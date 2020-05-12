@@ -1,16 +1,27 @@
-﻿
-@{
+﻿@{
     Layout = "_Layout";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-    Index
-</head>
-<body>
-</body>
-</html>
+<div class="container">
+    <div class="row tm-mt-big">
+        <div class="col-12 mx-auto tm-login-col">
+            <div class="bg-white tm-block">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <a asp-action="Registration" asp-controller="Account">
+                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
+                            <h2 class="tm-block-title mt-3">Rejestracja</h2>
+                        </a>
+                        @*@if (User.Identity.IsAuthenticated)
+                            {*@
+                        <a asp-action="Logout" asp-controller="Account">
+                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
+                            <h2 class="tm-block-title mt-3">Rejestracja</h2>
+                        </a>
+                         @* }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
