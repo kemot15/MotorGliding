@@ -51,11 +51,11 @@ namespace MotorGliding.Controllers
             return View(registerViewModel);
         }
 
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
+        //[HttpGet]
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginModel)
@@ -66,7 +66,7 @@ namespace MotorGliding.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 //if (result.IsLockedOut)
                 //{
