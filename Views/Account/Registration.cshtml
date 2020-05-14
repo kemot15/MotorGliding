@@ -9,19 +9,20 @@
             <div class="bg-white tm-block">
                 <div class="row">
                     <div class="col-12 text-center">
-                        <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
+                        @*<i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>*@
+                        <img src="~/img/buzz_logo.png" class="text-center"/>
                         <h2 class="tm-block-title mt-3">Rejestracja</h2>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-12">
-                        @Html.ValidationSummary()
+                        
                         <form asp-action="Registration" asp-controller="Account" method="post" class="tm-login-form">
-                            <div class="input-group">
+                            <div class="input-group mt-3">
                                 <label asp-for="UserName" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj imię">Login</label>
                                 <input asp-for="UserName" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group mt-3">
                                 <label asp-for="Email" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj e-mail">E-mail</label>
                                 <input asp-for="Email" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                             </div>
@@ -37,7 +38,7 @@
                                 <button type="submit" class="btn btn-primary d-inline-block mx-auto">Zarejestruj</button>
                             </div>
                             <div class="input-group mt-3">
-                                <p><em>Walidacja</em></p>
+                                <p><em>@Html.ValidationSummary()</em></p>
                             </div>
                         </form>
                     </div>

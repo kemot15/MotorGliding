@@ -1,27 +1,127 @@
-﻿@{
+﻿@model MainPageViewModel
+@{
     Layout = "_Layout";
 }
 
-<div class="container">
-    <div class="row tm-mt-big">
-        <div class="col-12 mx-auto tm-login-col">
-            <div class="bg-white tm-block">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <a asp-action="Registration" asp-controller="Account">
-                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
-                            <h2 class="tm-block-title mt-3">Rejestracja</h2>
-                        </a>
-                        @*@if (User.Identity.IsAuthenticated)
-                            {*@
-                        <a asp-action="Logout" asp-controller="Account">
-                            <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
-                            <h2 class="tm-block-title mt-3">Rejestracja</h2>
-                        </a>
-                         @* }*@
+@*<div class="container">
+        <div class="row tm-mt-big">
+            <div class="col-12 mx-auto tm-login-col">
+                <div class="bg-white tm-block">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a asp-action="Registration" asp-controller="Account">
+                                <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
+                                <h2 class="tm-block-title mt-3">Rejestracja</h2>
+                            </a>
+                            @if (User.Identity.IsAuthenticated)
+                                {
+                            <a asp-action="Logout" asp-controller="Account">
+                                <i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>
+                                <h2 class="tm-block-title mt-3">Rejestracja</h2>
+                            </a>
+                             }
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>*@
+
+@await Html.PartialAsync("Main/_PreloaderPartialView")
+@await Html.PartialAsync("Main/_HeaderPartialView")
+
+    
+<!-- PRE LOADER -->
+<!-- MENU -->
+<!-- HOME -->
+<section id="home" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-6 col-sm-12">
+                <div class="home-info">
+                    <h1>Poleć z nami...</h1>
+                    <a href="#about" class="btn section-btn smoothScroll">Start a project</a>
+                    <span>
+                        CALL US (+66) 010-020-0340
+                        <small>For any inquiry</small>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-sm-12">
+                <div class="home-video">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.youtube.com/embed/H1qIneDd5CY" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+</section>
+
+
+<!-- ABOUT -->
+@if (Model.Vehicle != null)
+{
+
+
+<section id="about" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-5 col-sm-6">
+                <div class="about-info">
+                    <div class="section-title">
+                        <h2>Sprzęt</h2>
+                        <span class="line-bar">...</span>
+                    </div>                    
+                    <p><em>@Model.Vehicle.Name</em> - @Model.Vehicle.Description</p>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <div class="about-info skill-thumb">
+                    @foreach (var feature in Model.Vehicle.Features)
+                    {
+                        <strong>@feature.Name</strong>
+                        <span class="pull-right">@feature.Value%</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width: @feature.Value%;"></div>
+                        </div>
+                    }
+
+                    
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <div class="about-image">
+                    <img src="@Model.Vehicle.Images.First().Name" class="img-responsive" alt="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+}
+@await Html.PartialAsync("Main/_BlogPartialView")
+@await Html.PartialAsync("Main/_WorkPartialView")
+@await Html.PartialAsync("Main/_ContactPartialView")
+@await Html.PartialAsync("Main/_FooterPartialView")
+
+
+
+
+@await Html.PartialAsync("Main/_ModalPartialView", Model.RegLogViewModel)
+
+
+@await Html.PartialAsync("Main/_ScriptsPartialView")
+<!-- BLOG -->
+<!-- WORK -->
+<!-- CONTACT -->
+<!-- FOOTER -->
+<!-- MODAL -->
+<!-- SCRIPTS -->

@@ -23,5 +23,9 @@ namespace MotorGliding.Context
                 new IdentityRole<int> { Id = 2, Name = "User", NormalizedName = "USER" });
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Features> Features { get; set; }
     }
 }
