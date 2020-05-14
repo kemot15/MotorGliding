@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MotorGliding.Services;
 
 namespace MotorGliding.Controllers
 {
     public class DashboardController : Controller
-    {
+    {        
+
         public IActionResult Index()
         {
             ViewBag.Active = "Dashboard";

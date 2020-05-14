@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+﻿@model RegLogViewModel
 <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content modal-popup">
@@ -28,9 +28,9 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="sign_in">
                                     <form asp-action="Login" asp-controller="Account">
-                                        <input asp-for="Email" class="form-control" placeholder="Email" required>
-                                        <input asp-for="Password" type="password" class="form-control" placeholder="Password" required>
-                                        <input type="submit" class="form-control" name="submit" value="Submit Button">
+                                        <input asp-for="LoginViewModel.Email" class="form-control" placeholder="Email" required>
+                                        <input asp-for="LoginViewModel.Password" type="password" class="form-control" placeholder="Password" required>
+                                        <input type="submit" class="form-control" name="submit" value="Zaloguj">
                                         <a href="https://www.facebook.com/templatemo">Forgot your password?</a>
                                     </form>
                                     
@@ -38,11 +38,11 @@
 
                                 <div role="tabpanel" class="tab-pane fade in" id="sign_up">
                                     <form action="#" method="post">
-                                        <input asp-for="Email" type="text" class="form-control" placeholder="Name" required>
-                                        <input asp-for="Email" class="form-control" placeholder="Telephone" required>
-                                        <input asp-for="Email" class="form-control" placeholder="Email" required>
-                                        <input asp-for="Email" class="form-control" placeholder="Password" required>
-                                        <input type="submit" class="form-control" name="submit" value="Submit Button">
+                                        <input asp-for="RegistrationViewModel.UserName" type="text" class="form-control" placeholder="Name" required>
+                                        <input asp-for="RegistrationViewModel.Email" class="form-control" placeholder="Email" required>
+                                        <input asp-for="RegistrationViewModel.Password" class="form-control" placeholder="Password" required>
+                                        <input asp-for="RegistrationViewModel.RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
+                                        <input type="submit" class="form-control" name="submit" value="Zarejestruj">
                                     </form>
                                 </div>
                             </div>
