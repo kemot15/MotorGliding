@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,9 @@ namespace MotorGliding
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IFeaturesService, FeaturesService>();
             services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IEventService, EventService>();
+            services.AddScoped<ICalendarService, CalendarService>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddControllersWithViews();
         }

@@ -27,16 +27,16 @@ namespace MotorGliding.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registration([FromForm]RegistrationViewModel registerViewModel)
+        public async Task<IActionResult> Registration([FromForm]RegLogViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new User
                 {
-                    UserName = registerViewModel.UserName,
-                    Email = registerViewModel.Email
+                    UserName = model.RegistrationViewModel.UserName,
+                    Email = model.RegistrationViewModel.Email
                 };
-                var result = await UserManager.CreateAsync(user, registerViewModel.Password);
+                var result = await UserManager.CreateAsync(user, model.RegistrationViewModel.Password);
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user, "User");
@@ -48,7 +48,7 @@ namespace MotorGliding.Controllers
                 }
             }
             ViewBag.Error = true;
-            return View(registerViewModel);
+            return View(model);
         }
 
         //[HttpGet]
@@ -58,11 +58,11 @@ namespace MotorGliding.Controllers
         //}
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginModel)
+        public async Task<IActionResult> Login(RegLogViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await SignInManager.PasswordSignInAsync(loginModel.Email, loginModel.Password, false, false);
+                var result = await SignInManager.PasswordSignInAsync(model.LoginViewModel.Email, model.LoginViewModel.Password, false, false);
 
                 if (result.Succeeded)
                 {
@@ -83,7 +83,7 @@ namespace MotorGliding.Controllers
                     ModelState.AddModelError("", "Błąd logowania");
                 }
             }
-            return View(loginModel);
+            return View(model);
         }
 
         [HttpGet]

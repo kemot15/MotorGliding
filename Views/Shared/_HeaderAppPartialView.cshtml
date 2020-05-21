@@ -23,22 +23,26 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-controller="Dashboard">Dashboard</a>
+                                <a class="nav-link" asp-action="Index" asp-controller="Dashboard">BuzzTandem</a>
                             </li>
                         }
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                Reports
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Daily Report</a>
-                                <a class="dropdown-item" href="#">Weekly Report</a>
-                                <a class="dropdown-item" href="index.html">Yearly Report</a>
-                            </div>
-                        </li>
+                    @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+            Reports
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Daily Report</a>
+            <a class="dropdown-item" href="#">Weekly Report</a>
+            <a class="dropdown-item" href="index.html">Yearly Report</a>
+        </div>
+                        
+                    </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Calendar" asp-controller="Dashboard">Kalendarz</a>
+                    </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html">Products</a>
+                            <a class="nav-link" asp-action="List" asp-controller="Event">Products</a>
                         </li>
                         @if (ViewBag.Active == "Account")
                         {

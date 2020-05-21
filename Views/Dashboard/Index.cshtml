@@ -5,7 +5,8 @@
 @await Html.PartialAsync("_MenuAppPartialView")
     <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
         <div class="bg-white tm-block h-100">
-            <div class="row">
+            @await Html.PartialAsync("Calendar/_CalendarPartialView");
+            @*<div class="row">
                 <div class="col-md-8 col-sm-12">
                     <h2 class="tm-block-title d-inline-block">Products</h2>
 
@@ -13,7 +14,7 @@
                 <div class="col-md-4 col-sm-12 text-right">
                     <a href="add-product.html" class="btn btn-small btn-primary">Add New Product</a>
                 </div>
-            </div>
+            </div>*@
             <div class="table-responsive">
                 <table class="table table-hover table-striped tm-table-striped-even mt-3">
                     <thead>

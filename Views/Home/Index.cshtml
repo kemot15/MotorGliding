@@ -107,7 +107,7 @@
     </div>
 </section>
 }
-@await Html.PartialAsync("Main/_BlogPartialView")
+@await Html.PartialAsync("Main/_BlogPartialView", Model.Events)
 @await Html.PartialAsync("Main/_WorkPartialView")
 @await Html.PartialAsync("Main/_ContactPartialView")
 @await Html.PartialAsync("Main/_FooterPartialView")

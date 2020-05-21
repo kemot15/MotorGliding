@@ -1,11 +1,10 @@
-﻿@model Vehicle
-
+﻿@model Event
 @{
     ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
-
+    <body class="bg02">
         <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
             <div class="bg-white tm-block">
                 <div class="row">
@@ -15,31 +14,28 @@
                 </div>
                 <div class="row mt-4 tm-edit-product-row">
                     <div class="col-xl-7 col-lg-7 col-md-12">
-                        <form asp-action="Add" asp-controller="Vehicle" method="post" class="tm-edit-product-form">
+                        <form asp-action="Add" asp-controller="Event" method="post" class="tm-edit-product-form">
                             <div class="input-group mb-3">
-                                <label asp-for="Name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                                <label asp-for="Title" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
                                 </label>
-                                <input asp-for="Name" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                                <input asp-for="Title" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
                             </div>
                             <div class="input-group mb-3">
-                                <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
-                                <textarea asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                                <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                                </label>
+                                <input asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Prędkość</label>
-                                <input type="number" asp-for="Features1.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label asp-for="Info" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
+                                <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Moc</label>
-                                <input type="number" asp-for="Features2.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Duration"></label>
+                                <input type="number" asp-for="Duration" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Przyśpieszenie</label>
-                                <input type="number" asp-for="Features3.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
-                            </div>
-                            <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Nośność</label>
-                                <input type="number" asp-for="Features4.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Price"></label>
+                                <input type="number" asp-for="Price" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
@@ -62,3 +58,6 @@
                 </div>
             </div>
         </div>
+    </body>
+
+

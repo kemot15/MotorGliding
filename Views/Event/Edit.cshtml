@@ -1,0 +1,73 @@
+﻿@model Event
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+    <div class="bg-white tm-block">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="tm-block-title d-inline-block">Edycja wydarzenia</h2>
+            </div>
+        </div>
+        <div class="row mt-4 tm-edit-product-row">
+            <div class="col-xl-7 col-lg-7 col-md-12">
+                <form asp-action="Edit" asp-controller="Event" method="post" class="tm-edit-product-form">
+                    <input asp-for="Id" type="hidden" />
+                    <label asp-for="Visible" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label"></label>
+                    <input asp-for="Visible" type="checkbox" aria-label="Checkbox">
+                    <div class="input-group mb-3">
+                        <label asp-for="Title" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                        </label>
+                        <input asp-for="Title" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                        </label>
+                        <input asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label asp-for="Info" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
+                        <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Duration"></label>
+                        <input type="number" asp-for="Duration" min="0" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        @*@{ var price = Decimal.ToDouble(Model.Price);}*@
+                        <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Price"></label>
+                        <input type="number" asp-for="Price" min="0" step="0.01" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                            
+                            <button class="btn btn-small btn-primary">
+                                <a href="javascript:history.back()">
+                                    Wstecz
+                                </a>
+                            </button>
+
+
+                            <button type="submit" class="btn btn-primary">
+                                Zapisz
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                <div class="tm-product-img-dummy mx-auto">
+                    <i class="fas fa-5x fa-cloud-upload-alt" onclick="document.getElementById('fileInput').click();"></i>
+                </div>
+                <div class="custom-file mt-3 mb-3">
+                    <input id="fileInput" type="file" style="display:none;" />
+                    <input type="button" class="btn btn-primary d-block mx-auto" value="Upload ..." onclick="document.getElementById('fileInput').click();" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

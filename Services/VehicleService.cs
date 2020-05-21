@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MotorGliding.Context;
 using MotorGliding.Models.Db;
 using MotorGliding.Services.Interfaces;
@@ -27,7 +28,10 @@ namespace MotorGliding.Services
 
         public async Task<Vehicle> GetMainAsync()
         {
-            return await _context.Vehicles.Include(f => f.Features).Include(i => i.Images).FirstAsync();
+            var result = await _context.Vehicles.Include(f => f.Features).Include(i => i.Images).FirstOrDefaultAsync();
+            if (result != null)
+                return result;
+            return null;
             //return await _context.Vehicles.Include(f => f.Features.Any(id => id.SourceId.Equals(f.Id))).Include(i => i.Images).FirstAsync();
         }
 
@@ -48,6 +52,25 @@ namespace MotorGliding.Services
             vehicle.Image = new Image() { Category = "Vehicle", Default = true, SourceId = vehicle.Id, Name = $"~/gallery/MainLogo_{vehicle.Id}" };
             await _context.Images.AddAsync(vehicle.Image);
             return await _context.SaveChangesAsync() > 0;
-        }    
+        }
+
+        public async Task<bool> UpdateAsync(Vehicle vehicle)
+        {
+            _context.Vehicles.Update(vehicle);
+            return await _context.SaveChangesAsync() > 0;
+
+        }
+
+        public async Task<bool> RemoveAsync(int id)
+        {
+            var vehicle = await _context.Vehicles.Include(f => f.Features).SingleAsync(v => v.Id == id);
+            _context.Vehicles.Remove(vehicle);
+            return await _context.SaveChangesAsync()>0;
+        }
+
+        public async Task<Vehicle> GetAsync(int id)
+        {
+            return await _context.Vehicles.Include(f => f.Features).SingleAsync(v => v.Id == id);
+        }
     }
 }

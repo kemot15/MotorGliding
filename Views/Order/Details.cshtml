@@ -1,0 +1,277 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("Main/_PreloaderPartialView")
+@await Html.PartialAsync("Main/_HeaderPartialView")
+<!-- BLOG HEADER -->
+<section id="blog-header" data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+        <div class="col-md-offset-1 col-md-5 col-sm-12">
+        <h2>Koszyk</h2>
+    </div>
+
+                    <div class="col-md-offset-1 col-md-5 col-sm-12">
+                        <h2>Koszyk</h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
+
+<!-- BLOG DETAIL -->
+<section id="table" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-offset-1 col-md-10 col-sm-12">
+                <!-- BLOG THUMB -->
+                <div class="blog-detail-thumb">
+                    <div class="blog-image">
+                        <img src="images/blog-detail-image.jpg" class="img-responsive" alt="Blog Image">
+                    </div>
+                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, quisquam, aut, eum, natus excepturi impedit ipsa rerum ratione id dolores ducimus minus eos veniam similique.</blockquote>
+
+
+                    <p>Vivamus quis velit sed ante suscipit aliquam nec sed ex. Maecenas porta leo at mi suscipit congue. Donec ipsum metus, tristique eu leo ut, luctu Vivamus sit amet purus nec risus mollis tempor.</p>
+                    @if (Model != null && Model.OrderDetails.Any())
+                    {
+                        <form asp-action="Refresh" asp-controller="Order" method="post">
+
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                                    <thead>
+                                        <tr class="tm-bg-gray">
+                                            <th scope="col">Nazwa</th>
+                                            <th scope="col">Cena</th>
+                                            <th scope="col">Ilość</th>
+                                            <th scope="col">Filmowanie</th>
+                                            <th scope="col">Razem</th>
+                                            <th scope="col">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{double sum = 0;}
+
+                                        @foreach (var detail in Model.OrderDetails)
+                                        {
+
+                                            @:<tr>
+                                                <th scope="row">
+                                                    <input type="hidden" asp-for="@detail.EventID" />
+                                                    <input type="hidden" asp-for="@detail.Id" />
+                                                    <input type="hidden" asp-for="@detail.OrderId" />
+                                                    @detail.EventID
+                                                </th>
+                                                <td class="tm-product-name"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
+                                                <input type="hidden" asp-for="@detail" />
+                                                <td class="tm-product-name"><input type="number" min="1" step="1" asp-for="@detail.Quantity" /></td>
+                                                <td class="tm-product-name"><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>
+                                                <td class="tm-product-name">@(detail.Quantity*detail.Price)</td>
+                                                <td>
+                                                    @Html.ActionLink("", "Remove", "Order", protocol: null, hostname: null, fragment: "table", routeValues: new { detail.Id }, htmlAttributes: new { @class = "smoothScroll fas fa-trash-alt tm-trash-icon", @onclick = "return confirm('Czy chcesz usunąć plan?')" })
+                                                </td>
+                                            @:</tr>
+                                            sum += detail.Price * detail.Quantity;
+
+                                        }
+                                        <tr>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td scope="col" class="bg-warning"><b>Suma:</b></td>
+                                            <td scope="col" class="bg-success"><b>@sum</b></td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        <div class="col-md-1 col-sm-12">
+                            <button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>
+                        </div>
+                     </form>
+
+                    }
+                    else
+                    {
+                        <div class="blog-ads">
+                            <h4>Koszyk jest pusty... @Html.ActionLink("Pokaż oferty", "Index", "Home", protocol: null, hostname: null, fragment: "blog", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</h4>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*@await Html.PartialAsync("Main/_ContactPartialView")*@
+@await Html.PartialAsync("Main/_FooterPartialView")
+
+
+
+
+@await Html.PartialAsync("Main/_ScriptsPartialView")
+
+
+
+
+
+
+
+@*@await Html.PartialAsync("Main/_PreloaderPartialView")
+    @await Html.PartialAsync("Main/_HeaderPartialView")
+
+        <section id="blog-header" data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-offset-1 col-md-5 col-sm-12">
+                        <h2>Koszyk Naglowek</h2>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="blog-detail" data-stellar-background-ratio="0.5">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-offset-1 col-md-10 col-sm-12">
+                         BLOG THUMB
+                        <div class="blog-detail-thumb">
+                            <div class="blog-image">
+                                <img src="images/blog-detail-image.jpg" class="img-responsive" alt="Blog Image">
+                            </div>
+
+                            <h2>Koszyk opis</h2>
+
+                            <p>Koszyk info</p>
+
+                            @Model.ShowText("chyba sie udalo");
+                            <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, quisquam, aut, eum, natus excepturi impedit ipsa rerum ratione id dolores ducimus minus eos veniam similique.</blockquote>
+
+
+                            <p>Vivamus quis velit sed ante suscipit aliquam nec sed ex. Maecenas porta leo at mi suscipit congue. Donec ipsum metus, tristique eu leo ut, luctu Vivamus sit amet purus nec risus mollis tempor.</p>
+
+                            <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+                                <div class="bg-white tm-block h-100">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-12">
+                                            <h2 class="tm-block-title d-inline-block">Koszyk</h2>
+
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 text-right">
+                                            <a asp-action="Add" class="btn btn-small btn-primary">Dadaj inne oferty</a>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                                            <thead>
+                                                <tr class="tm-bg-gray">
+                                                    <th scope="col">Nazwa</th>
+                                                    <th scope="col">Cena</th>
+                                                    <th scope="col">Ilość</th>
+                                                    <th scope="col">Filmowanie</th>
+                                                    <th scope="col">Razem</th>
+                                                    <th scope="col">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var detail in Model.OrderDetails)
+                                                {
+                                                    <tr>
+
+                                                        <th scope="row">
+                                                            @detail.EventID
+                                                        </th>
+                                                        <td class="tm-product-name">@detail.Price</td>
+                                                        <td class="tm-product-name"><input type="number" min="0" step="1" value="@detail.Quantity" /></td>
+                                                        <td class="tm-product-name"><input type="checkbox" value="@detail.Camera" /></td>
+                                                        <td class="tm-product-name">@detail.Quantity * @detail.Price</td>
+                                                        <td><a asp-action="Remove" asp-controller="Order" asp-route-id="@detail.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+
+
+
+                                    <div class="tm-table-mt tm-table-actions-row">
+                                        <div class="tm-table-actions-col-left">
+                                            <button class="btn btn-danger">Delete Selected Items</button>
+                                        </div>
+                                        <div class="tm-table-actions-col-right">
+                                            <span class="tm-pagination-label">Page</span>
+                                            <nav aria-label="Page navigation" class="d-inline-block">
+                                                <ul class="pagination tm-pagination">
+                                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                    <li class="page-item">
+                                                        <span class="tm-dots d-block">...</span>
+                                                    </li>
+                                                    <li class="page-item"><a class="page-link" href="#">13</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">14</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @await Html.PartialAsync("Main/_ContactPartialView")
+                    @await Html.PartialAsync("Main/_FooterPartialView")
+
+
+                    @await Html.PartialAsync("Main/_ModalPartialView", Model.RegLogViewModel)
+
+
+                    @await Html.PartialAsync("Main/_ScriptsPartialView")*@
+
+
+
+
+@*@foreach (var item in Model)
+    {
+        <div class="col-md-6 col-sm-6">
+             BLOG THUMB
+            <div class="media blog-thumb">
+                <div class="media-object media-left">
+                    @{var x = "";
+                        x = "/gallery/MainLogo_3.png";
+                    }
+                    <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="..@x" class="img-responsive" alt=""></a>
+                </div>
+                <div class="media-body blog-info">
+                    <small><i class="fa fa-clock-o"></i> @item.CreateData.ToShortDateString()</small>
+                    <h3><a href="blog-detail.html">@item.Title </a></h3>
+                    <p>@item.Description</p>
+                    <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id" class="btn section-btn">Szczegóły</a>
+                </div>
+            </div>
+        </div>
+    }*@
+
+
