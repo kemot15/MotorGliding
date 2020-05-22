@@ -28,7 +28,7 @@ namespace MotorGliding.Services
 
         public async Task<bool> UpdateAsync(Event model)
         {
-            _context.Events.Update(model);        
+            _context.Events.Update(model);    
             return await _context.SaveChangesAsync() > 0;
         }
 

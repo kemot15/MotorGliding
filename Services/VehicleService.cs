@@ -26,9 +26,9 @@ namespace MotorGliding.Services
             return await _context.Vehicles.ToListAsync();
         }
 
-        public async Task<Vehicle> GetMainAsync()
+        public async Task<IList<Vehicle>> GetMainAsync()
         {
-            var result = await _context.Vehicles.Include(f => f.Features).Include(i => i.Images).FirstOrDefaultAsync();
+            var result = await _context.Vehicles.Include(f => f.Features).Include(i => i.Images).ToListAsync();//.FirstOrDefaultAsync();
             if (result != null)
                 return result;
             return null;

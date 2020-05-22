@@ -1,4 +1,5 @@
 ﻿@model Order
+@inject Event events;
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -70,7 +71,7 @@
                                                     <input type="hidden" asp-for="@detail.EventID" />
                                                     <input type="hidden" asp-for="@detail.Id" />
                                                     <input type="hidden" asp-for="@detail.OrderId" />
-                                                    @detail.EventID
+                                                    @detail.EventID @*@events.*@
                                                 </th>
                                                 <td class="tm-product-name"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
                                                 <input type="hidden" asp-for="@detail" />
@@ -96,9 +97,10 @@
                                 </table>
 
                             </div>
-                        <div class="col-md-1 col-sm-12">
-                            <button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>
-                        </div>
+                            <div class="col-md-1 col-sm-12">
+                                <button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>
+                                @Html.ActionLink("Uzytkownik", "UserConfirm", "Order", new { @class = "btn btn-small btn-info" })
+                            </div>
                      </form>
 
                     }

@@ -22,7 +22,7 @@
     });
     
 
-    // PARALLAX EFFECT
+     PARALLAX EFFECT
     $.stellar({
       horizontalScrolling: false,
     }); 

@@ -55,6 +55,44 @@ namespace MotorGliding.Services
                 _context.Entry(det).CurrentValues.SetValues(d);
             }           
             return await _context.SaveChangesAsync() > 0;
-        }     
+        }
+
+        public async Task<int> CreateUserAsync(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return user.Id;
+        }
+
+        public async Task<int> UpdateUserAsync(User user)
+        {
+            //var address = await _context.add
+            
+            if (user.Address == null)
+            {
+                _context.Address.Add(user.Address);
+                //user.Address. = new Address();
+                
+            }
+            _context.Entry(user).State = EntityState.Modified;
+           // user.Address.User = user;
+            //await _context.SaveChangesAsync();
+            // _context.Address.Update(user.Address);
+            _context.Users.Update(user);
+            //_context.Entry(result). .SetValues(user);
+            //  _context.Entry(result.Address).CurrentValues.SetValues(user.Address);
+            await _context.SaveChangesAsync();
+            return user.Id;
+        }
+
+
+        public async Task<bool> UpdateOrderUserId(int orderId, int userId)
+        {
+            var order = await _context.Orders.SingleAsync(o => o.Id == orderId);
+            var user = await _context.Users.SingleAsync(u => u.Id == userId);
+            order.User = user;
+            order.UserId = user.Id;
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

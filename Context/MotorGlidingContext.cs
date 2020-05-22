@@ -32,6 +32,7 @@ namespace MotorGliding.Context
         public DbSet<Calendar> Calendar { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
+        public DbSet<Address> Address { get; set; }
 
     }
 }

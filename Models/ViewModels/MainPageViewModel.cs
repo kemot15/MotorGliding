@@ -9,7 +9,7 @@ namespace MotorGliding.Models.ViewModels
     public class MainPageViewModel
     {
         public RegLogViewModel RegLogViewModel { get; set; }
-        public Vehicle Vehicle { get; set; }
+        public IList<Vehicle> Vehicle { get; set; }
         public IList<Event> Events { get; set; }
     }
 }

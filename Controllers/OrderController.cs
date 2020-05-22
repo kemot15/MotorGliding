@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.CookiePolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
 using MotorGliding.Services.Interfaces;
@@ -12,10 +13,12 @@ namespace MotorGliding.Controllers
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly UserManager<User> UserManager;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, UserManager<User> userManager)
         {
             _orderService = orderService;
+            UserManager = userManager;
         }
 
         public IActionResult Index()
@@ -33,8 +36,9 @@ namespace MotorGliding.Controllers
             }
             return View();
         }
+
         [HttpPost]
-        public async Task<IActionResult> Details(Event model)
+        public async Task<IActionResult> Details(Event model, int quantity = 1)
         {
             Order order;
             var cookie = Request.Cookies["orderID"];            
@@ -45,9 +49,9 @@ namespace MotorGliding.Controllers
                 OrderDetails orderDetails = new OrderDetails
                 {
                     Price = model.Price,
-                    Quantity = 1,
+                    Quantity = quantity,
                     EventID = model.Id,
-                    //Event = model,
+                 //   Event = model,
                     Camera = false,
                 };
                 order.OrderDetails.Add(orderDetails);
@@ -64,20 +68,22 @@ namespace MotorGliding.Controllers
                     {
                         Price = model.Price,
                         CameraPrice = model.CameraPrice,
-                        Quantity = 1,
+                        Quantity = quantity,
                         EventID = model.Id,
-                        //Event = model,
+                       // Event = model,
                         Camera = false,
                     });
                 }
                 else
                 {
                     var orderDetails = order.OrderDetails.Single(d => d.EventID == model.Id);
+                  //  orderDetails.Event = model;
                     orderDetails.Quantity++;
                     //orderDetails.Price = model.Price * orderDetails.Quantity;
                 }
                 //order.OrderDetails.Add(orderDetails);
                 await _orderService.UpdateAsync(order);
+             //   order.OrderDetails
             } 
             return View(order);
         }
@@ -92,6 +98,31 @@ namespace MotorGliding.Controllers
         {           
             await _orderService.UpdateOrderDetailsAsync(detail);
             return RedirectToAction("Details");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserConfirm()
+        {
+            if (Request.Cookies["orderId"] == null)
+                return RedirectToAction("Details");
+            var user = await UserManager.GetUserAsync(User);            
+            if (user != null)
+            {
+                return View(user);
+            }
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UserConfirm(User user, Address address)
+        {
+            var userId = (user.Id == 0 ? await _orderService.CreateUserAsync(user) : await _orderService.UpdateUserAsync(user));
+
+            //    var userId = await _orderService.CreateUserAsync(user);
+
+
+            var orderId = int.Parse(Request.Cookies["orderId"]);
+            await _orderService.UpdateOrderUserId(orderId, userId);
+            return RedirectToAction("Index", "Home");
         }
     }
 }

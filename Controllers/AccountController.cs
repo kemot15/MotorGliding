@@ -40,7 +40,7 @@ namespace MotorGliding.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user, "User");
-                    return RedirectToAction("Login");
+                    return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)
                 {

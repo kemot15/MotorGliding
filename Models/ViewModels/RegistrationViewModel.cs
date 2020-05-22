@@ -17,7 +17,8 @@ namespace MotorGliding.Models.ViewModels
         [Required(ErrorMessage = "Pole wymagane")]
         [PasswordPropertyText]
         public string Password { get; set; }
-        [Required(ErrorMessage = "Pole wymagane"), Compare("Password")]
+        [Required(ErrorMessage = "Pole wymagane")]
+        [Compare("Password", ErrorMessage ="Podane hasła są różne")]
         [PasswordPropertyText]
         public string RepeatPassword { get; set; }
     }

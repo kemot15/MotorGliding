@@ -14,5 +14,9 @@ namespace MotorGliding.Services.Interfaces
         Task<bool> RemoveAsync(int id);
         Task<OrderDetails> GetOrderDetailsAsync(int id);
         Task<bool> UpdateOrderDetailsAsync(List<OrderDetails> detail);
+        Task<int> CreateUserAsync(User user);
+        Task<int> UpdateUserAsync(User user);
+
+        Task<bool> UpdateOrderUserId(int orderId, int userId);
     }
 }

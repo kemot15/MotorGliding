@@ -42,15 +42,6 @@ namespace MotorGliding.Models.Db
         public bool Visible { get; set; } = true;
         //[NotMapped]
         //public OrderDetails OrderDetails { get; set; }
-
-        public string ShowText (string text)
-        {
-            var result = "";
-            for (int i = 0; i < 5; i++)
-            {
-                result += $"<h1>{text}</h1>";
-            }
-            return result;
-        }
+      
     }
 }
