@@ -1,0 +1,15 @@
+﻿@model MotorGliding.Models.Other.WeatherInfo.Root
+@*@model Nancy.Json.Simple.JsonObject*@
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.name</h1>
+<h1>@Model.coord</h1>
+<h1>@Model.dt</h1>
+<h1>@Model.main.temp</h1>
+<h1>@Model.sys.country</h1>
+<h1>@Model.wind.speed</h1>
+@{var icon=$"http://openweathermap.org/img/wn/{@Model.weather[0].icon}@2x.png";}
+<i src=@icon></i> Ikona

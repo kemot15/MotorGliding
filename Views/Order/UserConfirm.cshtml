@@ -1,4 +1,4 @@
-﻿@model User
+﻿@model EditUserViewModel
 @{
     ViewData["Title"] = "User";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -57,8 +57,8 @@
                 <!-- CONTACT FORM HERE -->
                 <form asp-action="UserConfirm" asp-controller="Order" method="post">
                     <input hidden asp-for="Id" />
-                    <input hidden asp-for="Address.Id" />
-                    <input hidden asp-for="Address.User" />
+                    <input hidden asp-for="AddressId" />
+                    <input hidden asp-for="OrderId" />
                     <div class="col-md-6 col-sm-6">
                         <label asp-for="Name"></label>
                         <input asp-for="Name" type="text" class="form-control" placeholder="Imię" required="">
@@ -73,30 +73,30 @@
                         <input asp-for="PhoneNumber" type="tel" class="form-control" placeholder="Telefon" required="">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <label asp-for="Address.Street"></label>
-                        <input asp-for="Address.Street" type="text" class="form-control" placeholder="Adres" required="">
+                        <label asp-for="Street"></label>
+                        <input asp-for="Street" type="text" class="form-control" placeholder="Adres" required="">
                     </div>
 
                     <div class="col-md-6 col-sm-6">
-                        <label asp-for="Address.ZipCode"></label>
-                        <input asp-for="Address.ZipCode" type="text" class="form-control" placeholder="Kod pocztowy" required="">
+                        <label asp-for="ZipCode"></label>
+                        <input asp-for="ZipCode" type="text" class="form-control" placeholder="Kod pocztowy" required="">
                     </div>
                     <div class="col-md-6 col-sm-6">
-                        <label asp-for="Address.City"></label>
-                        <input asp-for="Address.City" type="text" class="form-control" placeholder="Miasto" required="">
+                        <label asp-for="City"></label>
+                        <input asp-for="City" type="text" class="form-control" placeholder="Miasto" required="">
                     </div>
 
                     <div class="col-md-6 col-sm-6">
-                        <label asp-for="Address.Country"></label>
-                        <input asp-for="Address.Country" type="text" class="form-control" placeholder="Kraj" required="">
+                        <label asp-for="Country"></label>
+                        <input asp-for="Country" type="text" class="form-control" placeholder="Kraj" required="">
                     </div>
-                    @if (Model == null)
-                    {
+                    @*@if (Model == null)
+                    {*@
                         <div class="col-md-6 col-sm-6">
                             <label asp-for="Email"></label>
                             <input asp-for="Email" type="email" class="form-control" placeholder="E-mail" required="">
                         </div>
-                    }                    
+                    @* } *@                   
                     @*<div class="col-md-3 col-sm-3">
             <label asp-for="@Model.Address."></label>
             <input asp-for="" type="checkbox" class="form-control" placeholder="Regulamin" required="">

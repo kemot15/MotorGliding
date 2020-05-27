@@ -24,11 +24,7 @@ namespace MotorGliding.Controllers
             return View();
         }
 
-        public IActionResult Account()
-        {
-            ViewBag.Active = "Account";
-            return View();
-        }
+        
 
         public async Task<IActionResult> Calendar(DateTime dateTime)
         {

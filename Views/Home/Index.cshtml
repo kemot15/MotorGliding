@@ -42,9 +42,9 @@
             <div class="col-md-6 col-sm-12">
                 <div class="home-info">
                     <h1>Poleć z nami...</h1>
-                    <a href="#about" class="btn section-btn smoothScroll">Start a project</a>
+                    <a href="#about" class="btn section-btn smoothScroll">Start</a>
                     <span>
-                        CALL US (+66) 010-020-0340
+                        Zapraszamy do sprawdzenia dostępnych ofert
                         <small>For any inquiry</small>
                     </span>
                 </div>
@@ -63,7 +63,7 @@
 </section>
 
 
-<section class="padding-large bg-light">
+@*<section class="padding-large bg-light">
     <div id="carouselExampleControls" class="carousel slide main-slider" data-ride="carousel">
         <div class="carousel-inner container">
             <div class="carousel-item active">
@@ -109,7 +109,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-</section>
+</section>*@
 
 
 
@@ -133,7 +133,7 @@
 
 
 <!-- ABOUT -->
-@*@if (Model.Vehicle.Count > 0)
+@if (Model.Vehicle.Count > 0)
 {
     <section id="about" data-stellar-background-ratio="0.5">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -199,7 +199,7 @@
             </div>
         </div>
     </section>
-}*@
+}
 
 @await Html.PartialAsync("Main/_BlogPartialView", Model.Events)
 @await Html.PartialAsync("Main/_WorkPartialView")

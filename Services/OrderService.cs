@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using MotorGliding.Context;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,16 +51,36 @@ namespace MotorGliding.Services
             foreach (var d in detail)
             {
                 var det = await _context.OrderDetails.SingleAsync(o => o.Id == d.Id);
-                _context.Entry(det).CurrentValues.SetValues(d);
+                det.Quantity = d.Quantity;
+                //_context.Entry(det).CurrentValues.SetValues(d);
             }           
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<int> CreateUserAsync(User user)
+        public async Task<int> CreateUserAsync(EditUserViewModel user)
         {
-            _context.Users.Add(user);
+            var newAddress = new Address
+            {
+                Street = user.Street,
+                ZipCode = user.ZipCode,
+                City = user.City,
+                Country = user.Country
+            };
+            var newUser = new OrderUser()
+            {
+                Name = user.Name,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                Address = newAddress,
+                Email = user.Email,   
+                OrderId = user.OrderId,
+                UserId = user.Id != 0 ? user.Id : 0
+
+            };
+            _context.OrderUsers.Add(newUser);
+            
             await _context.SaveChangesAsync();
-            return user.Id;
+            return newUser.Id;
         }
 
         public async Task<int> UpdateUserAsync(User user)
@@ -89,9 +108,19 @@ namespace MotorGliding.Services
         public async Task<bool> UpdateOrderUserId(int orderId, int userId)
         {
             var order = await _context.Orders.SingleAsync(o => o.Id == orderId);
-            var user = await _context.Users.SingleAsync(u => u.Id == userId);
-            order.User = user;
-            order.UserId = user.Id;
+            var userOrder = await _context.OrderUsers.SingleAsync(u => u.Id == userId);
+            order.Accepted = true;
+            order.OrderUserId = userOrder.Id;
+          //  order.OrderUser = userOrder;
+            _context.Orders.Update(order);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> OrderAccept (int id)
+        {
+            var order = await _context.Orders.SingleAsync(o => o.Id == id);
+            order.Accepted = true;
+            _context.Orders.Update(order);
             return await _context.SaveChangesAsync() > 0;
         }
     }

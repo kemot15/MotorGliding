@@ -40,6 +40,7 @@ namespace MotorGliding
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<ICalendarService, CalendarService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddControllersWithViews();
         }

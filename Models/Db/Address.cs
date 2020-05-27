@@ -21,5 +21,6 @@ namespace MotorGliding.Models.Db
         [Required, MaxLength(255), DisplayName("Państwo")]
         public string Country { get; set; }
         public User User { get; set; }
+        public OrderUser OrderUser { get; set; }
     }
 }

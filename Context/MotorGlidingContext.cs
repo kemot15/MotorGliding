@@ -33,6 +33,7 @@ namespace MotorGliding.Context
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetails> OrderDetails { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<OrderUser> OrderUsers { get; set; }
 
     }
 }

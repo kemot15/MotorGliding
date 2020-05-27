@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Razor.Language;
+using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
 using MotorGliding.Context;
@@ -20,10 +21,11 @@ namespace MotorGliding.Services
             _context = context;
         }
 
-        public async Task<bool> CreateAsync(Event model)
+        public async Task<int> CreateAsync(Event model)
         {
             await _context.Events.AddAsync(model);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return model.Id;
         }
 
         public async Task<bool> UpdateAsync(Event model)
@@ -31,7 +33,11 @@ namespace MotorGliding.Services
             _context.Events.Update(model);    
             return await _context.SaveChangesAsync() > 0;
         }
-
+        /// <summary>
+        /// Pobiera Event z lista obrazow
+        /// </summary>
+        /// <param name="id">Id Eventu do pobrania</param>
+        /// <returns>Zwraca pobrany Event</returns>
         public async Task<Event> GetAsync(int id)
         {
             return await _context.Events.SingleOrDefaultAsync(e => e.Id == id);
@@ -47,11 +53,13 @@ namespace MotorGliding.Services
             return await _context.Events.ToListAsync();
         }
 
-        public async Task<bool> RemoveAsync(int id)
-        {
-            var item = await GetAsync(id);
-            if (item == null)
-                return false;
+        /// <summary>
+        /// Usuwa wybrany Event
+        /// </summary>
+        /// <param name="id">Id Eventu do usunięcia</param>
+        /// <returns>Zwraca true przy powodzeniu usuniecia</returns>
+        public async Task<bool> RemoveAsync(Event item)
+        {           
             _context.Remove(item);
             return await _context.SaveChangesAsync() > 0;
         }       

@@ -40,7 +40,8 @@ namespace MotorGliding.Models.Db
         public ICollection<Image> Gallery { get; set; }
         [DisplayName("Aktywne")]
         public bool Visible { get; set; } = true;
-        //[NotMapped]
+        [NotMapped]
+        public Image Image { get; set; }
         //public OrderDetails OrderDetails { get; set; }
       
     }

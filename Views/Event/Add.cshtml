@@ -12,50 +12,56 @@
                         <h2 class="tm-block-title d-inline-block">Dodaj sprzęt</h2>
                     </div>
                 </div>
-                <div class="row mt-4 tm-edit-product-row">
-                    <div class="col-xl-7 col-lg-7 col-md-12">
-                        <form asp-action="Add" asp-controller="Event" method="post" class="tm-edit-product-form">
-                            <div class="input-group mb-3">
-                                <label asp-for="Title" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
-                                </label>
-                                <input asp-for="Title" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
-                            </div>
-                            <div class="input-group mb-3">
-                                <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
-                                </label>
-                                <input asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
-                            </div>
-                            <div class="input-group mb-3">
-                                <label asp-for="Info" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
-                                <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
-                            </div>
-                            <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Duration"></label>
-                                <input type="number" asp-for="Duration" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
-                            </div>
-                            <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Price"></label>
-                                <input type="number" asp-for="Price" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
-                            </div>
-                            <div class="input-group mb-3">
-                                <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
-                                    <button type="submit" class="btn btn-primary">
-                                        Dodaj
-                                    </button>
+                <form asp-action="Add" asp-controller="Event" method="post" enctype="multipart/form-data">
+                    <div class="row mt-4 tm-edit-product-row">
+
+                        <div class="col-xl-7 col-lg-7 col-md-12">
+
+                            <section class="tm-edit-product-form">
+                                <div class="input-group mb-3">
+                                    <label asp-for="Title" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                                    </label>
+                                    <input asp-for="Title" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
                                 </div>
+                                <div class="input-group mb-3">
+                                    <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                                    </label>
+                                    <input asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label asp-for="Info" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
+                                    <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Duration"></label>
+                                    <input type="number" asp-for="Duration" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Price"></label>
+                                    <input type="number" asp-for="Price" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                        <button type="submit" class="btn btn-primary">
+                                            Dodaj
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                            <div class="tm-product-img-dummy mx-auto">
+                                <i class="fas fa-5x fa-cloud-upload-alt" onclick="document.getElementById('fileInput').click();"></i>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
-                        <div class="tm-product-img-dummy mx-auto">
-                            <i class="fas fa-5x fa-cloud-upload-alt" onclick="document.getElementById('fileInput').click();"></i>
+                            <div class="custom-file mt-3 mb-3">
+                                <input id="fileInput" type="file" style="display:none;" />
+                                <input asp-for="@Model.Image.ImageFile" accept="image/*" class="btn btn-primary d-block mx-auto" />
+                            </div>
                         </div>
-                        <div class="custom-file mt-3 mb-3">
-                            <input id="fileInput" type="file" style="display:none;" />
-                            <input type="button" class="btn btn-primary d-block mx-auto" value="Upload ..." onclick="document.getElementById('fileInput').click();" />
-                        </div>
+
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </body>
