@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.IdentityModel.Tokens;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
 using MotorGliding.Services.Interfaces;
-using SQLitePCL;
 
 namespace MotorGliding.Controllers
 {
@@ -41,31 +31,90 @@ namespace MotorGliding.Controllers
             return View(await _eventService.ListAsync());
         }
 
+        //[HttpGet]
+        //public IActionResult Add()
+        //{
+        //    return View();
+        //}
+
         [HttpGet]
-        public IActionResult Add()
-        {
+        public async Task<IActionResult> AddEdit(int id = 0)
+        {   
+            if (id == 0)
             return View();
+            var item = await _eventService.GetAsync(id);
+            var image = await _imageService.GetMainAsync(item.Id, "Event");
+            if (image != null)
+                item.Image = image;
+            return View(item);
         }
+
         [HttpPost]
-        public async Task<IActionResult> Add(Event model)
+        public async Task<IActionResult> AddEdit (Event model)
         {
             if (!ModelState.IsValid)
                 return View(model);
-            var result = await _eventService.CreateAsync(model);
+            int result;
+            if (model.Id == 0)
+            {
+                result = await _eventService.CreateAsync(model);
+            } 
+            else
+            {
+                result = await _eventService.UpdateAsync(model);
+            }
+
             if (result == 0)
             {
-                ModelState.AddModelError("", "Błąd tworzenia wydarzenia.");
+                ModelState.AddModelError("", "Błąd wydarzenia.");
                 return View(model);
             }
-            if (model.Image != null)
+            if (model.Image.ImageFile != null)
             {
+                var image = await _imageService.GetAsync(model.Image.Id);
+                if (image != null)
+                {
+                    if (image.Name == model.Image.ImageFile.FileName)
+                    {
+                        return RedirectToAction("List");
+                    }
+                    else
+                    {
+                        await _imageService.DeleteImageAsync(image, "images");
+                        image = await _imageService.AddImageAsync(model.Image, "images", true);
+                        await _imageService.UpdateImageAsync(image);
+                        return RedirectToAction("List");
+                    }
+                }                
                 model.Image.SourceId = result;
                 model.Image.Category = "Event";
-                var image = await _imageService.AddImageAsync(model.Image, "images", true);
+                image = await _imageService.AddImageAsync(model.Image, "images", true);
                 await _imageService.SaveImageAsync(image);
-            }            
+            }
+                       
+           
             return RedirectToAction("List");
         }
+        //[HttpPost]
+        //public async Task<IActionResult> Add(Event model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
+        //    var result = await _eventService.CreateAsync(model);
+        //    if (result == 0)
+        //    {
+        //        ModelState.AddModelError("", "Błąd tworzenia wydarzenia.");
+        //        return View(model);
+        //    }
+        //    if (model.Image != null)
+        //    {
+        //        model.Image.SourceId = result;
+        //        model.Image.Category = "Event";
+        //        var image = await _imageService.AddImageAsync(model.Image, "images", true);
+        //        await _imageService.SaveImageAsync(image);
+        //    }            
+        //    return RedirectToAction("List");
+        //}
 
         
         /// <summary>
@@ -90,25 +139,27 @@ namespace MotorGliding.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Edit (int id)
-        {
-            return View(await _eventService.GetAsync(id));
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> Edit (int id)
+        //{
+        //    var item = await _eventService.GetAsync(id);
+        //    item.Image = await _imageService.GetMainAsync(item.Id, "Event");
+        //    return View(item);
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Edit (Event model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-            var result = await _eventService.UpdateAsync(model);
-            if(result == false)
-            {
-                ModelState.AddModelError("", "Błąd aktualizacji wydarzenia.");
-                return View(model);
-            }
-            return RedirectToAction("List");
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Edit (Event model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return View(model);
+        //    var result = await _eventService.UpdateAsync(model);
+        //    if(result == false)
+        //    {
+        //        ModelState.AddModelError("", "Błąd aktualizacji wydarzenia.");
+        //        return View(model);
+        //    }
+        //    return RedirectToAction("List");
+        //}
 
         /// <summary>
         /// Pobiera szczegoly dla danego Eventu

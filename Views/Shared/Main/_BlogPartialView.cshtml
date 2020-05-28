@@ -16,10 +16,15 @@
                     <!-- BLOG THUMB -->
                     <div class="media blog-thumb">
                         <div class="media-object media-left">
-                            @{var x = "";   
-                                    x = "../gallery/MainLogo_3.png";
+                            @if (item.Image != null)
+                            { 
+                                <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="@($"../images/{item.Image.Name}")" class="img-responsive" alt="~/images/logo-2.png" width="238px" height="358px"></a>
                             }
-                            <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="@x" class="img-responsive" alt=""></a>
+                            else
+                            {
+                            <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="~/images/logo-2.png" class="img-responsive" alt="Brak zdjęcia"></a>
+                            }
+
                         </div>
                         <div class="media-body blog-info">
                             <small><i class="fa fa-clock-o"></i>Czas trwania @item.Duration min</small>

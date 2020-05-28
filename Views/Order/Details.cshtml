@@ -14,7 +14,6 @@
                 <div class="col-md-offset-1 col-md-5 col-sm-12">
                 <h2>Koszyk</h2>
                 </div>
-
                     <div class="col-md-offset-1 col-md-5 col-sm-12">
                         <h2></h2>
                     </div>
@@ -22,9 +21,6 @@
                 </div>
             </div>
 </section>
-
-
-
 
 <!-- BLOG DETAIL -->
 <section id="table" data-stellar-background-ratio="0.5">
@@ -53,10 +49,13 @@
                                         <tr class="tm-bg-gray">
                                             <th scope="col">Nazwa</th>
                                             <th scope="col">Cena</th>
-                                            <th scope="col">Ilość</th>
-                                            <th scope="col">Filmowanie</th>
-                                            <th scope="col">Razem</th>
                                             <th scope="col">&nbsp;</th>
+                                            <th scope="col">&nbsp;</th>
+                                            <th scope="col">&nbsp;</th>
+                                            <th scope="col">Ilość</th>
+                                            @*<th scope="col">Filmowanie</th>*@
+                                            <th scope="col">Razem</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,12 +69,15 @@
                                                     <input type="hidden" asp-for="@detail.EventID" />
                                                     <input type="hidden" asp-for="@detail.Id" />
                                                     <input type="hidden" asp-for="@detail.OrderId" />
-                                                    @detail.EventID @*@events.*@
+                                                    @detail.EventTitle @*@events.*@
                                                 </th>
                                                 <td class="tm-product-name price"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
                                                 <input type="hidden" asp-for="@detail" />
+                                                <td class="tm-product-name">&nbsp;</td>
+                                                <td class="tm-product-name">&nbsp;</td>
+                                                <td class="tm-product-name">&nbsp;</td>
                                                 <td class="tm-product-name qty"><input type="number" min="1" step="1" asp-for="@detail.Quantity" /></td>
-                                                <td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>
+                                                @*<td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>*@
                                                 <td class="tm-product-name part_sum">@(detail.Quantity*detail.Price)</td>
                                                 <td>
                                                     @Html.ActionLink("", "Remove", "Order", protocol: null, hostname: null, fragment: "table", routeValues: new { detail.Id }, htmlAttributes: new { @class = "smoothScroll fas fa-trash-alt tm-trash-icon", @onclick = "return confirm('Czy chcesz usunąć pozycję?')" })
@@ -84,14 +86,16 @@
                                             sum += detail.Price * detail.Quantity;
 
                                         }
-                                        <tr>
-                                            <td class="bg-light" scope="col">&nbsp;</td>
-                                            <td class="bg-light" scope="col">&nbsp;</td>
-                                            <td class="bg-light" scope="col">&nbsp;</td>
-                                            <td scope="col" class="bg-warning"><b>Suma:</b></td>
-                                            <td scope="col" class="bg-success"><b id="sum">@sum</b></td>
-                                            <td class="bg-light" scope="col">&nbsp;</td>
-                                        </tr>
+                                    <tr>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td scope="col" class="bg-warning"><b>Suma:</b></td>
+                                        <td scope="col" class="bg-success"><b id="sum">@sum</b></td>
+
+                                    </tr>
                                     </tbody>
                                 </table>
 
@@ -99,7 +103,7 @@
                             <div class="col-md-1 col-sm-12">
                                 <button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>
                                 @*<button type="submit" asp-action="UserConfirm" asp-controller="Order" class="btn btn-small btn-info">Zatwierdź</button>*@
-                                @Html.ActionLink("Zatwierdź", "UserConfirm", "Order", null, new { @class = "btn btn-small btn-info" })
+                                @Html.ActionLink("Rezerwuj", "UserConfirm", "Order", null, new { @class = "btn btn-small btn-info" })
                             </div>
                      </form>
 

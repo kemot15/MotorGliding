@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Runtime.Loader;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Email;
 using MotorGliding.Services.Interfaces;
-using Nancy.Json;
 
 namespace MotorGliding.Controllers
 {
@@ -47,10 +40,10 @@ namespace MotorGliding.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(Event model, int quantity = 1)
+        public async Task<IActionResult> Details(Event model)
         {
             Order order;
-            var cookie = Request.Cookies["orderID"];            
+            var cookie = Request.Cookies["orderID"];
             if (cookie == null)
             {
                 order = new Order
@@ -60,9 +53,9 @@ namespace MotorGliding.Controllers
                 OrderDetails orderDetails = new OrderDetails
                 {
                     Price = model.Price,
-                    Quantity = quantity,
+                    Quantity = model.Quantity,
                     EventID = model.Id,
-                 //   Event = model,
+                    EventTitle = model.Title,
                     Camera = false,
                 };
                 order.OrderDetails.Add(orderDetails);
@@ -79,16 +72,17 @@ namespace MotorGliding.Controllers
                     {
                         Price = model.Price,
                         CameraPrice = model.CameraPrice,
-                        Quantity = quantity,
+                        Quantity = model.Quantity,
                         EventID = model.Id,
-                       // Event = model,
+                        EventTitle = model.Title,
                         Camera = false,
                     });
                 }
                 else
                 {
                     var orderDetails = order.OrderDetails.Single(d => d.EventID == model.Id);
-                    orderDetails.Quantity++;
+                    orderDetails.Quantity+= model.Quantity;
+                    orderDetails.EventTitle = model.Title;
                 }
                 await _orderService.UpdateAsync(order);
             } 

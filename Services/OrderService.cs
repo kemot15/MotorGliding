@@ -3,6 +3,7 @@ using MotorGliding.Context;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -85,25 +86,17 @@ namespace MotorGliding.Services
 
         public async Task<int> UpdateUserAsync(User user)
         {
-            //var address = await _context.add
             
             if (user.Address == null)
             {
                 _context.Address.Add(user.Address);
-                //user.Address. = new Address();
                 
             }
             _context.Entry(user).State = EntityState.Modified;
-           // user.Address.User = user;
-            //await _context.SaveChangesAsync();
-            // _context.Address.Update(user.Address);
             _context.Users.Update(user);
-            //_context.Entry(result). .SetValues(user);
-            //  _context.Entry(result.Address).CurrentValues.SetValues(user.Address);
             await _context.SaveChangesAsync();
             return user.Id;
         }
-
 
         public async Task<bool> UpdateOrderUserId(int orderId, int userId)
         {
@@ -120,6 +113,7 @@ namespace MotorGliding.Services
         {
             var order = await _context.Orders.SingleAsync(o => o.Id == id);
             order.Accepted = true;
+            order.CreateData = DateTime.Now;
             _context.Orders.Update(order);
             return await _context.SaveChangesAsync() > 0;
         }

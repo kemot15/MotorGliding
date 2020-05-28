@@ -5,7 +5,7 @@
 }
 
 <body class="bg02">
-    <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+    <div class="col-xl-12 col-lg-12 tm-md-12 tm-sm-12 tm-col">
         <div class="bg-white tm-block h-100">
             <div class="row">
                 <div class="col-md-8 col-sm-12">
@@ -13,7 +13,7 @@
 
                 </div>
                 <div class="col-md-4 col-sm-12 text-right">
-                    <a asp-action="Add" class="btn btn-small btn-primary">Dodaj</a>
+                    <a asp-action="AddEdit" class="btn btn-small btn-primary">Dodaj</a>
                 </div>
             </div>
             <div class="table-responsive">
@@ -22,11 +22,11 @@
                         <tr class="tm-bg-gray">
                             <th scope="col">&nbsp;</th>
                             <th scope="col">Nazwa</th>
-                            <th scope="col">Długość</th>
+                            <th scope="col">Czas trwania</th>
                             <th scope="col">Cena</th>
                             <th scope="col">Data dodania</th>
-                            <th scope="col">&nbsp;</th>
-                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Edycja</th>
+                            <th scope="col">Usuń</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,9 +36,9 @@
                             
                         <tr>
                             <th scope="row">
-                                @lp=+  @*<input type="checkbox" aria-label="Checkbox">*@
+                                @lp  @*<input type="checkbox" aria-label="Checkbox">*@
                             </th>
-
+                            @{ lp++;}
                             <td class="tm-product-name">
                                     @item.Title
                             </td>
@@ -46,7 +46,7 @@
                             <td class="tm-product-name">@item.Duration</td>
                             <td class="tm-product-name">@item.Price</td>
                             <td class="tm-product-name">@item.CreateData.ToShortDateString()</td>
-                            <td><a asp-action="Edit" asp-controller="Event" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a></td>
+                            <td><a asp-action="AddEdit" asp-controller="Event" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a></td>
                             <td><a asp-action="Remove" asp-controller="Event" asp-route-id="@item.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
 
                         </tr>
@@ -56,7 +56,7 @@
                 </table>
             </div>
 
-            <div class="tm-table-mt tm-table-actions-row">
+            @*<div class="tm-table-mt tm-table-actions-row">
                 <div class="tm-table-actions-col-left">
                     <button class="btn btn-danger">Delete Selected Items</button>
                 </div>
@@ -75,7 +75,7 @@
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </body>

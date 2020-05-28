@@ -34,10 +34,10 @@
 
                     <h2>@Model.Description</h2>
 
-                    <p>@Model.Info</p>
+
 
                     @*@Model.ShowText("chyba sie udalo");*@
-                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, quisquam, aut, eum, natus excepturi impedit ipsa rerum ratione id dolores ducimus minus eos veniam similique.</blockquote>
+                    <blockquote>@Model.Info</blockquote>
 
 
                     <p>Vivamus quis velit sed ante suscipit aliquam nec sed ex. Maecenas porta leo at mi suscipit congue. Donec ipsum metus, tristique eu leo ut, luctu Vivamus sit amet purus nec risus mollis tempor.</p>
@@ -52,38 +52,104 @@
                         <li>Wordpress Themes augue vulputate voluptate neque, curabitur dolor vitae massa.</li>
                     </ul>
                     <p>Lorem ipsum dolor sit amet, maecenas eget vestibulum justo imperdiet, wisi risus purus augue vulputate voluptate neque, curabitur dolor libero sodales vitae elit massa.</p>
-                    <form asp-action="Details" asp-controller="Order">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="hidden" asp-for="Price" />
-                        <input type="hidden" asp-for="Title" />
-                        <div class="container">
-                            <div class="row">
-                                <div class="col col-md-12 col-sm-12">
-                                     Dodaj do koszyka
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col col-md-6 col-sm-12">
-                                    @Model.Title
-                                </div>
-                                <div class="col col-md-6 col-sm-6">
-                                    @Model.Price
-                                </div>
-                                <div class="col col-md-6 col-sm-6">
-                                    <input type="number" step="1" min="1" id="qty" name="quantity" />
-                                </div>
-                                <div class="col col-md-6 col-sm-12">
-                                    Suma<input id="sum" />
-                                </div>
-                            </div>
+                    @*<form asp-action="Details" asp-controller="Order" class="form-group-lg">
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Price" />
+            <input type="hidden" asp-for="Title" />
+            <div class="container">
+                <div class="row">
+                    <div class="col col-md-12 col-sm-12">
+                        <h4>Dodaj do koszyka</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-md-4 col-sm-12">
+                        @Model.Title
+                    </div>
+                    <div class="col col-md-2 col-sm-6">
+                        @Model.Price
+                    </div>
+                    <div class="col col-md-2 col-sm-6">
+                        <input type="number" step="1" min="1" id="qty" name="quantity" />
+                    </div>
+                    <div class="col col-md-6 col-sm-12">
+                        Suma<input id="sum" />
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-info">Dodaj do koszyka</button>
+        </form>*@
+
+                    <div class="table-responsive">
+                        <div class="col col-md-12 col-sm-12">
+                            <h3>Dodaj do koszyka</h3>
                         </div>
-                        <button type="submit" class="btn btn-info">Dodaj do koszyka</button>
-                    </form>
+
+                        <form asp-action="Details" asp-controller="Order">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="hidden" asp-for="Price" />
+                            <input type="hidden" asp-for="Title" />
+                            <table class="table table-hover table-striped tm-table-striped-even mt-3" id="tab">
+                                <thead>
+                                    <tr class="tm-bg-gray">
+                                        <th scope="col">Nazwa</th>
+                                        <th scope="col">Cena</th>
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">&nbsp;</th>
+                                        <th scope="col">Ilość</th>
+                                        <th scope="col">Razem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="position">
+                                        <th scope="row">
+                                            @Model.Title
+                                        </th>
+                                        <td class="tm-product-name price"><input type="hidden" asp-for="@Model.Price" />@Model.Price</td>
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name qty"><input type="number" step="1" min="1" id="qty" value="1" asp-for="@Model.Quantity" />@*<input type="number" min="1" step="1" asp-for="@Model." />*@</td>
+                                        @*<td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>*@
+                                        <td class="tm-product-name part_sum">@Model.Price</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td class="bg-light" scope="col">&nbsp;</td>
+                                        <td scope="col" class="bg-warning"><b>Suma:</b></td>
+                                        <td scope="col" class="bg-success"><b id="sum">@Model.Price</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-info">Dodaj do koszyka</button>
+                        </form>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <div class="blog-social-share">
-                        <h4>Share this article</h4>
                         <a href="javascript:history.back()" class="btn btn-primary">Wstecz</a>
                         @*<a asp-action="Calendar" asp-route-id="@Model.Id" class="btn btn-success"><i class="fa fa-twitter"></i>Sprawdź terminy</a>
-                        <a href="#contact" class="btn btn-danger"><i class="fa fa-google-plus"></i>Kontakt</a>*@
+            <a href="#contact" class="btn btn-danger"><i class="fa fa-google-plus"></i>Kontakt</a>*@
                     </div>
                 </div>
             </div>

@@ -15,10 +15,11 @@ namespace MotorGliding.Models.Db
 
         public Order Order { get; set; }
         public int EventID { get; set; }
-        //[NotMapped]
-        //public virtual Event Event { get; set; }
+        
         public bool Camera { get; set; }
         public int Quantity { get; set; }
+        [NotMapped]
+        public virtual string EventTitle { get; set; }
 
     }
 }
