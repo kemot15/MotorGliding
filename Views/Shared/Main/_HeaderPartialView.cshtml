@@ -15,11 +15,29 @@
         <!-- MENU LINKS -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-nav-first">
-                <li><a href="#home" class="smoothScroll">Home</a></li>
-                <li><a href="#about" class="smoothScroll">Sprzet</a></li>
-                <li><a href="#blog" class="smoothScroll">Oferty</a></li>
-                <li><a href="#work" class="smoothScroll">Galeria</a></li>
-                <li><a href="#contact" class="smoothScroll">Kontakt</a></li>
+
+
+                @if (ViewData["Title"] == "Details")
+                {
+                    <li>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
+                    <li>@Html.ActionLink("Sprzęt", "Index", "Home", protocol: null, hostname: null, fragment: "about", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
+                    <li>@Html.ActionLink("Oferty", "Index", "Home", protocol: null, hostname: null, fragment: "blog", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
+                    <li>@Html.ActionLink("Galeria", "Index", "Home", protocol: null, hostname: null, fragment: "work", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
+                    <li>@Html.ActionLink("Kontakt", "Index", "Home", protocol: null, hostname: null, fragment: "contact", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
+                }
+                else
+                {
+                    <li><a href="#home" class="smoothScroll">Home</a></li>
+                    <li><a href="#about" class="smoothScroll">Sprzet</a></li>
+                    <li><a href="#blog" class="smoothScroll">Oferty</a></li>
+                    <li><a href="#work" class="smoothScroll">Galeria</a></li>
+                    <li><a href="#contact" class="smoothScroll">Kontakt</a></li>
+                }
+                <li>@Html.ActionLink("Koszyk", "Details", "Order")</li>
+                <li>@Html.ActionLink("Uzytkownik", "UserConfirm", "Order")</li>
+                <li>@Html.ActionLink("Pogoda", "Index", "Weather")</li>
+
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li><a asp-action="Index" asp-controller="Dashboard" class="smoothScroll">Konto</a></li>
@@ -34,11 +52,11 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="section-btn"><a asp-action="Logout" asp-controller="Account" data-toggle="modal" data-target="#modal-form">Wyloguj</a></li>
-                }
+                        <li class="section-btn"><a asp-action="Logout" asp-controller="Account">Wyloguj</a></li>
+                 }
                 else
                 {
-                    <li class="section-btn"><a href="#" data-toggle="modal" data-target="#modal-form">Logowanie / Rejestracja</a></li>
+                <li class="section-btn"><a href="#" data-toggle="modal" data-target="#modal-form">Logowanie / Rejestracja</a></li>
                 }
 
             </ul>

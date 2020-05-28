@@ -14,44 +14,40 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
-                        @if (ViewBag.Active == "Dashboard")
-                        {
-                            <li class="nav-item active">
-                                <a class="nav-link" asp-action="Index" asp-controller="Dashboard">Dashboard</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Index" asp-controller="Dashboard">Dashboard</a>
-                            </li>
-                        }
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                Reports
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Daily Report</a>
-                                <a class="dropdown-item" href="#">Weekly Report</a>
-                                <a class="dropdown-item" href="index.html">Yearly Report</a>
-                            </div>
+                        <li class="nav-item @(Html.Raw(ViewBag.Active == "Dashboard" ? "active" : "")) />">
+                            <a class="nav-link" asp-action="Index" asp-controller="Dashboard">Dashboard</a>
+                        </li>
+                        @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+           aria-expanded="false">
+            Reports
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Daily Report</a>
+            <a class="dropdown-item" href="#">Weekly Report</a>
+            <a class="dropdown-item" href="index.html">Yearly Report</a>
+        </div>
+
+                    </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="Calendar" asp-controller="Dashboard">Kalendarz</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="products.html">Products</a>
+                            <a class="nav-link" asp-action="List" asp-controller="Event">Oferty</a>
                         </li>
-                        @if (ViewBag.Active == "Account")
-                        {
-                            <li class="nav-item active">
-                                <a class="nav-link" asp-action="Account" asp-controller="Dashboard">Accounts</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link" asp-action="Account" asp-controller="Dashboard">Accounts</a>
-                            </li>
-                        }    
+                        <li class="nav-item @(Html.Raw(ViewBag.Active == "Account" ? "active" : "")) />">
+                            <a class="nav-link" asp-action="Account" asp-controller="Dashboard">Konto</a>
+                        </li>
+                        <li class="nav-item dropdown @(Html.Raw(ViewBag.Active == "UserSettings" ? "active" : ""))">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                Konto
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="Account">Edytuj dane</a>                             
+                                <a class="dropdown-item" asp-action="EditPass" asp-controller="Account">Zmień hasło</a>
+                            </div>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
@@ -59,7 +55,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="#">Profil</a>
-                                @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("User"))
                                 {
                                     <a class="dropdown-item" href="#">Użytkownicy</a>
                                     <a class="dropdown-item" asp-action="List" asp-controller="Vehicle">Sprzęt</a>

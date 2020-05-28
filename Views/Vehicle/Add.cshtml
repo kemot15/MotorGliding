@@ -26,20 +26,20 @@
                                 <textarea asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Features1.Name">Prędkość</label>
-                                <input type="number" asp-for="Features1.Value" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Prędkość</label>
+                                <input type="number" asp-for="Features1.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Features2.Name">Moc</label>
-                                <input type="number" asp-for="Features2.Value" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Moc</label>
+                                <input type="number" asp-for="Features2.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Features3.Name">Przyśpieszenie</label>
-                                <input type="number" asp-for="Features3.Value" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Przyśpieszenie</label>
+                                <input type="number" asp-for="Features3.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
                             </div>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Features4.Name">Nośność</label>
-                                <input type="number" asp-for="Features4.Value" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Nośność</label>
+                                <input type="number" asp-for="Features4.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">

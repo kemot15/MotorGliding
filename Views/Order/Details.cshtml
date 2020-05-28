@@ -1,0 +1,124 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Html.PartialAsync("Main/_PreloaderPartialView")
+@await Html.PartialAsync("Main/_HeaderPartialView")
+<!-- BLOG HEADER -->
+<section id="blog-header" data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-offset-1 col-md-5 col-sm-12">
+                <h2>Koszyk</h2>
+                </div>
+
+                    <div class="col-md-offset-1 col-md-5 col-sm-12">
+                        <h2></h2>
+                    </div>
+
+                </div>
+            </div>
+</section>
+
+
+
+
+<!-- BLOG DETAIL -->
+<section id="table" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-offset-1 col-md-10 col-sm-12">
+                <!-- BLOG THUMB -->
+                <div class="blog-detail-thumb">
+                    <div class="blog-image">
+                        <img src="images/blog-detail-image.jpg" class="img-responsive" alt="Blog Image">
+                    </div>
+                    <blockquote>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi, quisquam, aut, eum, natus excepturi impedit ipsa rerum ratione id dolores ducimus minus eos veniam similique.</blockquote>
+
+
+                    <p>Vivamus quis velit sed ante suscipit aliquam nec sed ex. Maecenas porta leo at mi suscipit congue. Donec ipsum metus, tristique eu leo ut, luctu Vivamus sit amet purus nec risus mollis tempor.</p>
+                    @if (Model != null && Model.OrderDetails.Any())
+                    {
+                        <form asp-action="Refresh" asp-controller="Order" method="post">
+
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                                    <thead>
+                                        <tr class="tm-bg-gray">
+                                            <th scope="col">Nazwa</th>
+                                            <th scope="col">Cena</th>
+                                            <th scope="col">Ilość</th>
+                                            <th scope="col">Filmowanie</th>
+                                            <th scope="col">Razem</th>
+                                            <th scope="col">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{double sum = 0;}
+
+                                        @foreach (var detail in Model.OrderDetails)
+                                        {
+
+                                            @:<tr class="position">
+                                                <th scope="row">
+                                                    <input type="hidden" asp-for="@detail.EventID" />
+                                                    <input type="hidden" asp-for="@detail.Id" />
+                                                    <input type="hidden" asp-for="@detail.OrderId" />
+                                                    @detail.EventID @*@events.*@
+                                                </th>
+                                                <td class="tm-product-name price"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
+                                                <input type="hidden" asp-for="@detail" />
+                                                <td class="tm-product-name qty"><input type="number" min="1" step="1" asp-for="@detail.Quantity" /></td>
+                                                <td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>
+                                                <td class="tm-product-name part_sum">@(detail.Quantity*detail.Price)</td>
+                                                <td>
+                                                    @Html.ActionLink("", "Remove", "Order", protocol: null, hostname: null, fragment: "table", routeValues: new { detail.Id }, htmlAttributes: new { @class = "smoothScroll fas fa-trash-alt tm-trash-icon", @onclick = "return confirm('Czy chcesz usunąć pozycję?')" })
+                                                </td>
+                                            @:</tr>
+                                            sum += detail.Price * detail.Quantity;
+
+                                        }
+                                        <tr>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                            <td scope="col" class="bg-warning"><b>Suma:</b></td>
+                                            <td scope="col" class="bg-success"><b id="sum">@sum</b></td>
+                                            <td class="bg-light" scope="col">&nbsp;</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="col-md-1 col-sm-12">
+                                <button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>
+                                @*<button type="submit" asp-action="UserConfirm" asp-controller="Order" class="btn btn-small btn-info">Zatwierdź</button>*@
+                                @Html.ActionLink("Zatwierdź", "UserConfirm", "Order", null, new { @class = "btn btn-small btn-info" })
+                            </div>
+                     </form>
+
+                    }
+                    else
+                    {
+                        <div class="blog-ads">
+                            <h4>Koszyk jest pusty... @Html.ActionLink("Pokaż oferty", "Index", "Home", protocol: null, hostname: null, fragment: "blog", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</h4>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*@await Html.PartialAsync("Main/_ContactPartialView")*@
+@await Html.PartialAsync("Main/_FooterPartialView")
+
+
+@await Html.PartialAsync("Main/_ScriptsPartialView")
+

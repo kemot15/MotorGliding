@@ -23,12 +23,16 @@ namespace MotorGliding.Models.Db
         [NotMapped]
         public Image Image { get; set; }
         [NotMapped]
+        [Range(0, 100, ErrorMessage = "Wartść musi być z przedziału 0-100")]
         public Features Features1 { get; set; }
         [NotMapped]
+        [Range(0, 100, ErrorMessage = "Wartść musi być z przedziału 0-100")]
         public Features Features2 { get; set; }
         [NotMapped]
+        [Range(0, 100, ErrorMessage = "Wartść musi być z przedziału 0-100")]
         public Features Features3 { get; set; }
         [NotMapped]
+        [Range(0, 100, ErrorMessage = "Wartść musi być z przedziału 0-100")]
         public Features Features4 { get; set; }
     }
 }

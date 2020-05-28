@@ -1,0 +1,143 @@
+﻿<div class="tm-col tm-col-big">
+    <div class="bg-white tm-block h-100">
+        <h2 class="tm-block-title">Calendar</h2>
+        <div id="calendar"></div>
+        <div class="row mt-4">
+            <div class="col-12 text-right">
+                <a href="#" class="tm-link-black">View Schedules</a>
+            </div>
+        </div>
+
+    </div>
+    @*<table>
+            <thead>
+                <tr>
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        <td>@DateTime.Today.DayOfWeek.ToString()</td>
+                    }
+                </tr>
+
+            </thead>
+            @for (int i = 0; i < 6; i++)
+            {
+                <tr>
+                    @for (int j = 0; j < 7; j++)
+                    {
+
+                        <td>@DateTime.Today.DayOfWeek.ToString()</td>
+
+                    }
+                </tr>
+            }
+        </table>*@
+    <div class="fc-toolbar fc-header-toolbar>
+        <div class="fc-left"><h2>May 2020</h2></div>
+        <div class="fc-center"></div>
+        <div class="fc-right"><button type="button" class="fc-today-button fc-button fc-button-primary" disabled="">today</button><div class="fc-button-group"><button type="button" class="fc-prev-button fc-button fc-button-primary" aria-label="prev"><span class="fc-icon fc-icon-chevron-left"></span></button><button type="button" class="fc-next-button fc-button fc-button-primary" aria-label="next"><span class="fc-icon fc-icon-chevron-right"></span></button></div></div>
+    </div>
+    @*<div class="fc-view fc-dayGridMonth-view fc-dayGrid-view" style>
+        <table class>
+            <thead class="fc-head">
+                <tr>
+                    <td class="fc-head-container fc-widget-header">
+                        <div class="fc-row fc-widget-header">
+                            <table class>
+                                <thead>
+                                    <tr>
+                                        @for (int i = 0; i < 7; i++)
+                                        {
+                                        <th class="fc-day-header fc-widget-header fc-sun">
+                                            <span>Sun</span>
+                                        </th>
+                                        }
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </thead>
+
+
+
+
+
+        </table>*@
+
+    <div class="fc-view-container">
+    <div class="fc-view fc-dayGridMonth-view fc-dayGrid-view" style="">
+        <table class="">
+        <thead class="fc-head">
+            <tr>
+            <td class="fc-head-container fc-widget-header">
+                <div class="fc-row fc-widget-header">
+                <table class="">
+                    <thead>
+                        <tr>
+                            @for (int i = 0; i < 7; i++)
+                            {
+                                <th class="fc-day-header fc-widget-header fc-sun">
+                                    <span>Sun</span>
+                                </th>
+                            }
+                        </tr>
+                        </thead>
+                    </table>
+                    </div>
+                </td>
+                </tr>
+            </thead>
+        <tbody class="fc-body">
+            <tr><td class="fc-widget-content">
+                <div class="fc-scroller fc-day-grid-container" style="overflow: hidden; height: 648px;">
+                <div class="fc-day-grid">
+                    <div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                    <div class="fc-bg">
+                        <table class="">
+                        <tbody>
+                            <tr>
+                            <td class="fc-day fc-widget-content fc-sun fc-other-month fc-past" data-date="2020-04-26">
+                                </td>
+                            <td class="fc-day fc-widget-content fc-mon fc-other-month fc-past" data-date="2020-04-27">
+                                    </td>
+                            <td class="fc-day fc-widget-content fc-tue fc-other-month fc-past" data-date="2020-04-28">
+                                        </td>
+                            
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    <div class="fc-content-skeleton">
+                        <table>
+                        <thead>
+                            <tr>
+                            <td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2020-04-26">
+                                <span class="fc-day-number">26</span>
+                                </td>
+                            
+                                </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                            <td>                                </td>
+                            <td>                                </td>
+                            <td>                                </td>
+                            <td>                                </td>
+                            <td>                                </td>
+                            <td>                                </td>
+                            <td></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>

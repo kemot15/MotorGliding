@@ -1,11 +1,18 @@
-﻿using System;
+﻿using MotorGliding.Models.Db;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotorGliding.Services.Interfaces
 {
-    interface IImageService
+    public interface IImageService
     {
+        Task<Image> AddImageAsync(Image image, string folder, bool main = false);
+        Task<bool> SaveImageAsync(Image image);
+        Task<bool> DeleteImageAsync(Image image, string folder);
+        Task<Image> GetAsync(int id);
+        Task<bool> RemoveImageAsync(Image image);
+        Task<List<Image>> GetGalleryAsync(int id, string category);
     }
 }

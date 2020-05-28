@@ -1,4 +1,4 @@
-﻿@model RegistrationViewModel
+﻿@model RegLogViewModel
 @{
     Layout = "_Layout";
 }
@@ -19,20 +19,20 @@
                         
                         <form asp-action="Registration" asp-controller="Account" method="post" class="tm-login-form">
                             <div class="input-group mt-3">
-                                <label asp-for="UserName" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj imię">Login</label>
-                                <input asp-for="UserName" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                <label asp-for="@Model.RegistrationViewModel.UserName" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj imię">Login</label>
+                                <input asp-for="@Model.RegistrationViewModel.UserName" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                             </div>
                             <div class="input-group mt-3">
-                                <label asp-for="Email" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj e-mail">E-mail</label>
-                                <input asp-for="Email" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                                <label asp-for="@Model.RegistrationViewModel.Email" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj e-mail">E-mail</label>
+                                <input asp-for="@Model.RegistrationViewModel.Email" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
                             </div>
                             <div class="input-group mt-3">
-                                <label asp-for="Password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj hasło">Hasło</label>
-                                <input asp-for="Password" class="form-control validate" required>
+                                <label asp-for="@Model.RegistrationViewModel.Password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj hasło">Hasło</label>
+                                <input asp-for="@Model.RegistrationViewModel.Password" class="form-control validate" required>
                             </div>
                             <div class="input-group mt-3">
-                                <label asp-for="RepeatPassword" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="powtórz hasło">Powtórz hasło</label>
-                                <input asp-for="RepeatPassword" class="form-control validate" required>
+                                <label asp-for="@Model.RegistrationViewModel.RepeatPassword" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="powtórz hasło">Powtórz hasło</label>
+                                <input asp-for="@Model.RegistrationViewModel.RepeatPassword" class="form-control validate" required>
                             </div>
                             <div class="input-group mt-3">
                                 <button type="submit" class="btn btn-primary d-inline-block mx-auto">Zarejestruj</button>

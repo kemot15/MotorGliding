@@ -1,0 +1,55 @@
+﻿@model Vehicle
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+
+<div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+    <div class="bg-white tm-block">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="tm-block-title d-inline-block">Edytuj sprzęt</h2>
+            </div>
+        </div>
+        <div class="row mt-4 tm-edit-product-row">
+            <div class="col-xl-7 col-lg-7 col-md-12">
+                <form asp-action="Edit" asp-controller="Vehicle" method="post" class="tm-edit-product-form">
+                    <div class="input-group mb-3">
+                        <label asp-for="Name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                        </label>
+                        <input asp-for="Name" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                    </div>
+                    <div class="input-group mb-3">
+                        <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
+                        <textarea asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                    </div>
+                    @foreach (var feature in Model.Features)
+                    {
+                        <div class="input-group mb-3">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">@feature.Name</div> 
+                            <input type="number" asp-for="@feature.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></input>
+                        </div>
+                    }                    
+                    <div class="input-group mb-3">
+                        <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                            <button type="submit" class="btn btn-warning">
+                                Zapisz
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                <div class="tm-product-img-dummy mx-auto">
+                    <i class="fas fa-5x fa-cloud-upload-alt" onclick="document.getElementById('fileInput').click();"></i>
+                </div>
+                <div class="custom-file mt-3 mb-3">
+                    <input id="fileInput" type="file" style="display:none;" />
+                    <input type="button" class="btn btn-primary d-block mx-auto" value="Upload ..." onclick="document.getElementById('fileInput').click();" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

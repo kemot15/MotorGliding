@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewData["Title"] = "OrderConfirm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@await Html.PartialAsync("Main/_PreloaderPartialView")
+@await Html.PartialAsync("Main/_HeaderPartialView")
+    <section id="blog-header" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-5 col-sm-12">
+                    <h2>Dziękujemy za złożenie zamówienia</h2>
+                </div>
+
+                <div class="col-md-offset-1 col-md-5 col-sm-12">
+                    <h2></h2>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Dane z potwierdzeniem zamowienia zostały wysłane na adres e-mails</h2>
+    </section>
+    <p>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</p>
+
+@await Html.PartialAsync("Main/_FooterPartialView")
+@await Html.PartialAsync("Main/_ScriptsPartialView")

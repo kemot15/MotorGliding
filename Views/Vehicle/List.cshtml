@@ -22,18 +22,20 @@
                                 <th scope="col">&nbsp;</th>
                                 <th scope="col">Nazwa</th>
                                 <th scope="col">&nbsp;</th>
+                                <th scope="col">&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var vehicle in Model)
                             {
-                                <tr>
-                                    <th scope="row">
-                                        <input type="checkbox" aria-label="Checkbox">
-                                    </th>
-                                    <td class="tm-product-name">@vehicle.Name</td>
-                                    <td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
-                                </tr>
+                            <tr>
+                                <th scope="row">
+                                    <input type="checkbox" aria-label="Checkbox">
+                                </th>
+                                <td class="tm-product-name">@vehicle.Name</td>
+                                <td><a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@vehicle.Id"><i class="fas fa-edit"></i></a></td>
+                                <td><a asp-action="Remove" asp-controller="Vehicle" asp-route-id="@vehicle.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
+                            </tr>
                             }
                         </tbody>
                     </table>
