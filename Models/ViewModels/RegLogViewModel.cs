@@ -9,5 +9,12 @@ namespace MotorGliding.Models.ViewModels
     {
         public LoginViewModel LoginViewModel { get; set; }
         public RegistrationViewModel RegistrationViewModel { get; set; }
+        public Tab ActiveTab { get; set; }
+    }
+
+    public enum Tab
+    {
+        Login,
+        Registration
     }
 }

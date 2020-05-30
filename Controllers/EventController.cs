@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.Other;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
 using MotorGliding.Services.Interfaces;
@@ -23,11 +24,13 @@ namespace MotorGliding.Controllers
 
         public IActionResult Index()
         {
+            //ViewData["Title"] = Tabs.Other;
             return View();
         }
 
         public async Task<IActionResult> List()
         {
+            //ViewData["Title"] = Tabs.Other;
             return View(await _eventService.ListAsync());
         }
 
@@ -39,11 +42,11 @@ namespace MotorGliding.Controllers
 
         [HttpGet]
         public async Task<IActionResult> AddEdit(int id = 0)
-        {   
+        {
             if (id == 0)
             return View();
             var item = await _eventService.GetAsync(id);
-            var image = await _imageService.GetMainAsync(item.Id, "Event");
+            var image = await _imageService.GetMainAsync(item.Id, EventCategory.Event.ToString());
             if (image != null)
                 item.Image = image;
             return View(item);
@@ -80,15 +83,15 @@ namespace MotorGliding.Controllers
                     }
                     else
                     {
-                        await _imageService.DeleteImageAsync(image, "images");
-                        image = await _imageService.AddImageAsync(model.Image, "images", true);
+                        await _imageService.DeleteImageAsync(image, Folders.images.ToString());
+                        image = await _imageService.AddImageAsync(model.Image, Folders.images.ToString(), true);
                         await _imageService.UpdateImageAsync(image);
                         return RedirectToAction("List");
                     }
                 }                
                 model.Image.SourceId = result;
-                model.Image.Category = "Event";
-                image = await _imageService.AddImageAsync(model.Image, "images", true);
+                model.Image.Category = EventCategory.Event.ToString();
+                image = await _imageService.AddImageAsync(model.Image, Folders.images.ToString(), true);
                 await _imageService.SaveImageAsync(image);
             }
                        
@@ -128,11 +131,11 @@ namespace MotorGliding.Controllers
             if (item == null)
                 return RedirectToAction("List");
             var eventId = item.Id;
-            var gallery = await _imageService.GetGalleryAsync(eventId, "Event");
+            var gallery = await _imageService.GetGalleryAsync(eventId, EventCategory.Event.ToString());
             if (gallery != null)
                 foreach(var image in gallery)
                 {            
-                    await _imageService.DeleteImageAsync(image, "images");
+                    await _imageService.DeleteImageAsync(image, Folders.images.ToString());
                     await _imageService.RemoveImageAsync(image);
                 }
             await _eventService.RemoveAsync(item);

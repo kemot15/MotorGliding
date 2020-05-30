@@ -32,6 +32,17 @@
         })
     }
 
+    //const login = document.getElementById('LoginViewModel_Email');
+    //const pass = document.getElementById('LoginViewModel_Password');
+    //const loginButton = document.getElementById('login_button');
+    //loginButton.addEventListener('click', function () {
+    //    fetch("/Account/Login", {
+    //        method: 'POST',
+    //        headers: { 'Content-Type': "application/json" },
+    //        body: JSON.stringify({ Email: login.value, Password: pass.value })
+    //    }).then(data => data.json()).then(result => console.log(result))
+    //})
+
     //ladowanie podgladu obrazka przy dodawaniu i edycji
     function ShowImagePreview(imageUploader, previewImage) {
         if (imageUploader.files && imageUploader.files[0]) {

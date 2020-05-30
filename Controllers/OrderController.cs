@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.Other;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Email;
 using MotorGliding.Services.Interfaces;
@@ -30,6 +31,7 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> Details()
         {
+            ViewData["Title"] = Tabs.Other.ToString();
             var cookie = Request.Cookies["orderID"];
             if (cookie != null)
             {
@@ -42,6 +44,7 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> Details(Event model)
         {
+            ViewData["Title"] = Tabs.Other.ToString();
             Order order;
             var cookie = Request.Cookies["orderID"];
             if (cookie == null)
@@ -111,6 +114,7 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> UserConfirm()
         {
+            ViewData["Title"] = Tabs.Other;
             var orderId = Request.Cookies["orderId"];
             if (orderId == null)
                 return RedirectToAction("Details");
@@ -146,6 +150,7 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> UserConfirm(EditUserViewModel model)
         {
+            ViewData["Title"] = Tabs.Other;
             var orderId = int.Parse(Request.Cookies["orderId"]);
             model.OrderId = orderId;
             var userOrderId = await _orderService.CreateUserAsync(model);
@@ -160,8 +165,16 @@ namespace MotorGliding.Controllers
         public async Task<IActionResult> OrderConfirm()
         {
             //var cookie = int.Parse(Request.Cookies["orderID"]);
-            
+            ViewData["Title"] = Tabs.Other;
             return View();
+        }
+
+        public async Task<IActionResult> OrderPreview(int id)
+        {
+            var order = await _orderService.GetPreviewAsync(id);
+            if (order == null)
+                RedirectToAction("Index", "Dashboard");
+            return View(order);
         }
     }
 }

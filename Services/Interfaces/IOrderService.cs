@@ -20,5 +20,29 @@ namespace MotorGliding.Services.Interfaces
 
         Task<bool> UpdateOrderUserId(int orderId, int userId);
         Task<bool> OrderAccept(int id);
+        /// <summary>
+        /// Lista zamówien ze szczegółami i użykownikami do wyswietlenia na tablicy głownej
+        /// </summary>
+        /// <returns>Lista zamowien</returns>
+        Task<IList<Order>> GetSummaryOrders();
+
+        /// <summary>
+        /// Pobiera zamówienie z szczegółami, użytkownikie, adresem do podglądu
+        /// </summary>
+        /// <param name="id">ID zamówienia</param>
+        /// <returns>Order</returns>
+        Task<Order> GetPreviewAsync(int id);
+        /// <summary>
+        /// Sortuje zamówienia po danym wydarzeniu
+        /// </summary>
+        /// <param name="id">Id Event</param>
+        /// <returns>Zwraca liste zamowien dla danego wydarzenia</returns>
+        Task<IList<Order>> FilterOrderContainingEvent(int id);
+        /// <summary>
+        /// Zamowienia przypisane do uzytkownika
+        /// </summary>
+        /// <param name="id">Id uzytkownika</param>
+        /// <returns>Lista zamowien uzytkownika</returns>
+        Task<IList<Order>> FilterOrderByUser(int id);
     }
 }

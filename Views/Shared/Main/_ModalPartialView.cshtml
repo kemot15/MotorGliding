@@ -1,4 +1,5 @@
 ﻿@model RegLogViewModel
+@await Html.PartialAsync("_ValidationScriptsPartialView")
 <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content modal-popup">
@@ -15,7 +16,7 @@
 
                         <div class="col-md-12 col-sm-12">
                             <div class="modal-title">
-                                <h2>BuzzTandem</h2>
+                                <h2>SkyClub</h2>
                             </div>
 
                             <!-- NAV TABS -->
@@ -27,24 +28,32 @@
                             <!-- TAB PANES -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="sign_in">
-                                    <form asp-action="Login" asp-controller="Account" method="post">
-                                        <input asp-for="LoginViewModel.Email" class="form-control" placeholder="Email" required>
-                                        <input asp-for="LoginViewModel.Password" type="password" class="form-control" placeholder="Password" required>
-                                        <input type="submit" class="form-control" name="submit" value="Zaloguj">
-                                        @*<a href="https://www.facebook.com/templatemo">Forgot your password?</a>*@
-                                    </form>
-                                    
-                                </div>
+                                    @*<form asp-action="Login" asp-controller="Account" method="post">*@
+                                        <form>
+                                            <input asp-for="LoginViewModel.Login" class="form-control" placeholder="Email" required>
+                                            <span asp-validation-for="LoginViewModel.Password" class="valid-tooltip"></span>
+                                            <input asp-for="LoginViewModel.Password" type="password" class="form-control" placeholder="Password" required>
+                                            <span asp-validation-for="LoginViewModel.Password" class="valid-feedback"></span>
+                                            <input type="submit" class="form-control" name="submit" value="Zaloguj" id="login_button">
+                                            @*<a href="https://www.facebook.com/templatemo">Forgot your password?</a>*@
+                                        </form>
+</div>
 
                                 <div role="tabpanel" class="tab-pane fade in" id="sign_up">
                                     <form asp-action="Registration" asp-controller="Account" method="post">
                                         <input asp-for="RegistrationViewModel.UserName" type="text" class="form-control" placeholder="Name" required>
+                                        <span asp-validation-for="RegistrationViewModel.UserName"></span>
                                         <input asp-for="RegistrationViewModel.Email" class="form-control" placeholder="Email" required>
+                                        <span asp-validation-for="RegistrationViewModel.Email"></span>
                                         <input asp-for="RegistrationViewModel.Password" class="form-control" placeholder="Password" required>
+                                        <span asp-validation-for="RegistrationViewModel.Password"></span>
                                         <input asp-for="RegistrationViewModel.RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
+                                        <span asp-validation-for="RegistrationViewModel.RepeatPassword"></span>
                                         <input type="submit" class="form-control" name="submit" value="Zarejestruj">
+
                                     </form>
                                 </div>
+                                <div asp-validation-summary="All"></div>
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,64 @@
+﻿@model LoginViewModel
+@await Html.PartialAsync("_ValidationScriptsPartialView")
+
+    <body>
+        @await Html.PartialAsync("Main/_HeaderPartialView")
+        <section data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row">
+
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content modal-popup">
+
+                            <div class="modal-header">
+                                <a type="button" asp-action="Index" asp-controller="Home" class="close" title="Prowrót do strony głównej">
+                                    <span class="text-white">&times;</span>
+                                </a>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="modal-title">
+                                                <a type="button" asp-action="Index" asp-controller="Home">
+                                                    <img src="~/img/logo.png" title="Prowrót do strony głównej" />
+                                                </a>
+                                                @*<h2>SkyClub</h2>*@
+                                            </div>
+
+                                            <!-- NAV TABS -->
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li class="active"><a asp-action="Login" asp-controller="Account">Logowanie</a></li>
+                                                <li ><a asp-action="Registration" asp-controller="Account">Rejestracja</a></li>
+                                            </ul>
+
+                                            <!-- TAB PANES -->
+                                            <div class="tab-content">
+                                                <div role="tabpanel" class="tab-pane fade in active" id="sign_in">
+                                                    @*<form asp-action="Login" asp-controller="Account" method="post">*@
+                                                    <form asp-action="Login" asp-controller="Account" method="post">
+                                                        <input asp-for="Login"  class="form-control" placeholder="Login" required>
+                                                        <span asp-validation-for="Login" class="text-danger"></span>
+                                                        <input asp-for="Password" type="password" class="form-control" placeholder="Hasło" required>
+                                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                                        <input type="submit" class="form-control" name="submit" value="Zaloguj">
+                                                        @*<a href="https://www.facebook.com/templatemo">Forgot your password?</a>*@
+                                                    </form>
+                                                </div>
+                                                <div asp-validation-summary="All" class="text-danger"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                   
+
+                </div>
+            </div>
+        </section>
+        
+    </body>

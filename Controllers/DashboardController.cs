@@ -1,30 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MotorGliding.Models.Db;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
+using MotorGliding.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace MotorGliding.Controllers
 {
     public class DashboardController : Controller
     {
         private readonly ICalendarService _calendarService;
+        private readonly IEventService _eventService;
+        private readonly UserManager<User> UserManager;
+        private readonly IOrderService _orderService;
 
-        public DashboardController(ICalendarService calendarService)
+        public DashboardController(ICalendarService calendarService, IEventService eventService, UserManager<User> userManager, IOrderService orderService)
         {
             _calendarService = calendarService;
+            _eventService = eventService;
+            UserManager = userManager;
+            _orderService = orderService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int orderId, int eventId)
         {
             ViewBag.Active = "Dashboard";
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                var summaryViewModel = new DashboardSummaryViewModel()
+                {
+                    Events = await _eventService.ListAsync(),
+                    Orders = orderId == 0 ? await _orderService.GetSummaryOrders() : await _orderService.FilterOrderContainingEvent(orderId)
+                };
+                return View(summaryViewModel);
+            }
+            return RedirectToAction("UserIndex");
+            
         }
 
-        
+        public async Task<IActionResult> UserIndex()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            var orders = await _orderService.FilterOrderByUser(user.Id);
+            return View(orders);
+        }        
 
         public async Task<IActionResult> Calendar(DateTime dateTime)
         {

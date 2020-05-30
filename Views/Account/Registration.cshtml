@@ -1,49 +1,61 @@
-﻿@model RegLogViewModel
-@{
-    Layout = "_Layout";
-}
+﻿@model RegistrationViewModel
+@await Html.PartialAsync("_ValidationScriptsPartialView")
+<body>
+    @await Html.PartialAsync("Main/_HeaderPartialView")
+    <section data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content modal-popup">
 
-<div class="container">
-    <div class="row tm-mt-big">
-        <div class="col-12 mx-auto tm-login-col">
-            <div class="bg-white tm-block">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        @*<i class="fas fa-3x fa-tachometer-alt tm-site-icon text-center"></i>*@
-                        <img src="~/img/buzz_logo.png" class="text-center"/>
-                        <h2 class="tm-block-title mt-3">Rejestracja</h2>
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-12">
-                        
-                        <form asp-action="Registration" asp-controller="Account" method="post" class="tm-login-form">
-                            <div class="input-group mt-3">
-                                <label asp-for="@Model.RegistrationViewModel.UserName" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj imię">Login</label>
-                                <input asp-for="@Model.RegistrationViewModel.UserName" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
+                        <div class="modal-header">
+                            <a type="button" asp-action="Index" asp-controller="Home" class="close" title="Prowrót do strony głównej">
+                                <span class="text-white">&times;</span>
+                            </a>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="modal-title">
+                                            <a type="button" asp-action="Index" asp-controller="Home">
+                                                <img src="~/img/logo.png" title="Prowrót do strony głównej" />
+                                            </a>
+                                            @*<h2>SkyClub</h2>*@
+                                        </div>
+
+                                        <!-- NAV TABS -->
+                                        <ul class="nav nav-tabs" role="tablist">
+                                            <li><a asp-action="Login" asp-controller="Account">Logowanie</a></li>
+                                            <li class="active"><a asp-action="Registration" asp-controller="Account">Rejestracja</a></li>
+                                        </ul>
+                                        <!-- TAB PANES -->
+
+                                        <div role="tabpanel" class="tab-pane fade in active" id="sign_up">
+                                            <form asp-action="Registration" asp-controller="Account" method="post">
+                                                <input asp-for="UserName" type="text" class="form-control" placeholder="Login" required>
+                                                <span asp-validation-for="UserName" class="text-danger"></span>
+                                                <input asp-for="Email" class="form-control" placeholder="Email" required>
+                                                <span asp-validation-for="Email" class="text-danger"></span>
+                                                <input asp-for="Password" class="form-control" placeholder="Hasło" required>
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                                <input asp-for="RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
+                                                <span asp-validation-for="RepeatPassword" class="text-danger"></span>
+                                                <input type="submit" class="form-control" name="submit" value="Zarejestruj">
+                                            </form>
+                                        </div>
+                                        <div asp-validation-summary="All" class="text-danger"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="input-group mt-3">
-                                <label asp-for="@Model.RegistrationViewModel.Email" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj e-mail">E-mail</label>
-                                <input asp-for="@Model.RegistrationViewModel.Email" type="text" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" required>
-                            </div>
-                            <div class="input-group mt-3">
-                                <label asp-for="@Model.RegistrationViewModel.Password" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="podaj hasło">Hasło</label>
-                                <input asp-for="@Model.RegistrationViewModel.Password" class="form-control validate" required>
-                            </div>
-                            <div class="input-group mt-3">
-                                <label asp-for="@Model.RegistrationViewModel.RepeatPassword" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" placeholde="powtórz hasło">Powtórz hasło</label>
-                                <input asp-for="@Model.RegistrationViewModel.RepeatPassword" class="form-control validate" required>
-                            </div>
-                            <div class="input-group mt-3">
-                                <button type="submit" class="btn btn-primary d-inline-block mx-auto">Zarejestruj</button>
-                            </div>
-                            <div class="input-group mt-3">
-                                <p><em>@Html.ValidationSummary()</em></p>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
+</body>

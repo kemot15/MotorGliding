@@ -25,6 +25,7 @@
                             <th scope="col">Czas trwania</th>
                             <th scope="col">Cena</th>
                             <th scope="col">Data dodania</th>
+                            <th scope="col">Aktywna</th>
                             <th scope="col">Edycja</th>
                             <th scope="col">Usuń</th>
                         </tr>
@@ -46,6 +47,13 @@
                             <td class="tm-product-name">@item.Duration</td>
                             <td class="tm-product-name">@item.Price</td>
                             <td class="tm-product-name">@item.CreateData.ToShortDateString()</td>
+                            <td>
+                                @if (item.Visible)
+                                {
+
+                                    <i class="fas fa-check"></i>
+                                }
+                            </td>
                             <td><a asp-action="AddEdit" asp-controller="Event" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a></td>
                             <td><a asp-action="Remove" asp-controller="Event" asp-route-id="@item.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
 

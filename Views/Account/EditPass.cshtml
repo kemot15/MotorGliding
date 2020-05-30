@@ -8,7 +8,7 @@
 
     <div class="container">
         <!-- row -->
-        <div class="row tm-content-row tm-mt-big">
+        <div class="row tm-content-row tm-mt-small">
             <div class="tm-col tm-col-big">
                 <div class="bg-white tm-block">
                     <div class="row">
@@ -17,25 +17,29 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <span class="text-info">@ViewBag.Status</span>
                         <div class="col-12">
-                            @*@Html.ValidationSummary()*@
-                            <div>@ViewBag.Status</div>
+
                             <form asp-action="EditPass" class="tm-signup-form">
                                 <div class="form-group">
                                     <label asp-for="OldPass"></label>
-                                    <input asp-for="OldPass" placeholder="******"  class="form-control validate">
+                                    <input asp-for="OldPass" placeholder="******" class="form-control">
+                                    <span asp-validation-for="OldPass" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Password"></label>
-                                    <input asp-for="Password" placeholder="******" class="form-control validate">
+                                    <input asp-for="Password" placeholder="******" class="form-control">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="ReapeatPassword"></label>
-                                    <input asp-for="ReapeatPassword" placeholder="******" class="form-control validate">
+                                    <input asp-for="ReapeatPassword" placeholder="******" class="form-control">
+                                    <span asp-validation-for="ReapeatPassword" class="text-danger"></span>
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-sm-4">
-                                        <button href="javascript:history.back()" class="btn btn-primary">
+                                        <button asp-action="Index" asp-controller="Dashboard" class="btn btn-primary">
                                             Wstecz
                                         </button>
                                     </div>
@@ -46,6 +50,7 @@
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>

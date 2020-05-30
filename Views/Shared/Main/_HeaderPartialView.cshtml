@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav navbar-nav-first">
 
 
-                @if (ViewData["Title"] == "Details")
+                @if (ViewData["Title"] == MotorGliding.Models.Other.Tabs.Other.ToString())
                 {
                     <li>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
                     <li>@Html.ActionLink("Sprzęt", "Index", "Home", protocol: null, hostname: null, fragment: "about", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
@@ -52,11 +52,12 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                        <li class="section-btn"><a asp-action="Logout" asp-controller="Account">Wyloguj</a></li>
-                 }
+                    <li class="section-btn"><a asp-action="Logout" asp-controller="Account">Wyloguj</a></li>
+                }
                 else
                 {
-                <li class="section-btn"><a href="#" data-toggle="modal" data-target="#modal-form">Logowanie / Rejestracja</a></li>
+                    <li class="section-btn"><a asp-action="Login" asp-controller="Account" >Logowanie / Rejestracja</a></li>
+                    @*@Html.ActionLink("Logowanie / Rejestracja", "Login", "Account",  protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })*@
                 }
 
             </ul>
