@@ -1,5 +1,5 @@
 ﻿@*@model MotorGliding.Models.Other.WeatherInfo.Root*@
-@model MotorGliding.Models.Enums.ForecastWeather.Rootobject
+@model MotorGliding.Models.Enums.ForecastWeather.Forecast
 @*@model Nancy.Json.Simple.JsonObject*@
 @{
     ViewData["Title"] = "Index";
@@ -22,59 +22,80 @@
     </div>
 </section>
 
-@*<h1>@Model.name</h1>
-    <h1>@Model.coord.lat</h1>
-    <h1>@Model.dt</h1>
-    <h1>@Model.main.temp</h1>
-    <h1>@Model.sys.country</h1>
-    <h1>@Model.wind.speed</h1>*@
-
 
 @*@{var icon = ""; $"http://openweathermap.org/img/wn/{@Model.weather[0].icon}@2x.png";}*@
 @*<img src="@icon"></img> Ikona*@
 
-<section id="blog" class="weathergroup">
+          
+<section class="weather-content weathergroup">
+    <section>
+        <form asp-action="Index">
+            <h2 class="text-danger">@ViewBag.Info</h2>
+            <b>Wpisz miasto:</b> <input name="city" class="tm-block-title" />
+            <button type="submit" class="btn btn-info">Sprawdź pogodę</button>
+            <h2>Pogoda dla: @Model.rootobject.city.name</h2>
+        </form>
+    </section>
+
     <div id="monday">
         <div class="row">
-            @for (int i = 3; i < 27; i += 8)
+            <div class="col-md-4">
+                <div class="weather-item">
+                    <h1>@DateTime.Now.DayOfWeek</h1>
+                    <div class="weather-icon">
+                        @{var icon = $"http://openweathermap.org/img/wn/{@Model.root.weather[0].icon}@2x.png";}
+                        <img src="@icon" alt="">
+                    </div>
+                    <h2>@Model.root.main.temp&deg;C</h2>
+                    <h4>@Model.root.weather[0].description</h4>
+                    <ul class="time-weather">
+                        <li>Min<span>@Model.root.main.temp_min&deg;C</span></li>
+                        <li>Max<span>@Model.root.main.temp_max&deg;C</span></li>
+                        <li>Ciśnieni<span>@Model.root.main.pressure hPa</span></li>
+                        <li>Wilgotność<span>@Model.root.main.humidity%</span></li>
+                    </ul>
+                </div>
+            </div>
+            @for (int i = 3; i < 19; i += 8)
             {
                 <div class="col-md-4">
                     <div class="weather-item">
-                        <h1>@DateTime.Parse(Model.list[i].dt_txt).DayOfWeek</h1>
+                        <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
                         <div class="weather-icon">
-                            @{var icon = $"http://openweathermap.org/img/wn/{@Model.list[i].weather[0].icon}@2x.png";}
+                            @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
                             <img src="@icon" alt="">
                         </div>
-                        <h2>@Model.list[i].main.temp&deg;C</h2>
+                        <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
+                        <h4>@Model.rootobject.list[i].weather[0].description</h4>
                         <ul class="time-weather">
-                            <li>@DateTime.Parse(Model.list[i - 2].dt_txt).ToShortTimeString()<span>@Model.list[i - 2].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.list[i - 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.list[i + 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.list[i + 2].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString()<span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
                         </ul>
                     </div>
                 </div>
             }
 
-        </div>
+        </div>  
         <div class="row">
-            <div class="col-md-2"></div>
-            @for (int i = 28; i < 43; i += 8)
+            @for (int i = 20; i < 43; i += 8)
             {
 
                 <div class="col-md-4">
                     <div class="weather-item">
-                        <h1>@DateTime.Parse(Model.list[i].dt_txt).DayOfWeek</h1>
+                        <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
                         <div class="weather-icon">
-                            @{var icon = $"http://openweathermap.org/img/wn/{@Model.list[i].weather[0].icon}@2x.png";}
+                            @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
                             <img src="@icon" alt="">
                         </div>
-                        <h2>@Model.list[i].main.temp&deg;C</h2>
+                        <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
+                        <h4>@Model.rootobject.list[i].weather[0].description</h4>
                         <ul class="time-weather">
-                            <li>@DateTime.Parse(Model.list[i - 2].dt_txt).ToShortTimeString()<span>@Model.list[i - 2].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.list[i - 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.list[i + 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.list[i + 2].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
+                            <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
                         </ul>
                     </div>
                 </div>
@@ -85,12 +106,12 @@
 
 </section>
 
-<section>
-    <div id="openweathermap-widget-11"></div>
-    <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-    <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 11, cityid: '3081368', appid: '3da830a4d8a131e854ec8f7b49f61132', units: 'metric', containerid: 'openweathermap-widget-11', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();</script>
-</section>
-<div class="col-md-12">
-</div>
+@*<section>
+        <div id="openweathermap-widget-11"></div>
+        <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+        <script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = []; window.myWidgetParam.push({ id: 11, cityid: '3081368', appid: '3da830a4d8a131e854ec8f7b49f61132', units: 'metric', containerid: 'openweathermap-widget-11', }); (function () { var script = document.createElement('script'); script.async = true; script.charset = "utf-8"; script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js"; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s); })();</script>
+    </section>*@
+@*<div class="col-md-12">
+    </div>*@
 @await Html.PartialAsync("Main/_FooterPartialView")
 @await Html.PartialAsync("Main/_ScriptsPartialView")

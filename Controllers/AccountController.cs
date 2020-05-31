@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualBasic;
 using MotorGliding.Models.Db;
-using MotorGliding.Models.Other;
+using MotorGliding.Models.Enums;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Interfaces;
 
@@ -32,14 +26,16 @@ namespace MotorGliding.Controllers
         public IActionResult Registration()
         {
             ViewBag.Error = false;
-            ViewData["Title"] = Tabs.Other.ToString();
+            ViewBag.Tab = Tabs.Other;
+            //ViewData["Title"] = Tabs.Other;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Registration([FromForm]RegistrationViewModel model)
         {
-            ViewData["Title"] = Tabs.Other.ToString();
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             if (ModelState.IsValid)
             {
                 var user = new User
@@ -66,15 +62,17 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            ViewBag.Error = false; 
-            ViewData["Title"] = Tabs.Other.ToString();
+            ViewBag.Error = false;
+            ViewBag.Tab = Tabs.Other;
+            //ViewData["Title"] = Tabs.Other;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            ViewData["Title"] = Tabs.Other.ToString();
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             if (ModelState.IsValid)
             {
                 var result = await SignInManager.PasswordSignInAsync(model.Login, model.Password, false, false);

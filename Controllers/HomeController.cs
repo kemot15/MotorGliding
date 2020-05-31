@@ -51,12 +51,12 @@ namespace MotorGliding.Controllers.Home
                 email.Subject = "Wiadomość ze strony SkyClub - formularz kontaktowy";
                 email.Body = $"<h1>Od: {email.Name}</h1>{Environment.NewLine}<h2>E-mail: {email.Email} </h2>{Environment.NewLine}<div>Wiadomość: {email.Message}</div>";
 
-                await EmailService.SendEmailAsync(email);
+                
                 //info = "Wiadomość została wysłana";
-                return Json(200);
+                return Json(await EmailService.SendEmailAsync(email));
             }
             //info = "Wiadomość nie została wysłana";
-            return Json(400);
+            return Json(false);
 
         }
     }

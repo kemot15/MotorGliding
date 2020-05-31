@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav navbar-nav-first">
 
 
-                @if (ViewData["Title"] == MotorGliding.Models.Other.Tabs.Other.ToString())
+                @if (ViewBag.Tab == MotorGliding.Models.Enums.Tabs.Other)
                 {
                     <li>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>
                     <li>@Html.ActionLink("Sprzęt", "Index", "Home", protocol: null, hostname: null, fragment: "about", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</li>

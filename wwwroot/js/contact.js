@@ -21,19 +21,27 @@ document.addEventListener('submit', function (event) {
             method: 'POST',
             headers: { 'Content-Type': "application/json" },
             body: JSON.stringify({ Name: name.value, Email: email.value, Phone: parseInt(phone.value), Message: message.value })
-        }).then(() => /*data.json()).then(result =>*/ {
-            emailButton.disabled = true;
-            name.value = "";
-            name.disabled = true;
-            phone.value = "";
-            phone.disabled = true;
-            email.value = "";
-            email.disabled = true;
-            message.value = "";
-            message.disabled = true;
-            emailButton.value = "Wysłano";
-            alert("Wysłano wiadomość");
-        })
+        }).then(data => data.json()).then(result => showResult(result) 
+        //{
+        //    console.log('wynik', result);
+        //    if (result) {
+        //        emailButton.disabled = true;
+        //        name.value = "";
+        //        name.disabled = true;
+        //        phone.value = "";
+        //        phone.disabled = true;
+        //        email.value = "";
+        //        email.disabled = true;
+        //        message.value = "";
+        //        message.disabled = true;
+        //        emailButton.value = "Wysłano";
+        //        alert("Wysłano wiadomość");
+        //    }
+        //    else {
+        //        alert("Wiadomość nie została wysłana");
+        //    }
+        //}
+        )
     }
     else {
         alert("Wiadomość nie została wysłana");
@@ -41,3 +49,24 @@ document.addEventListener('submit', function (event) {
 
 
 })
+
+
+function showResult(result) {
+    console.log(result);
+    if (result) {
+        emailButton.disabled = true;
+        name.value = "";
+        name.disabled = true;
+        phone.value = "";
+        phone.disabled = true;
+        email.value = "";
+        email.disabled = true;
+        message.value = "";
+        message.disabled = true;
+        emailButton.value = "Wysłano";
+        alert("Wysłano wiadomość");
+    }
+    else {
+        alert("Wiadomość nie została wysłana");
+    }
+}

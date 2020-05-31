@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
-using MotorGliding.Models.Other;
+using MotorGliding.Models.Enums;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Email;
 using MotorGliding.Services.Interfaces;
@@ -31,8 +32,8 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> Details()
         {
-            ViewData["Title"] = Tabs.Other.ToString();
-            //ViewBag.Title = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
+            //ViewBag.Tab = Tabs.Other;
             var cookie = Request.Cookies["orderID"];
             if (cookie != null)
             {
@@ -47,7 +48,7 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> Details(Event model)
         {
-           // ViewData["Title"] = Tabs.Other.ToString();
+           // ViewData["Title"] = Tabs.Other;
             Order order;
             var cookie = Request.Cookies["orderID"];
             if (cookie == null)
@@ -92,7 +93,8 @@ namespace MotorGliding.Controllers
                 }
                 await _orderService.UpdateAsync(order);
             }
-            ViewData["Title"] = Tabs.Other.ToString();
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             return View(order);
         }
 
@@ -118,7 +120,8 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> UserConfirm()
         {
-            ViewData["Title"] = Tabs.Other;
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             var orderId = Request.Cookies["orderId"];
             if (orderId == null)
                 return RedirectToAction("Details");
@@ -154,22 +157,42 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> UserConfirm(EditUserViewModel model)
         {
-            ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             var orderId = int.Parse(Request.Cookies["orderId"]);
             model.OrderId = orderId;
             var userOrderId = await _orderService.CreateUserAsync(model);
             await _orderService.OrderAccept(orderId);
             await _orderService.UpdateOrderUserId(orderId, userOrderId);
-            if (await EmailService.SendEmailAsync(null))
+
+            var userEmail = new EmailViewModel
+            {
+                From = null,
+                Subject = "Potwierdzenie zamówienia ze strony SkyClub",
+                IsHtml = true,
+                Body = $"<h1>Potwierdzamy przyjęcie zamówienia</h1>{Environment.NewLine}<h2>{model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>Potwierdzamy otrzymanie zamówienia</div>",
+                To = model.Email
+            };
+
+            var adminEmail = new EmailViewModel
+            {
+                From = model.Email,
+                Subject = $"Potwierdzenie zamówienia ze strony SkyClub {model.OrderId}",
+                IsHtml = true,
+                Body = $"<h1>Nowe zamówienie</h1>{Environment.NewLine}<h2>Od: {model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>{model.PhoneNumber} {model.Street} {model.ZipCode} {model.City}</div>"
+            };
+
+            if (await EmailService.SendEmailAsync(userEmail))
+            {
+                await EmailService.SendEmailAsync(adminEmail);
                 Response.Cookies.Delete("orderId");
+            }
             return RedirectToAction("OrderConfirm", "Order"); //docelowo strona potwierdzenia      
             
         }
 
         public IActionResult OrderConfirm()
-        {
-            //var cookie = int.Parse(Request.Cookies["orderID"]);
-            ViewData["Title"] = Tabs.Other;
+        {            
+            ViewBag.Tab = Tabs.Other;
             return View();
         }
 
