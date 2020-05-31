@@ -81,7 +81,7 @@ namespace MotorGliding.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
 
                 if (result.IsLockedOut)
@@ -169,7 +169,7 @@ namespace MotorGliding.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EditPass()
+        public IActionResult EditPass()
         {
             ViewBag.Active = "UserSettings";
             return View();

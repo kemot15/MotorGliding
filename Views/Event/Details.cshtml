@@ -156,14 +156,14 @@
          </div>
     </div>
 </section>
-            @await Html.PartialAsync("Main/_ContactPartialView")
+            @*@await Html.PartialAsync("Main/_ContactPartialView")*@
             @await Html.PartialAsync("Main/_FooterPartialView")
 
 
 
 
             @*@await Html.PartialAsync("Main/_ModalPartialView", Model.RegLogViewModel)*@
-            <script>
+            @*<script>
 
     const qty = document.getElementById('qty');
     const sum = document.getElementById('sum');
@@ -182,6 +182,6 @@
     console.log(changeSum(3,4))
     changeSum(2, 40)
     qty.addEventListener('click', changeSum(@Model.Price, qty.innerText));
-            </script>
+            </script>*@
 
             @await Html.PartialAsync("Main/_ScriptsPartialView")

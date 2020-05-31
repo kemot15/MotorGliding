@@ -27,7 +27,7 @@ namespace MotorGliding.Services
 
         public async Task<Order> GetAsync(int id)
         {
-            return await _context.Orders.Include(d => d.OrderDetails).SingleAsync(o => o.Id == id);
+            return await _context.Orders.Include(d => d.OrderDetails).SingleOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task<Order> GetPreviewAsync (int id)

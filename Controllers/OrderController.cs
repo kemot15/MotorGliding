@@ -32,11 +32,14 @@ namespace MotorGliding.Controllers
         public async Task<IActionResult> Details()
         {
             ViewData["Title"] = Tabs.Other.ToString();
+            //ViewBag.Title = Tabs.Other;
             var cookie = Request.Cookies["orderID"];
             if (cookie != null)
             {
                 var order = await _orderService.GetAsync(int.Parse(cookie));
-                return View(order);
+                if (order != null)
+                    return View(order);
+                Response.Cookies.Delete("orderId");
             }
             return View();
         }
@@ -44,7 +47,7 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> Details(Event model)
         {
-            ViewData["Title"] = Tabs.Other.ToString();
+           // ViewData["Title"] = Tabs.Other.ToString();
             Order order;
             var cookie = Request.Cookies["orderID"];
             if (cookie == null)
@@ -88,7 +91,8 @@ namespace MotorGliding.Controllers
                     orderDetails.EventTitle = model.Title;
                 }
                 await _orderService.UpdateAsync(order);
-            } 
+            }
+            ViewData["Title"] = Tabs.Other.ToString();
             return View(order);
         }
 
@@ -162,7 +166,7 @@ namespace MotorGliding.Controllers
             
         }
 
-        public async Task<IActionResult> OrderConfirm()
+        public IActionResult OrderConfirm()
         {
             //var cookie = int.Parse(Request.Cookies["orderID"]);
             ViewData["Title"] = Tabs.Other;

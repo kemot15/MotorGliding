@@ -28,10 +28,10 @@ namespace MotorGliding.Services.Email
                 //Subject = "Wiadomość wysłana ze strony SkyClub - potwierdzenie zamówienia",
                 //Body = $"<h1>Od: {model.Name}</h1>{Environment.NewLine}<h2>E-mail: {model.Email}</h2>{Environment.NewLine}<div>Treść: {model.Message}</div>",
                 //IsBodyHtml = true
-                From = new MailAddress(emailFrom),//From = new MailAddress(model.From),
-                Subject = "Wiadomość wysłana ze strony SkyClub - potwierdzenie zamówienia",
-                Body = $"<h1>Od: strona zamowien</h1>{Environment.NewLine}<h2>E-mail: zee strony </h2>{Environment.NewLine}<div>Treść: potwierdzenie zamowienia</div>",
-                IsBodyHtml = true
+                From = new MailAddress(model.Email),//From = new MailAddress(model.From),
+                Subject = model.Subject,//"Wiadomość wysłana ze strony SkyClub - potwierdzenie zamówienia",
+                Body = model.Body,//$"<h1>Od: strona zamowien</h1>{Environment.NewLine}<h2>E-mail: zee strony </h2>{Environment.NewLine}<div>Treść: potwierdzenie zamowienia</div>",
+                IsBodyHtml = model.IsHtml
 
             };
             //message.To.Add(model.To);

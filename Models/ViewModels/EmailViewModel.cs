@@ -13,5 +13,8 @@ namespace MotorGliding.Models.ViewModels
         public string Email { get; set; }
         public string To { get; set; }
         public string From { get; set; }
+        public string Body { get; set; }
+        public int Phone { get; set; }
+        public bool IsHtml { get; set; }
     }
 }
