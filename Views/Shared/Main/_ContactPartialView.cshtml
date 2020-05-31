@@ -1,4 +1,5 @@
-﻿<section id="contact" data-stellar-background-ratio="0.5">
+﻿@model EmailViewModel
+<section id="contact" data-stellar-background-ratio="0.5">
     <div class="container">
         <div class="row">
 
@@ -12,37 +13,27 @@
             <div class="col-md-8 col-sm-8">
 
                 <!-- CONTACT FORM HERE -->
-                <form id="contact-form" role="form" action="mailto:kemot15@tlen.pl" method="post">
+                <form id="contact-form" role="form" method="post">
+                    @*asp-action="SendEmail" asp-controller="Home"*@
                     <div class="col-md-12 col-sm-12">
-                        <input type="text" class="form-control" placeholder="Imię i nazwisko" id="cf-name" name="cf-name" required="">
+                        <input type="text" asp-for="Name" class="form-control" placeholder="Imię i nazwisko" required="">
                     </div>
 
                     <div class="col-md-6 col-sm-6">
-                        <input type="email" class="form-control" placeholder="E-mail" id="cf-email" name="cf-email" required="">
+                        <input type="email" asp-for="Email" class="form-control" placeholder="E-mail" required="">
                     </div>
 
                     <div class="col-md-6 col-sm-6">
-                        <input type="tel" class="form-control" placeholder="Telefon" id="cf-number" name="cf-number" required="">
+                        <input type="number" asp-for="Phone" class="form-control" placeholder="Telefon" required="">
                     </div>
 
-                    @*<div class="col-md-6 col-sm-6">
-                        <select class="form-control" id="cf-budgets" name="cf-budgets">
-                            <option>Budget Level</option>
-                            <option>$500 to $1,000</option>
-                            <option>$1,000 to $2,200</option>
-                            <option>$2,200 to $4,500</option>
-                            <option>$4,500 to $7,500</option>
-                            <option>$7,500 to $12,000</option>
-                            <option>$12,000 or more</option>
-                        </select>
-                    </div>*@
 
                     <div class="col-md-12 col-sm-12">
-                        <textarea class="form-control" rows="6" placeholder="Wiadomość..." id="cf-message" name="cf-message" required=""></textarea>
+                        <textarea class="form-control" asp-for="Message" rows="6" placeholder="Wiadomość..." required=""></textarea>
                     </div>
 
                     <div class="col-md-4 col-sm-12">
-                        <input type="submit" class="form-control" name="submit" value="Wyślij wiadomość">
+                        <input type="submit" id="email-button" class="form-control" name="submit" value="Wyślij wiadomość">
                     </div>
 
                 </form>
@@ -63,3 +54,4 @@
         </div>
     </div>
 </section>
+<script src="~/js/contact.js"></script>

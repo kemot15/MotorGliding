@@ -1,0 +1,48 @@
+﻿@model Order
+<div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+    <div class="bg-white tm-block h-100">
+        <h2 class="tm-block-title d-inline-block">Szczegóły zamówienia</h2>
+        <table class="table table-hover table-striped mt-3">
+            <tbody>
+                <tr>
+                    <td>Imię</td>
+                    <td>@Model.OrderUser.Name</td>
+                </tr>
+                <tr>
+                    <td>Nazwisko</td>
+                    <td>@Model.OrderUser.LastName</td>
+                </tr>
+                <tr>
+                    <td>Telefon</td>
+                    <td><a href="tel:@Model.OrderUser.PhoneNumber">@Model.OrderUser.PhoneNumber</a></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><a href="mailto:@Model.OrderUser.Email">@Model.OrderUser.Email</a></td>
+                </tr>
+                <tr>
+                    <td>Data zamówienia</td>
+                    <td>@Model.CreateData</td>
+                </tr>
+                <tr>
+                    <td>Ulica</td>
+                    <td>@Model.OrderUser.Address.Street</td>
+                </tr>
+                <tr>
+                    <td>Kod pocztowy</td>
+                    <td>@Model.OrderUser.Address.ZipCode</td>
+                </tr>
+                <tr>
+                    <td>Miejscowość</td>
+                    <td>@Model.OrderUser.Address.City</td>
+                </tr>
+                <tr>
+                    <td>Kraj</td>
+                    <td>@Model.OrderUser.Address.Country</td>
+                </tr>
+            </tbody>
+        </table>
+
+        @*<a href="#" class="btn btn-primary tm-table-mt">Add New Category</a>*@
+    </div>
+</div>

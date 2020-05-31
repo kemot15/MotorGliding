@@ -28,10 +28,11 @@ namespace MotorGliding.Services
             return model.Id;
         }
 
-        public async Task<bool> UpdateAsync(Event model)
+        public async Task<int> UpdateAsync(Event model)
         {
-            _context.Events.Update(model);    
-            return await _context.SaveChangesAsync() > 0;
+            _context.Events.Update(model);
+            await _context.SaveChangesAsync();
+            return model.Id;
         }
         /// <summary>
         /// Pobiera Event z lista obrazow
@@ -40,6 +41,7 @@ namespace MotorGliding.Services
         /// <returns>Zwraca pobrany Event</returns>
         public async Task<Event> GetAsync(int id)
         {
+
             return await _context.Events.SingleOrDefaultAsync(e => e.Id == id);
         }
 
@@ -50,7 +52,13 @@ namespace MotorGliding.Services
 
         public async Task<IList<Event>> ListAsync()
         {
-            return await _context.Events.ToListAsync();
+            //var list = await _context.Events.ToListAsync();
+            //foreach(var item in list)
+            //{
+            //    item.Image = await get
+            //}
+
+            return await _context.Events.Include(g => g.Gallery).ToListAsync(); ;
         }
 
         /// <summary>

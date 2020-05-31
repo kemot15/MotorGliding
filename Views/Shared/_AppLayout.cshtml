@@ -1,11 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Buzztandem</title>
+    <title>SkyClub</title>
     <!--
 
     Template 2108 Dashboard
@@ -24,13 +24,17 @@
     <link rel="stylesheet" href="~/css/tooplate.css">
 </head>
 <body>
+    <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
     <div class="container">
         @await Html.PartialAsync("_HeaderAppPartialView")
         <div class="row tm-content-row tm-mt-big">
             @RenderBody()
         </div>
-            @await Html.PartialAsync("_FooterAppPartialView")
-        </div>
+        @await Html.PartialAsync("_FooterAppPartialView")
+    </div>
+
+    <script src="~/js/site.js" type="text/javascript"></script>
 </body>
+
     
 </html>

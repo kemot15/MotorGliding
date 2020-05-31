@@ -1,19 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Runtime.Loader;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.Enums;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Email;
 using MotorGliding.Services.Interfaces;
-using Nancy.Json;
 
 namespace MotorGliding.Controllers
 {
@@ -37,20 +32,25 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> Details()
         {
+            ViewBag.Tab = Tabs.Other;
+            //ViewBag.Tab = Tabs.Other;
             var cookie = Request.Cookies["orderID"];
             if (cookie != null)
             {
                 var order = await _orderService.GetAsync(int.Parse(cookie));
-                return View(order);
+                if (order != null)
+                    return View(order);
+                Response.Cookies.Delete("orderId");
             }
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(Event model, int quantity = 1)
+        public async Task<IActionResult> Details(Event model)
         {
+           // ViewData["Title"] = Tabs.Other;
             Order order;
-            var cookie = Request.Cookies["orderID"];            
+            var cookie = Request.Cookies["orderID"];
             if (cookie == null)
             {
                 order = new Order
@@ -60,9 +60,9 @@ namespace MotorGliding.Controllers
                 OrderDetails orderDetails = new OrderDetails
                 {
                     Price = model.Price,
-                    Quantity = quantity,
+                    Quantity = model.Quantity,
                     EventID = model.Id,
-                 //   Event = model,
+                    EventTitle = model.Title,
                     Camera = false,
                 };
                 order.OrderDetails.Add(orderDetails);
@@ -79,19 +79,22 @@ namespace MotorGliding.Controllers
                     {
                         Price = model.Price,
                         CameraPrice = model.CameraPrice,
-                        Quantity = quantity,
+                        Quantity = model.Quantity,
                         EventID = model.Id,
-                       // Event = model,
+                        EventTitle = model.Title,
                         Camera = false,
                     });
                 }
                 else
                 {
                     var orderDetails = order.OrderDetails.Single(d => d.EventID == model.Id);
-                    orderDetails.Quantity++;
+                    orderDetails.Quantity+= model.Quantity;
+                    orderDetails.EventTitle = model.Title;
                 }
                 await _orderService.UpdateAsync(order);
-            } 
+            }
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             return View(order);
         }
 
@@ -117,6 +120,8 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> UserConfirm()
         {
+            //ViewData["Title"] = Tabs.Other;
+            ViewBag.Tab = Tabs.Other;
             var orderId = Request.Cookies["orderId"];
             if (orderId == null)
                 return RedirectToAction("Details");
@@ -152,22 +157,51 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> UserConfirm(EditUserViewModel model)
         {
+            ViewBag.Tab = Tabs.Other;
             var orderId = int.Parse(Request.Cookies["orderId"]);
             model.OrderId = orderId;
             var userOrderId = await _orderService.CreateUserAsync(model);
             await _orderService.OrderAccept(orderId);
             await _orderService.UpdateOrderUserId(orderId, userOrderId);
-            if (await EmailService.SendEmailAsync(null))
+
+            var userEmail = new EmailViewModel
+            {
+                From = null,
+                Subject = "Potwierdzenie zamówienia ze strony SkyClub",
+                IsHtml = true,
+                Body = $"<h1>Potwierdzamy przyjęcie zamówienia</h1>{Environment.NewLine}<h2>{model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>Potwierdzamy otrzymanie zamówienia</div>",
+                To = model.Email
+            };
+
+            var adminEmail = new EmailViewModel
+            {
+                From = model.Email,
+                Subject = $"Potwierdzenie zamówienia ze strony SkyClub {model.OrderId}",
+                IsHtml = true,
+                Body = $"<h1>Nowe zamówienie</h1>{Environment.NewLine}<h2>Od: {model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>{model.PhoneNumber} {model.Street} {model.ZipCode} {model.City}</div>"
+            };
+
+            if (await EmailService.SendEmailAsync(userEmail))
+            {
+                await EmailService.SendEmailAsync(adminEmail);
                 Response.Cookies.Delete("orderId");
+            }
             return RedirectToAction("OrderConfirm", "Order"); //docelowo strona potwierdzenia      
             
         }
 
-        public async Task<IActionResult> OrderConfirm()
-        {
-            //var cookie = int.Parse(Request.Cookies["orderID"]);
-            
+        public IActionResult OrderConfirm()
+        {            
+            ViewBag.Tab = Tabs.Other;
             return View();
+        }
+
+        public async Task<IActionResult> OrderPreview(int id)
+        {
+            var order = await _orderService.GetPreviewAsync(id);
+            if (order == null)
+                RedirectToAction("Index", "Dashboard");
+            return View(order);
         }
     }
 }

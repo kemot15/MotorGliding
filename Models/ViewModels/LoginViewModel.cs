@@ -9,8 +9,9 @@ namespace MotorGliding.Models.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Email jest wymagany")]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "Login jest wymagany")]
+        public string Login { get; set; }
+
         [Required(ErrorMessage = "Hasło jest wymagane")]
         [PasswordPropertyText]
         public string Password { get; set; }

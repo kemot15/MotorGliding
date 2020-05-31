@@ -42,7 +42,8 @@ namespace MotorGliding.Models.Db
         public bool Visible { get; set; } = true;
         [NotMapped]
         public Image Image { get; set; }
-        //public OrderDetails OrderDetails { get; set; }
-      
+        [NotMapped]
+        public int Quantity { get; set; }
+
     }
 }

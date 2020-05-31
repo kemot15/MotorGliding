@@ -115,23 +115,6 @@
 
 
 
-
-@*<script>
-    $(function () {
-        $('#carouselExampleIndicators').carousel()
-    });
-
-</script>*@
-
-
-
-
-
-
-
-
-
-
 <!-- ABOUT -->
 @if (Model.Vehicle.Count > 0)
 {
@@ -168,7 +151,7 @@
                                             <strong>@feature.Name</strong>
                                             <span class="pull-right">@feature.Value%</span>
                                             <div class="progress">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width: @feature.Value%;"></div>
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width:@feature.Value%"></div>
                                             </div>
                                         }
 
@@ -203,13 +186,13 @@
 
 @await Html.PartialAsync("Main/_BlogPartialView", Model.Events)
 @await Html.PartialAsync("Main/_WorkPartialView")
-@await Html.PartialAsync("Main/_ContactPartialView")
+@await Html.PartialAsync("Main/_ContactPartialView", Model.Email)
 @await Html.PartialAsync("Main/_FooterPartialView")
 
 
 
 
-@await Html.PartialAsync("Main/_ModalPartialView", Model.RegLogViewModel)
+@*@await Html.PartialAsync("Main/_ModalPartialView", Model.RegLogViewModel)*@
 
 @*@section Scripts{
 

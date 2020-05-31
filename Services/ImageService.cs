@@ -1,18 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.CodeAnalysis.Operations;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.VisualBasic;
 using MotorGliding.Context;
 using MotorGliding.Models.Db;
 using MotorGliding.Services.Interfaces;
-using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace MotorGliding.Services
@@ -38,12 +32,14 @@ namespace MotorGliding.Services
         {
             string wwwRootPath = _hostEnvironment.WebRootPath;
             string fileName = Path.GetFileNameWithoutExtension(image.ImageFile.FileName);
-            string extenson = Path.GetExtension(image.ImageFile.FileName);
-            image.Name = fileName = fileName + DateTime.Now.ToString("_yymmssfff") + extenson;
+            string extension = Path.GetExtension(image.ImageFile.FileName);
+            image.Name = fileName = fileName + DateTime.Now.ToString("_yymmssfff") + extension;
             string path = Path.Combine($"{wwwRootPath}/{folder}/{fileName}");
-            var fileStream = new FileStream(path, FileMode.Create);
-            await image.ImageFile.CopyToAsync(fileStream);
-            image.Default = main;            
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await image.ImageFile.CopyToAsync(fileStream);
+                image.Default = main;            
+            }
             return image;
         }
         /// <summary>
@@ -66,9 +62,11 @@ namespace MotorGliding.Services
         public async Task<bool> DeleteImageAsync(Image image, string folder) 
         {           
             var imagePath = Path.Combine($"{_hostEnvironment.WebRootPath}\\{folder}\\{image.Name}");
+            //var fileToDelete = Image.FromFile(imagePath);
             if (File.Exists(imagePath))
-            {
-                File.Delete(imagePath);
+            {             
+                    File.Delete(imagePath);
+              
                 return true;
             }
             return false;
@@ -96,6 +94,17 @@ namespace MotorGliding.Services
         }
 
         /// <summary>
+        /// Zwraca glowny obraz dla zadanej kategorii
+        /// </summary>
+        /// <param name="id">Id Eventu, pojazdu</param>
+        /// <param name="category">Kategoria</param>
+        /// <returns></returns>
+        public async Task<Image> GetMainAsync(int id, string category)
+        {
+            return await _context.Images.SingleOrDefaultAsync(i => i.SourceId == id && i.Category == category && i.Default);
+        }
+
+        /// <summary>
         /// Pobranie wszystkich obrazów nalezacych do danej kategorii
         /// </summary>
         /// <param name="id">Id eventu lub pojazdu</param>
@@ -104,6 +113,14 @@ namespace MotorGliding.Services
         public async Task<List<Image>> GetGalleryAsync(int id, string category)
         {
             return await _context.Images.Where(i => i.SourceId == id && i.Category == category).ToListAsync();
+        }
+
+        public async Task<bool> UpdateImageAsync (Image image)
+        {
+            var newImage = await GetAsync(image.Id);
+            newImage.Name = image.Name;
+            _context.Images.Update(newImage);
+            return await _context.SaveChangesAsync() > 0;
         }
 
        

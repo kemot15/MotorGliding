@@ -3,6 +3,7 @@ using MotorGliding.Context;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,12 @@ namespace MotorGliding.Services
 
         public async Task<Order> GetAsync(int id)
         {
-            return await _context.Orders.Include(d => d.OrderDetails).SingleAsync(o => o.Id == id);
+            return await _context.Orders.Include(d => d.OrderDetails).SingleOrDefaultAsync(o => o.Id == id);
+        }
+
+        public async Task<Order> GetPreviewAsync (int id)
+        {
+            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).ThenInclude(a => a.Address).SingleAsync(o => o.Id == id);
         }
 
         public async Task<bool> UpdateAsync (Order order)
@@ -85,25 +91,17 @@ namespace MotorGliding.Services
 
         public async Task<int> UpdateUserAsync(User user)
         {
-            //var address = await _context.add
             
             if (user.Address == null)
             {
                 _context.Address.Add(user.Address);
-                //user.Address. = new Address();
                 
             }
             _context.Entry(user).State = EntityState.Modified;
-           // user.Address.User = user;
-            //await _context.SaveChangesAsync();
-            // _context.Address.Update(user.Address);
             _context.Users.Update(user);
-            //_context.Entry(result). .SetValues(user);
-            //  _context.Entry(result.Address).CurrentValues.SetValues(user.Address);
             await _context.SaveChangesAsync();
             return user.Id;
         }
-
 
         public async Task<bool> UpdateOrderUserId(int orderId, int userId)
         {
@@ -120,8 +118,26 @@ namespace MotorGliding.Services
         {
             var order = await _context.Orders.SingleAsync(o => o.Id == id);
             order.Accepted = true;
+            order.CreateData = DateTime.Now;
             _context.Orders.Update(order);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<IList<Order>> GetSummaryOrders()
+        {
+            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).Where(o => o.Accepted).ToListAsync();
+        }
+
+        public async Task<IList<Order>> FilterOrderContainingEvent(int id)
+        {
+            var order = await _context.Orders.Include(d => d.OrderDetails.Where(e => e.EventID == id)).Include(u => u.OrderUser).Where(o => o.Accepted).ToListAsync();
+            //order.Where(d => d.OrderDetails. Contains();
+            return order;
+        }
+
+        public async Task<IList<Order>> FilterOrderByUser(int id)
+        {
+            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).Where(o => o.Accepted && o.OrderUser.UserId == id).ToListAsync();
         }
     }
 }

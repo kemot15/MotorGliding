@@ -1,0 +1,23 @@
+﻿@model IList<Event>    
+<div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+        <div class="bg-white tm-block h-100">
+            <h2 class="tm-block-title d-inline-block">Lista wydarzeń</h2>
+            <table class="table table-hover table-striped mt-3">
+                <tbody>
+                        <tr>
+                            <td><a asp-action="Index">Wszystkie</a></td>
+                            <td class="tm-trash-icon-cell"><a asp-action="Index"><i class="fas fa-search"></i></a></td>
+                        </tr>                    
+                    @foreach (var item in Model)
+                    { 
+                        <tr>
+                            <td><a asp-action="Index" asp-route-orderId="@item.Id">@item.Title - @item.Info</a></td>
+                            <td class="tm-trash-icon-cell"><a asp-action="Index" asp-route-orderId="@item.Id"><i class="fas fa-search"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @*<a href="#" class="btn btn-primary tm-table-mt">Add New Category</a>*@
+        </div>
+    </div>

@@ -14,5 +14,7 @@ namespace MotorGliding.Services.Interfaces
         Task<Image> GetAsync(int id);
         Task<bool> RemoveImageAsync(Image image);
         Task<List<Image>> GetGalleryAsync(int id, string category);
+        Task<Image> GetMainAsync(int id, string category);
+        Task<bool> UpdateImageAsync(Image image);
     }
 }

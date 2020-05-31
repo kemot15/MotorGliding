@@ -7,66 +7,80 @@
 
     <div class="container">
         <!-- row -->
-        <div class="row tm-content-row tm-mt-big">
+        <div class="row tm-content-row tm-mt-small">
            
-            <div class="tm-col tm-col-big">
+            <div class="tm-col col-12">
                 <div class="bg-white tm-block">
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-12">
                             <h2 class="tm-block-title">Edycja użytkownika</h2>
                         </div>
                     </div>
                     <div class="row">
+                        <div asp-validation-summary="All" class="text-danger col-12"></div>
+                        <span class="text-info">@ViewBag.Status</span>
                         <div class="col-12">
-                            @Html.ValidationSummary()
                             <form asp-action="Edit" asp-controller="Account" class="tm-signup-form">
                                 <input type="hidden" asp-for="AddressId" />
                                 <input type="hidden" asp-for="Id" />
-                                <div class="form-group">
-                                    <label asp-for="Name" placeholde="Podaj imię"></label>
-                                    <input asp-for="Name" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LastName" placeholde="Podaj nazwisko"></label>
-                                    <input asp-for="LastName" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="PhoneNumber">Telefon</label>
-                                    <input asp-for="PhoneNumber" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Street"></label>
-                                    <input asp-for="Street" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="ZipCode"></label>
-                                    <input asp-for="ZipCode" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="City"></label>
-                                    <input asp-for="City" class="form-control validate">
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Country"></label>
-                                    <input asp-for="Country" class="form-control validate">
-                                </div>
-
                                 <div class="row">
-                                    <div class="col-12 col-sm-4">
-                                        @*<a href="javascript:history.back() class=" btn btn-primary"">
-                                        <button class="btn btn-primary">
-                </button>
-                                        Wstecz
-                                    </a>*@
-
+                                    <div class="form-group col-6">
+                                        <label asp-for="Name" placeholde="Podaj imię"></label>
+                                        <input asp-for="Name" class="form-control validate" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
-                                    <div class="col-12 col-sm-8 tm-btn-right">
-                                        <button type="submit" class="btn btn-danger">
-                                            Zapisz zmiany
-                                        </button>
+                                    <div class="form-group col-6">
+                                        <label asp-for="Street"></label>
+                                        <input asp-for="Street" class="form-control validate" />
+                                        <span asp-validation-for="Street" class="text-danger"></span>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col col-lg-6 col-sm-12">
+                                        <label asp-for="LastName" placeholde="Podaj nazwisko"></label>
+                                        <input asp-for="LastName" class="form-control validate" />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>                                    
+                                    <div class="form-group col col-lg-3 col-sm-6">
+                                        <label asp-for="ZipCode"></label>
+                                        <input asp-for="ZipCode" class="form-control validate" />
+                                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col col-lg-3 col-sm-6">
+                                        <label asp-for="City"></label>
+                                        <input asp-for="City" class="form-control validate" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>                                    
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label asp-for="PhoneNumber">Telefon</label>
+                                        <input asp-for="PhoneNumber" class="form-control validate" />
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label asp-for="Country"></label>
+                                        <input asp-for="Country" class="form-control validate" />
+                                        <span asp-validation-for="Country" class="text-danger"></span>
                                     </div>
                                 </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-4">
+                                            <button asp-action="Index" asp-controller="Dashboard" class="btn btn-primary">
+                                                Wstecz
+                                            </button>
+                                        </div>
+                                        <div class="col-12 col-md-8 col-sm-8 tm-btn-right">
+                                            <button type="submit" class="btn btn-danger">
+                                                Zapisz zmiany
+                                            </button>
+                                        </div>
+                                    </div>
                             </form>
+                            <div asp-validation-summary="All" class="text-danger"></div>
                         </div>
                     </div>
                 </div>

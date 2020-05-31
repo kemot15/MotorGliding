@@ -12,7 +12,7 @@ namespace MotorGliding.Services.Interfaces
         //Task<IList<Event>> GetEventsVisibleAsync();
         Task<int> CreateAsync(Event model);
         Task<bool> RemoveAsync(Event item);
-        Task<bool> UpdateAsync(Event model);
+        Task<int> UpdateAsync(Event model);
         Task<Event> GetAsync(int id);
         
 
