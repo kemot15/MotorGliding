@@ -1,11 +1,11 @@
-﻿$(function () {
+﻿
+$(function () {
     console.log('test')
 
     //aktualizacja ilosci zamowionych rzeczy w koszyku + zapis do bazy danych
     const rows = document.querySelectorAll('tr.position');
     const suma = document.getElementById('sum');
     const table = document.getElementById('tab');
-    console.log(table);
 
     for (const tr of rows) {
         let price = tr.querySelector('.price > input');
@@ -26,22 +26,10 @@
                     body: JSON.stringify([{ id: parseInt(id.value), quantity: parseInt(qty.value) }])
                 })//.then(data => data.json()).then(result => console.log(result))
             }
-            
-
-            
         })
     }
 
-    //ladowanie podgladu obrazka przy dodawaniu i edycji
-    function ShowImagePreview(imageUploader, previewImage) {
-        if (imageUploader.files && imageUploader.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $(previewImage).attr('src', e.target.result);
-            }
-            reader.readAsDataURL(imageUploader.files[0]);
-        }
-    }
+   
     //function refresh() {
             //    setInterval(function () {
             //        console.log('odliczam');
@@ -73,4 +61,36 @@
     //}
 
     //getCurrency();
+
+
+
+    //ladowanie podgladu obrazka przy dodawaniu i edycji
+  
+    const imgBtn = document.getElementById('Image_ImageFile');
+    const imgPreview = document.getElementById('imagePreview');
+    const imgInput = document.getElementById('Image_ImageFile');
+    console.log(imgBtn);
+    imgBtn.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            //var preview = document.getElementById(imgPreview);
+            imgPreview.style.display = 'block';
+            reader.addEventListener('load', function () {
+                console.log(this);
+                imgPreview.setAttribute('src', this.result);
+            });
+            reader.readAsDataURL(file);
+        }
+        else {
+            //preview.style.display = '';
+            imgPreview.setAttribute('src', '');
+        }
+        
+    });
+
+
+
 });
+

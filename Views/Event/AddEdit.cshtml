@@ -80,20 +80,21 @@
                                 {
                                     <input type="hidden" asp-for="@Model.Image.Id" />
                                     <input type="hidden" asp-for="@Model.Image.Name" />
-                                    <img src="@("~/images/"+Model.Image.Name)" asp-append-version="true" width="250px" height="250px" class="fas fa-5x fa-cloud-upload-alt" />
+                                    <img src="@("~/images/"+Model.Image.Name)" asp-append-version="true" width="250" height="250" class="fas fa-5x fa-cloud-upload-alt" id="imagePreview" />
                                 }
                                 else
                                 {
-                                    <i class="fas fa-5x fa-cloud-upload-alt" onclick="document.getElementById('fileInput').click();"></i>
+                                    @*<i class="fas fa-5x fa-cloud-upload-alt" id="imagePreview"></i>*@
+                                    <img src="~/images/about-image.jpg" asp-append-version="true" width="250" height="250" class="fas fa-5x fa-cloud-upload-alt" id="imagePreview" />
 
                                 }
                             </div>
                             <div class=" mt-3 mb-3">
                                 @*custom-file*@
                                 @*<input id="fileInput" type="file" style="display:none;" />*@
-                                <input asp-for="@Model.Image.ImageFile" accept="image/*" class="btn btn-primary d-block mx-auto" />
+                                <input asp-for="@Model.Image.ImageFile" accept="image/*" class="btn d-block mx-auto" />
                             </div>
-                            
+                            @*onchange="ShowImagePreview(this, document.getElementById('imagePreview'));"*@
                         </div>
 
                     </div>
@@ -101,5 +102,4 @@
         </div>
     </div>
 </body>
-
 
