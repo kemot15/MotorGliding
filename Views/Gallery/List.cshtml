@@ -1,0 +1,36 @@
+﻿@model IList<Image>
+@{
+    ViewData["Title"] = "Galeria";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+
+}
+
+
+<body class="bg02">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="bg-white tm-block">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="tm-block-title d-inline-block">Galeria</h2>
+                    <a asp-action="Add" class="btn btn-info">Dodaj zdjęcia</a>
+                    @*<input type="file" accept="image/*" class="btn btn-info d-inline-block"
+                *@
+                <div class="row">
+                    @foreach (var image in Model)
+                    {
+                    <div class="col-md-4">
+                        <img src="@image.Name" width="300" height="300" />
+                        <input type="checkbox" asp-for="@image.Active" />
+                        <input type="hidden" asp-for="@image.Id" />
+                        <a asp-action="Delete" asp-controller="Gallery" asp-route-id="@image.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a>
+                    </div>
+                    }
+                </div>
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger col-12"></div>
+                
+        </div>
+    </div>
+</body>
+

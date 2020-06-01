@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MotorGliding.Context;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.Other;
 using MotorGliding.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -123,6 +125,21 @@ namespace MotorGliding.Services
             return await _context.SaveChangesAsync() > 0;
         }
 
-       
+        public async Task<IList<Image>> GetGalleryAsync(bool active)
+        {
+            if (active)
+                return await _context.Images.Where(i => i.Category == Folders.gallery.ToString() && i.Active).ToListAsync();
+            return await _context.Images.Where(i => i.Category == Folders.gallery.ToString()).ToListAsync();
+        }
+
+        public async Task<bool> ActiveChange(int id)
+        {
+            var image = _context.Images.Find(id);
+            if (image == null)
+                return false;
+            image.Active = !image.Active;
+            _context.Update(image);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

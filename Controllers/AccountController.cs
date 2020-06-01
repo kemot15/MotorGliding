@@ -107,7 +107,7 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit()
         {
-            ViewBag.Active = "UserSettings";
+            ViewBag.Active = Tabs.UserSettings;
             var user = await UserManager.GetUserAsync(User);
             if (user == null)
                 return RedirectToAction("Login","Account");//redirect to Login?
@@ -132,7 +132,7 @@ namespace MotorGliding.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
-            ViewBag.Active = "UserSettings";
+            ViewBag.Active = Tabs.UserSettings;
             //ViewBag.Active = "Account";
             if (!ModelState.IsValid)
             {
@@ -169,14 +169,14 @@ namespace MotorGliding.Controllers
         [HttpGet]
         public IActionResult EditPass()
         {
-            ViewBag.Active = "UserSettings";
+            ViewBag.Active = Tabs.UserSettings;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> EditPass(EditPassViewModel model)
         {
-            ViewBag.Active = "UserSettings";
+            ViewBag.Active = Tabs.UserSettings;
             if (!ModelState.IsValid) return View(model);
 
             var user = await UserManager.GetUserAsync(User);

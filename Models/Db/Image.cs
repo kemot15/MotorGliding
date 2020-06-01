@@ -19,7 +19,12 @@ namespace MotorGliding.Models.Db
         public int SourceId { get; set; }
         [DefaultValue(false)]
         public bool Default { get; set; }      
+        
+        public bool Active { get; set; }
         [NotMapped]
         public IFormFile ImageFile { get; set; }
+        [NotMapped]
+        public IList<IFormFile> Gallery { get; set; }
+
     }
 }

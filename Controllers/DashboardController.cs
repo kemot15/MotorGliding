@@ -6,6 +6,7 @@ using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
 using MotorGliding.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using MotorGliding.Models.Enums;
 
 namespace MotorGliding.Controllers
 {
@@ -26,7 +27,7 @@ namespace MotorGliding.Controllers
 
         public async Task<IActionResult> Index(int orderId, int eventId)
         {
-            ViewBag.Active = "Dashboard";
+            ViewBag.Active = Tabs.Dashboard;
             if (User.IsInRole("Admin"))
             {
                 var summaryViewModel = new DashboardSummaryViewModel()
@@ -102,6 +103,7 @@ namespace MotorGliding.Controllers
             await _calendarService.ClearReservedAsync(currentCalendarDate);
             return RedirectToAction("Calendar", new { dateTime = currentCalendarDate });
         }
+      
 
     }
 }
