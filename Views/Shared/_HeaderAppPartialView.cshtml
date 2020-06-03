@@ -29,13 +29,13 @@
                         @*<li class="nav-item @(Html.Raw(ViewBag.Active == "Account" ? "active" : "")) />">
             <a class="nav-link" asp-action="Account" asp-controller="Dashboard">Konto</a>
         </li>*@
-                        <li class="nav-item dropdown @(Html.Raw(ViewBag.Active == MotorGliding.Models.Enums.Tabs.UserSettings ? "active" : ""))">
+                        <li class="nav-item dropdown @(Html.Raw(ViewBag.Active == MotorGliding.Models.Enums.Tabs.Settings ? "active" : ""))">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false">
                                 Konto
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-action="Edit" asp-controller="Account">Edytuj dane</a>
+                                <a class="dropdown-item" asp-action="Edit" asp-controller="Account" asp-route-id="">Edytuj dane</a>
                                 <a class="dropdown-item" asp-action="EditPass" asp-controller="Account">Zmień hasło</a>
                             </div>
                         </li>
@@ -48,12 +48,13 @@
                                 <a class="dropdown-item" href="#">Profil</a>
                                 @if (User.IsInRole("Admin") || User.IsInRole("User"))
                                 {
-                                    <a class="dropdown-item" href="#">Użytkownicy</a>
+                                    <a class="dropdown-item" asp-action="UserList" asp-controller="Account">Użytkownicy</a>
                                     <a class="dropdown-item" asp-action="List" asp-controller="Vehicle">Sprzęt</a>
                                 }
                                 <a class="dropdown-item" href="#">Billing</a>
                                 <a class="dropdown-item" href="#">Customize</a>
                             </div>
+
                         </li>
                     </ul>
                     <ul class="navbar-nav">

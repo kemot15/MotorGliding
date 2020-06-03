@@ -7,6 +7,7 @@
         Other,
         Dashboard,
         Gallery,
-        UserSettings
+        UserSettings,
+        Settings
     }
 }

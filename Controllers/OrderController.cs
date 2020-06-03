@@ -42,6 +42,7 @@ namespace MotorGliding.Controllers
                     return View(order);
                 Response.Cookies.Delete("orderId");
             }
+            ViewBag.OrderId = cookie;
             return View();
         }
 
@@ -70,10 +71,11 @@ namespace MotorGliding.Controllers
                 Response.Cookies.Append("orderId", $"{order.Id}");
             }
             else
-            {
+            {    
                 order = await _orderService.GetAsync(int.Parse(cookie));
+               // var details = order.OrderDetails.SingleOrDefault();
                 
-                if (!order.OrderDetails.Any(d => d.EventID == model.Id))
+                if (order != null && !order.OrderDetails.Any(d => d.EventID == model.Id))
                 {
                     order.OrderDetails.Add(new OrderDetails
                     {
@@ -95,6 +97,7 @@ namespace MotorGliding.Controllers
             }
             //ViewData["Title"] = Tabs.Other;
             ViewBag.Tab = Tabs.Other;
+            ViewBag.OrderId = cookie;
             return View(order);
         }
 
@@ -146,8 +149,7 @@ namespace MotorGliding.Controllers
                     OrderId = int.Parse(orderId),
                     Email = user.Email
 
-                };
-                
+                };                
                 return View(model);
             }
             
@@ -159,6 +161,14 @@ namespace MotorGliding.Controllers
         {
             ViewBag.Tab = Tabs.Other;
             var orderId = int.Parse(Request.Cookies["orderId"]);
+            //zabiezpieczenie w przypadku podmienienia cookie
+            if (orderId != model.OrderId)
+            {
+                ViewBag.Error = "Zawartość koszyka uległa zmianie";
+                Response.Cookies.Append("orderId", $"{model.OrderId}");
+                return RedirectToAction("Error", "Home");
+            }
+
             model.OrderId = orderId;
             var userOrderId = await _orderService.CreateUserAsync(model);
             await _orderService.OrderAccept(orderId);

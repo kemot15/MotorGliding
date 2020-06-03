@@ -4,27 +4,27 @@
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
 
-<body class="bg02">
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-        <div class="bg-white tm-block">
-            <div class="row">
-                <div class="col-12">
-                    @if (Model == null)
-                    {
-                        <h2 class="tm-block-title d-inline-block">Dodaj wydarzenie</h2>
-                    }
-                    else
-                    {
-                        <h2 class="tm-block-title d-inline-block">Edytuj wydarzenie</h2>
-                        
+    <body class="bg02">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="bg-white tm-block">
+                <div class="row">
+                    <div class="col-12">
+                        @if (Model == null)
+                        {
+                            <h2 class="tm-block-title d-inline-block">Dodaj wydarzenie</h2>
+                        }
+                        else
+                        {
+                            <h2 class="tm-block-title d-inline-block">Edytuj wydarzenie</h2>
 
-                    }
+
+                        }
+                    </div>
                 </div>
-            </div>
-            <div asp-validation-summary="All" class="text-danger col-12"></div>
+                <div asp-validation-summary="All" class="text-danger col-12"></div>
                 <input type="hidden" asp-for="Id" />
                 <form asp-action="AddEdit" asp-controller="Event" method="post" enctype="multipart/form-data">
-                    
+
                     <div class="row mt-4 tm-edit-product-row">
                         <div class="col-xl-7 col-lg-7 col-md-12">
                             <section class="tm-edit-product-form">
@@ -41,9 +41,14 @@
                                     <span asp-validation-for="Description" class="text-danger"></span>
                                 </div>
                                 <div class="input-group mb-3">
+
                                     <label asp-for="Info" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
-                                    <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                                    
+                                    @*<div class="form-control col-xl-9 col-lg-8 col-md-8 col-sm-7">*@
+                                        <textarea asp-for="Info" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                                    @*</div>*@
                                     <span asp-validation-for="Info" class="text-danger"></span>
+
                                 </div>
                                 <div class="input-group mb-3">
                                     <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2" asp-for="Duration"></label>
@@ -62,17 +67,17 @@
                                         <input asp-for="Visible" type="checkbox" aria-label="Checkbox">
                                     </div>
                                 }
-                                        <div class="input-group mb-3">
-                                            <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
-                                                <button class="btn btn-primary" asp-action="List" formnovalidate>
-                                                    Wstecz
-                                                </button>
-                                                <button type="submit" class="btn btn-danger tm-btn-right">
-                                                    Zapisz
-                                                </button>
-                                            </div>
-                                        </div>
-                                </section>
+                                <div class="input-group mb-3">
+                                    <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                        <button class="btn btn-primary" asp-action="List" formnovalidate>
+                                            Wstecz
+                                        </button>
+                                        <button type="submit" class="btn btn-danger tm-btn-right">
+                                            Zapisz
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
                             <div class="tm-product-img-dummy mx-auto">
@@ -99,7 +104,12 @@
 
                     </div>
                 </form>
+            </div>
         </div>
-    </div>
-</body>
+
+
+
+        
+
+    </body>
 

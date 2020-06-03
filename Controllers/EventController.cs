@@ -72,7 +72,7 @@ namespace MotorGliding.Controllers
                 ModelState.AddModelError("", "Błąd wydarzenia.");
                 return View(model);
             }
-            if (model.Image.ImageFile != null)
+            if (model.Image !=null && model.Image.ImageFile != null)
             {
                 var image = await _imageService.GetAsync(model.Image.Id);
                 if (image != null)

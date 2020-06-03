@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AppLayout.cshtml";
 }
     <body class="bg02">
-        <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+        <div class="col-xl-12 col-lg-12 tm-md-12 tm-sm-12 tm-col">
             <div class="bg-white tm-block h-100">
                 <div class="row">
                     <div class="col-md-8 col-sm-12">
@@ -34,7 +34,7 @@
                                 </th>
                                 <td class="tm-product-name">@vehicle.Name</td>
                                 <td><a asp-action="Edit" asp-controller="Vehicle" asp-route-id="@vehicle.Id"><i class="fas fa-edit"></i></a></td>
-                                <td><a asp-action="Remove" asp-controller="Vehicle" asp-route-id="@vehicle.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
+                                <td><a asp-action="Remove" asp-controller="Vehicle" asp-route-id="@vehicle.Id" onclick="return confirm('Czy chcesz usunąć pojazd?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a></td>
                             </tr>
                             }
                         </tbody>

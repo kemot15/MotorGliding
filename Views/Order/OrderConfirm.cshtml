@@ -13,7 +13,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-offset-1 col-md-5 col-sm-12">
-                    <h2>Dziękujemy za złożenie zamówienia</h2>
+                    <h1>Dziękujemy za złożenie zamówienia</h1>
+                    <a asp-action="Index" asp-controller="Home" class="btn section-btn smoothScroll">Start</a>
                 </div>
 
                 <div class="col-md-offset-1 col-md-5 col-sm-12">
@@ -26,7 +27,7 @@
     <section>
         <h2>Dane z potwierdzeniem zamowienia zostały wysłane na adres e-mails</h2>
     </section>
-    <p>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</p>
+    @*<p>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</p>*@
 
 @await Html.PartialAsync("Main/_FooterPartialView")
 @await Html.PartialAsync("Main/_ScriptsPartialView")

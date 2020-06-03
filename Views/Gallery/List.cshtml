@@ -14,20 +14,52 @@
                     <h2 class="tm-block-title d-inline-block">Galeria</h2>
                     <a asp-action="Add" class="btn btn-info">Dodaj zdjęcia</a>
                     @*<input type="file" accept="image/*" class="btn btn-info d-inline-block"
-                *@
-                <div class="row">
-                    @foreach (var image in Model)
-                    {
-                    <div class="col-md-4">
-                        <img src="@image.Name" width="300" height="300" />
-                        <input type="checkbox" asp-for="@image.Active" />
-                        <input type="hidden" asp-for="@image.Id" />
-                        <a asp-action="Delete" asp-controller="Gallery" asp-route-id="@image.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a>
+                *@    
+                    
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            @foreach (var image in Model)
+                            {
+                            <div class="swiper-slide">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="@image.Name" alt="SkyClub">
+                                    <div class="card-body">
+                                        @*<h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
+                                        @if (image.Active)
+                                        {
+                                            <a asp-action="ActiveSwitch" asp-controller="Gallery" asp-route-id="@image.Id" type="button" class="btn btn-primary">Aktywne</a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="ActiveSwitch" asp-controller="Gallery" asp-route-id="@image.Id" type="button" class="btn btn-success">Nie aktywne</a>
+
+                                        }
+                                        @*<input type="checkbox" asp-for="@image.Active" />*@
+                                        <input type="hidden" asp-for="@image.Id" />
+                                        <a asp-action="Delete" asp-controller="Gallery" asp-route-id="@image.Id" onclick="return confirm('Czy chcesz usunąć zdjęcie?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                @*<img src="@image.Name" height="300" />
+                @if (image.Active)
+                {
+                    <a asp-action="ActiveSwitch" asp-controller="Gallery" asp-route-id="@image.Id" type="button" class="btn btn-primary">Widoczny</a>
+                }
+                else
+                {
+                    <a asp-action="ActiveSwitch" asp-controller="Gallery" asp-route-id="@image.Id" type="button" class="btn btn-success">Nie widoczny</a>
+
+                }
+                <input type="checkbox" asp-for="@image.Active" />
+                <input type="hidden" asp-for="@image.Id" />
+                <a asp-action="Delete" asp-controller="Gallery" asp-route-id="@image.Id" onclick="return confirm('Czy chcesz usunąć plan?')"><i class="fas fa-trash-alt tm-trash-icon"></i></a>*@
+
+                              }
+                              </div>
+                        </div>                    
                     </div>
-                    }
                 </div>
-                </div>
-            </div>
             <div asp-validation-summary="All" class="text-danger col-12"></div>
                 
         </div>

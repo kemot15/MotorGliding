@@ -34,6 +34,6 @@ namespace MotorGliding.Services.Interfaces
         /// </summary>
         /// <param name="id">Id obrazu do zmiany stanu</param>
         /// <returns></returns>
-        Task<bool> ActiveChange(int id);
+        Task<bool> ActiveChangeAsync(int id);
     }
 }

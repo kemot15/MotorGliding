@@ -132,7 +132,7 @@ namespace MotorGliding.Services
             return await _context.Images.Where(i => i.Category == Folders.gallery.ToString()).ToListAsync();
         }
 
-        public async Task<bool> ActiveChange(int id)
+        public async Task<bool> ActiveChangeAsync(int id)
         {
             var image = _context.Images.Find(id);
             if (image == null)

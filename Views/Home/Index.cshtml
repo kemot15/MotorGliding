@@ -62,127 +62,58 @@
     </div>
 </section>
 
-
-@*<section class="padding-large bg-light">
-    <div id="carouselExampleControls" class="carousel slide main-slider" data-ride="carousel">
-        <div class="carousel-inner container">
-            <div class="carousel-item active">
-                <div class="container w-75 d-flex">
-                    <div class="carousel-caption d-block">
-                        <h1>Lorem ipsum dolor sit amet</h1>
-                        <h3>
-                            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container w-75 d-flex">
-                    <div class="carousel-caption d-block">
-                        <h1>Torem ipsum dolor sit amet</h1>
-                        <h3>
-                            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="container w-75 d-flex">
-                    <div class="carousel-caption d-block">
-                        <h1>Borem ipsum dolor sit amet</h1>
-                        <h3>
-                            consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                            magna aliqua.
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-</section>*@
-
-
-
-
-
 <!-- ABOUT -->
 @if (Model.Vehicle.Count > 0)
 {
     <section id="about" data-stellar-background-ratio="0.5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            @for (int i = 0; i < Model.Vehicle.Count; i++)
-            {
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="@i" @(Html.Raw(i == 0 ? "class=\"active\"" : ""))></li>
-                </ol>
-            }
-            <div class="carousel-inner">
-                @for (int i = 0; i < Model.Vehicle.Count; i++)
-                {
+            
+            
+                <div class="swiper-container-vehicle">
+                    <div class="swiper-wrapper">
+                        @foreach (var item in @Model.Vehicle)
+                        {
+                              <div class="swiper-slide-vehicle">
+                                    
 
-                    <div class="carousel-item  @(Html.Raw(i==0 ? "class=\"active\"" : ""))">
-                        <div class="container">
-                            <div class="row">
-
-                                <div class="col-md-5 col-sm-6">
-                                    <div class="about-info">
-                                        <div class="section-title">
-                                            <h2>Sprzęt</h2>
-                                            <span class="line-bar">...</span>
-                                        </div>
-                                        <p><em>@Model.Vehicle[i].Name</em> - @Model.Vehicle[i].Description</p>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="about-info skill-thumb">
-                                        @foreach (var feature in Model.Vehicle[i].Features)
-                                        {
-                                            <strong>@feature.Name</strong>
-                                            <span class="pull-right">@feature.Value%</span>
-                                            <div class="progress">
-                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width:@feature.Value%"></div>
+                                        <div class="col-md-5 col-sm-6">
+                                            <div class="about-info">
+                                                <div class="section-title">
+                                                    <h2>Sprzęt</h2>
+                                                    <span class="line-bar">...</span>
+                                                </div>
+                                                <p><em>@item.Name</em> - @item.Description</p>
                                             </div>
-                                        }
+                                        </div>
 
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="about-info skill-thumb">
+                                                @foreach (var feature in item.Features)
+                                                {
+                                                    <strong>@feature.Name</strong>
+                                                    <span class="pull-right">@feature.Value%</span>
+                                                    <div class="progress">
+                                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width:@feature.Value%"></div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
 
-                                    </div>
-                                </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="about-image">
+                                                <img src="@item.Images.First().Name" class="img-responsive" alt="">
+                                            </div>
+                                        </div>
 
-                                <div class="col-md-4 col-sm-12">
-                                    <div class="about-image">
-                                        <img src="@Model.Vehicle[i].Images.First().Name" class="img-responsive" alt="">
-                                    </div>
-                                </div>
-
+                                   
                             </div>
-                        </div>
-
+                        }
                     </div>
-
-                }
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
+                </div>
     </section>
 }
+
+
+
 
 @await Html.PartialAsync("Main/_BlogPartialView", Model.Events)
 @await Html.PartialAsync("Main/_WorkPartialView", Model.Gallery)

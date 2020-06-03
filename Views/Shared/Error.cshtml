@@ -1,0 +1,34 @@
+﻿@model MainPageViewModel
+@{
+    ViewData["Title"] = "Bład";
+    Layout = "_Layout";
+}
+
+
+@await Html.PartialAsync("Main/_PreloaderPartialView")
+@await Html.PartialAsync("Main/_HeaderPartialView")
+
+
+<section id="home" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="home-info">
+                    <h1>@ViewBag.Error</h1>
+                    <a asp-action="Details" asp-controller="Order" class="btn section-btn smoothScroll">Start</a>
+                    <span>                        
+                        <small></small>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    @*<section id="about" data-stellar-background-ratio="0.5">
+       <div>
+           <h1></h1>
+        </div>
+    </section>
+}*@
+@await Html.PartialAsync("Main/_FooterPartialView")

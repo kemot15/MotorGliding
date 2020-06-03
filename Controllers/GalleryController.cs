@@ -1,16 +1,9 @@
-﻿
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.Enums;
 using MotorGliding.Models.Other;
-using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Interfaces;
-using SQLitePCL;
 
 namespace MotorGliding.Controllers
 {
@@ -56,9 +49,9 @@ namespace MotorGliding.Controllers
             return RedirectToAction("List");
         }
 
-        public IActionResult ActiveSwich (int id)
+        public async Task<IActionResult> ActiveSwitch (int id)
         {
-            _imageService.ActiveChange(id);
+            await _imageService.ActiveChangeAsync(id);
             return RedirectToAction("List");
         }
 

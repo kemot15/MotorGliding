@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.ViewModels;
@@ -59,6 +60,11 @@ namespace MotorGliding.Controllers.Home
             //info = "Wiadomość nie została wysłana";
             return Json(false);
 
+        }
+
+        public  IActionResult Error()
+        {
+            return View();
         }
     }
 }
