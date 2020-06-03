@@ -63,54 +63,61 @@
 </section>
 
 <!-- ABOUT -->
-@if (Model.Vehicle.Count > 0)
-{
-    <section id="about" data-stellar-background-ratio="0.5">
-            
-            
-                <div class="swiper-container-vehicle">
-                    <div class="swiper-wrapper">
+<section id="about" data-stellar-background-ratio="0.5">
+    <div class="container">
+            <div class="row">
+        @*<div class="swiper-container-vehicle">
+                <div class="swiper-wrapper">*@
+                    @if (Model.Vehicle.Count > 0)
+                    {
+
+
+
+
+
                         @foreach (var item in @Model.Vehicle)
                         {
-                              <div class="swiper-slide-vehicle">
-                                    
+                            <div class="swiper-slide-vehicle">
 
-                                        <div class="col-md-5 col-sm-6">
-                                            <div class="about-info">
-                                                <div class="section-title">
-                                                    <h2>Sprzęt</h2>
-                                                    <span class="line-bar">...</span>
-                                                </div>
-                                                <p><em>@item.Name</em> - @item.Description</p>
-                                            </div>
+
+                                <div class="col-md-5 col-sm-6">
+                                    <div class="about-info">
+                                        <div class="section-title">
+                                            <h2>Sprzęt</h2>
+                                            <span class="line-bar">...</span>
                                         </div>
+                                        <p><em>@item.Name</em> - @item.Description</p>
+                                    </div>
+                                </div>
 
-                                        <div class="col-md-3 col-sm-6">
-                                            <div class="about-info skill-thumb">
-                                                @foreach (var feature in item.Features)
-                                                {
-                                                    <strong>@feature.Name</strong>
-                                                    <span class="pull-right">@feature.Value%</span>
-                                                    <div class="progress">
-                                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width:@feature.Value%"></div>
-                                                    </div>
-                                                }
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="about-info skill-thumb">
+                                        @foreach (var feature in item.Features)
+                                        {
+                                            <strong>@feature.Name</strong>
+                                            <span class="pull-right">@feature.Value%</span>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@feature.Value" aria-valuemin="0" aria-valuemax="100" style="width:@feature.Value%"></div>
                                             </div>
-                                        </div>
+                                        }
+                                    </div>
+                                </div>
 
-                                        <div class="col-md-4 col-sm-12">
-                                            <div class="about-image">
-                                                <img src="@item.Images.First().Name" class="img-responsive" alt="">
-                                            </div>
-                                        </div>
+                                <div class="col-md-4 col-sm-12">
+                                    <div class="about-image">
+                                        <img src="@item.Images.First().Name" class="img-responsive" alt="">
+                                    </div>
+                                </div>
 
-                                   
+
                             </div>
                         }
+        }
                     </div>
+                @*</div>
+            </div>*@
                 </div>
     </section>
-}
 
 
 
