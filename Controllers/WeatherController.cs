@@ -31,12 +31,6 @@ namespace MotorGliding.Controllers
                 ViewBag.Info = "Miejscowość nie została odnaleziona";
                 return Index("Wrocław");
             }
-            
-            //if (json == null)
-            //{
-            //    ViewBag.Info = "Miejscowość nie została odnaleziona";
-            //    Index();
-            //}
             var result = (new JavaScriptSerializer()).Deserialize<ForecastWeather.Rootobject>(json);
             ForecastWeather.Rootobject rootobject = result;
 

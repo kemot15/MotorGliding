@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
+﻿
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
 using MotorGliding.Services.Interfaces;
-using SQLitePCL;
-
 namespace MotorGliding.Controllers
 {
     public class VehicleController : Controller
@@ -18,22 +14,23 @@ namespace MotorGliding.Controllers
         {
             _vehicleService = vehicleService;
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> List()
         {
             return View(await _vehicleService.ListAsync());
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
         {           
             return View();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(Vehicle vehicle)
         {
@@ -42,20 +39,20 @@ namespace MotorGliding.Controllers
             await _vehicleService.AddAsync(vehicle);
             return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
             return View(await _vehicleService.GetAsync(id)); 
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(Vehicle vehicle)
         {
             await _vehicleService.UpdateAsync(vehicle);
             return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Remove(int id)
         {
             await _vehicleService.RemoveAsync(id);

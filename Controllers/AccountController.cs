@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.VisualBasic;
@@ -111,6 +116,7 @@ namespace MotorGliding.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int id = 0)
         {
             ViewBag.Active = Tabs.UserSettings;
@@ -121,10 +127,7 @@ namespace MotorGliding.Controllers
             var address = await _accountService.GetUserAddress(user.Id);
             if (address != null) user.Address = address;
             else
-                user.Address = new Address();
-             
-
-//var selectListItem = role.Select(identityRole => new SelectListItem(identityRole.Name, identityRole.Name)).ToList();
+                user.Address = new Address();  
 
             var model = new EditUserViewModel
             {
@@ -141,6 +144,7 @@ namespace MotorGliding.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
             ViewBag.Active = Tabs.UserSettings;
@@ -167,7 +171,7 @@ namespace MotorGliding.Controllers
             if (result.Succeeded)
             {
                 ViewBag.Status = "Dane zostały pomyślnie zmienione";
-                return View();
+                return View(model);
             }
             foreach (var error in result.Errors)
             {
@@ -178,6 +182,7 @@ namespace MotorGliding.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult EditPass()
         {
             ViewBag.Active = Tabs.UserSettings;
@@ -185,6 +190,7 @@ namespace MotorGliding.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditPass(EditPassViewModel model)
         {
             ViewBag.Active = Tabs.UserSettings;
@@ -224,19 +230,31 @@ namespace MotorGliding.Controllers
             return View();
         }
 
-        public async Task<IActionResult> UserList()
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UserList(string selectedRole = "0")
         {
+            var roleList = new List<SelectListItem>();
+            roleList.Add(new SelectListItem {Text = "Wszystkie role", Value = "0" });
+            foreach (var role in RoleManager.Roles)
+            {
+                roleList.Add(new SelectListItem { Text = role.Name, Value = role.Id.ToString() });
+            }
+            ViewBag.RoleList = roleList;
             ViewBag.Active = Tabs.Settings;
-            var users = await UserManager.GetUsersInRoleAsync("user");
+            var roleName = await RoleManager.FindByIdAsync(selectedRole);
+            var users = selectedRole == "0" ? await UserManager.Users.ToListAsync() : await UserManager.GetUsersInRoleAsync(roleName.Name);           
             return View(users);
         }
+
+
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Lock(int id)
         {
             await _accountService.UserLockAsync(id);
             return RedirectToAction("UserList");
         }
 
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> SwitchRole (string roleName, int id)
         {
             var user = await _accountService.GetUser(id);

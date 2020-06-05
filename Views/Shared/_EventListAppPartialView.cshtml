@@ -1,23 +1,86 @@
-﻿@model IList<Event>    
-<div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-        <div class="bg-white tm-block h-100">
-            <h2 class="tm-block-title d-inline-block">Lista wydarzeń</h2>
-            <table class="table table-hover table-striped mt-3">
-                <tbody>
-                        <tr>
-                            <td><a asp-action="Index">Wszystkie</a></td>
-                            <td class="tm-trash-icon-cell"><a asp-action="Index"><i class="fas fa-search"></i></a></td>
-                        </tr>                    
-                    @foreach (var item in Model)
-                    { 
-                        <tr>
-                            <td><a asp-action="Index" asp-route-orderId="@item.Id">@item.Title - @item.Info</a></td>
-                            <td class="tm-trash-icon-cell"><a asp-action="Index" asp-route-orderId="@item.Id"><i class="fas fa-search"></i></a></td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+﻿@*@model IList<Event>*@
+@model DashboardSummaryViewModel
+<div class="col-xl-5 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+    <div class="bg-white tm-block h-100">
+     
 
-            @*<a href="#" class="btn btn-primary tm-table-mt">Add New Category</a>*@
-        </div>
+      
+                                    <div class="modal-title">
+                                        <h2>Filtruj</h2>
+                                    </div>
+       
+
+                                    <form asp-action="Index" asp-controller="Dashboard">
+                                        @*<input type="hidden"  asp-for="Page"/>*@
+                                        <div class="row">
+                                            <div class="form-group col-8">
+                                                <label asp-for="Event"></label>
+                                                <select asp-for="Event" asp-items="Model.Events.OrderBy(o => o.Value)" class="form-control"></select>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label asp-for="PageSize"></label>
+                                                <select asp-for="PageSize" asp-items="Model.PageSizes" class="form-control"></select>
+                                                <span class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="Name"></label>
+                                            <input asp-for="Name" class="form-control">
+                                            <span class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="LastName"></label>
+                                            <input asp-for="LastName" class="form-control">
+                                            <span class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="City"></label>
+                                            <input asp-for="City" class="form-control">
+                                            <span class="text-danger"></span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label asp-for="dateFrom"></label>
+                                                <input asp-for="dateFrom" type="date" class="form-control" />
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label asp-for="dateTo"></label>
+                                                <input asp-for="dateTo" type="date" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="tm-table-actions-row">
+                                            <button type="submit" class="btn btn-outline-info tm-table-actions-col-left">Filtruj</button>
+                                            <button type="submit" asp-action="ClearFilters" class="btn btn-outline-secondary tm-table-actions-col-right">Wyczyść filtry</button>
+                                         </div>
+
+                                    </form>
+                       
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="sign_in">
+                                         
+                                        </div>
+                                    </div>
+          
+
     </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker();
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>

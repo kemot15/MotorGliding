@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.Enums;
@@ -15,20 +16,20 @@ namespace MotorGliding.Controllers
         {
             _imageService = imageService;
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> List()
         {
             ViewBag.Active = Tabs.Gallery;
             return View(await _imageService.GetGalleryAsync(false));
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Add()
         {
             ViewBag.Active = Tabs.Gallery;
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(Image model)
         {
@@ -48,13 +49,13 @@ namespace MotorGliding.Controllers
             }
             return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ActiveSwitch (int id)
         {
             await _imageService.ActiveChangeAsync(id);
             return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete (int id)
         {
             var image = await _imageService.GetAsync(id);

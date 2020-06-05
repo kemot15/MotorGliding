@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using MotorGliding.Context;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.Other;

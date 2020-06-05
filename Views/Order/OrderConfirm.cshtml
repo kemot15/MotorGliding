@@ -1,4 +1,4 @@
-﻿
+﻿@model int
 @{
     ViewData["Title"] = "OrderConfirm";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -25,7 +25,8 @@
         </div>
     </section>
     <section>
-        <h2>Dane z potwierdzeniem zamowienia zostały wysłane na adres e-mails</h2>
+        <h2>Dane z potwierdzeniem zamowienia zostały wysłane na adres e-mail</h2>
+        <h3><a asp-action="Preview" asp-controller="Reports" asp-route-id="@Model">Link do potwierdzenia zamówienia</a></h3>
     </section>
     @*<p>@Html.ActionLink("Home", "Index", "Home", protocol: null, hostname: null, fragment: "home", routeValues: null, htmlAttributes: new { @class = "smoothScroll" })</p>*@
 

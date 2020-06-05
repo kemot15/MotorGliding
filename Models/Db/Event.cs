@@ -45,5 +45,6 @@ namespace MotorGliding.Models.Db
         [NotMapped]
         public int Quantity { get; set; }
 
+
     }
 }

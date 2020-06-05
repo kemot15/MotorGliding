@@ -39,17 +39,17 @@ namespace MotorGliding.Services
         {
             await _context.Vehicles.AddAsync(vehicle);
             await _context.SaveChangesAsync();
-            vehicle.Features1.Name = "Przyśpieszenie";
+            vehicle.Features1.Name = "Pojemość";
             vehicle.Features2.Name = "Moc";
             vehicle.Features3.Name = "Zwrotność";
-            vehicle.Features4.Name = "Nośność";
+            vehicle.Features4.Name = "Siła ciągu";
             vehicle.Features = new List<Features>() { vehicle.Features1, vehicle.Features2, vehicle.Features3, vehicle.Features4 };
             foreach(var item in vehicle.Features)
             {
                 item.SourceId = vehicle.Id;
                 await _context.Features.AddAsync(item);
             }
-            vehicle.Image = new Image() { Category = "Vehicle", Default = true, SourceId = vehicle.Id, Name = $"~/gallery/MainLogo_{vehicle.Id}" };
+            vehicle.Image = new Image() { Category = "Vehicle", Default = true, SourceId = vehicle.Id, Name = $"../gallery/MainLogo_3.png" };
             await _context.Images.AddAsync(vehicle.Image);
             return await _context.SaveChangesAsync() > 0;
         }

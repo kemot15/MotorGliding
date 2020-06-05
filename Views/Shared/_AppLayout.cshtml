@@ -31,6 +31,17 @@
     @*CKEditor*@
     <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
 
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
+    <!-- include your less or built css files  -->
+    <!--
+    bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
+    or
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+    -->
+
 </head>
 <body>
     @*<script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>*@
@@ -50,14 +61,7 @@
     @*swiper*@
     @*<script src="https://unpkg.com/swiper/js/swiper.js"></script>*@
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
-    <script>      
-        //$(window).bind("load", function () {
-        //    const ckeditor = $('div.cke_1');
-        //    ckeditor.addClass('form-control');
-        //    this.console.log(ckeditor);
-        //    console.log('zmieniono');
-
-        //});
+    <script>   
             var swiper = new Swiper('.swiper-container', {
             slidesPerView: 5,
             slidesPerColumn: 1,
@@ -66,45 +70,17 @@
                 el: '.swiper-pagination',
                 clickable: true,
             },            
-        });
+            });
+
         var editor = CKEDITOR.replace('Info');
-        //CKEDITOR.replace.prototype.changeStyle = function () {
-        //    const ckeditor = $('div.cke_1');
-        //    ckeditor.addClass('form-control');
-        //    this.console.log(ckeditor);
-        //    console.log('zmieniono');
-        //}
-        
-        //const text = document.getElementById('Info');
-        //var changeStyle = function () {
-        //    const ckeditor = $('cke_Info');
-        //    ckeditor.addClass('form-control');
-        //    this.console.log(ckeditor);
-           
-        //    console.log('zmieniono');
-        //    const cke = document.getElementById('cke_1');
-        //    // ckeditor.addClass('form-control');
-        //    cke.classList.add('form-control');
-        //    this.console.log(cke);
-        //}
 
 
-        
-        //changeStyle();
-        //
-        //const ckediv = $('div');
-        //ckediv.on('change', function () {
-        //    const ckeditor = $('cke_Info');
-        //    ckeditor.addClass('form-control');
-        //    this.console.log(ckeditor);
-
-        //    console.log('zmieniono');
-        //    const cke = document.getElementById('cke_1');
-        //    // ckeditor.addClass('form-control');
-        //    cke.classList.add('form-control');
-        //    this.console.log(cke);
-        //});
-        
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "dd/mm/yyyy",
+            todayBtn: true,
+            language: "pl",
+            autoclose: true
+        });
     </script>
 </body>
 </html>

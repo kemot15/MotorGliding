@@ -1,76 +1,109 @@
-﻿@model  DashboardSummaryViewModel
+﻿@model DashboardSummaryViewModel
 @{
     Layout = "_AppLayout";
 }
-@await Html.PartialAsync("_EventListAppPartialView", Model.Events)
-    <div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
-        <div class="bg-white tm-block h-100">
-            @*@await Html.PartialAsync("Calendar/_CalendarPartialView");*@
-            @*<div class="row">
-                <div class="col-md-8 col-sm-12">
-                    <h2 class="tm-block-title d-inline-block">Products</h2>
 
-                </div>
-                <div class="col-md-4 col-sm-12 text-right">
-                    <a href="add-product.html" class="btn btn-small btn-primary">Add New Product</a>
-                </div>
-            </div>*@
-            <div class="table-responsive">
-                <table class="table table-hover table-striped tm-table-striped-even mt-3">
-                    <thead>
-                        <tr class="tm-bg-gray">
-                            <th scope="col">&nbsp;</th>
-                            <th scope="col">Imię nazwisko</th>
-                            <th scope="col" class="Wydarzenie"></th>
-                            <th scope="col" class="text-center">Ilość lotów</th>
-                            <th scope="col">Koszt</th>
-                            <th scope="col">&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var order in Model.Orders)
+<div class="col-xl-7 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+    <div class="bg-white tm-block h-100">
+        <div class="modal-title">
+            <h2>Zamówienia</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                <thead>
+                    <tr class="tm-bg-gray">
+                        <th scope="col">Nr zamówienia</th>
+                        <th scope="col">Imię nazwisko</th>
+                        <th scope="col" class="text-center">Data</th>
+                        <th scope="col" class="text-center">Ilość lotów</th>
+                        <th scope="col">Koszt</th>
+                        <th scope="col">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Model.Orders)
+                    {
+                        var sum = 0.0;
+                        var qty = 0;
+
+                        @foreach (var detail in order.OrderDetails)
                         {
-                            var sum = 0.0; 
-
-                        @foreach(var detail in order.OrderDetails)
-                                {
                             sum += detail.Price * detail.Quantity;
+                            qty += detail.Quantity;
                         }
-                            <tr>
-                                <th scope="row">
-                                    <input type="checkbox" aria-label="Checkbox">
-                                </th>
-                                <td class="tm-product-name">@order.OrderUser.Name + @order.OrderUser.LastName</td>
-                                <td class="text-center">---</td>
-                                <td class="text-center">@order.OrderDetails.Count</td>
-                                <td>@sum</td>
-                                <td><a asp-action="OrderPreview" asp-controller="Order" asp-route-id="@order.Id"><i class="fas fa-folder-open"></i></a></td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    <tr>
 
-            <div class="tm-table-mt tm-table-actions-row">
-                <div class="tm-table-actions-col-left">
-                    <button class="btn btn-danger">Delete Selected Items</button>
-                </div>
-                <div class="tm-table-actions-col-right">
-                    <span class="tm-pagination-label">Page</span>
-                    <nav aria-label="Page navigation" class="d-inline-block">
+                        <td class="tm-product-name">@order.Id</td>
+                        <td class="tm-product-name">@order.OrderUser.Name @order.OrderUser.LastName</td>
+                        <td class="text-center">@order.CreateData.ToShortDateString()</td>
+                        <td class="text-center">@qty</td>
+                        <td>@sum</td>
+                        <td><a asp-action="OrderPreview" asp-controller="Order" asp-route-id="@order.Id"><i class="fas fa-folder-open"></i></a></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tm-table-actions-row">
+            <div class="tm-table-actions-col-left">
+            </div>
+            <div class="tm-table-actions-col-right">
+                <span class="tm-pagination-label">Strona</span>
+                <nav aria-label="Page navigation" class="d-inline-block">
+                    <form asp-action="Index">
+                        <input type="hidden" asp-for="Name" />
+                        <input type="hidden" asp-for="LastName" />
+                        <input type="hidden" asp-for="City" />
+                        <input type="hidden" asp-for="dateFrom" />
+                        <input type="hidden" asp-for="dateTo" />
+                        <input type="hidden" asp-for="PageSize" />
+                        <input type="hidden" asp-for="Event" />
                         <ul class="pagination tm-pagination">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            @if (ViewBag.Page > 1)
+                            {
+                                @*<a asp-action="Index" asp-route-page="@(ViewBag.Page - 1)">&lt;&lt;</a>*@
+                                <li class="page-item"><button type="submit" asp-route-page="1" class="page-link">&lt;&lt;</button></li>
+                                <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.Page - 1)" class="page-link">&lt;</button></li>
+                            }
                             <li class="page-item">
-                                <span class="tm-dots d-block">...</span>
+                                <span class="tm-dots d-block">@ViewBag.Page</span>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">13</a></li>
-                            <li class="page-item"><a class="page-link" href="#">14</a></li>
+                            @if (ViewBag.Page < ViewBag.PagesMax)
+                            {
+                                @*<a asp-action="Index" asp-route-page="@(ViewBag.Page + 1)">&gt;&gt;</a>*@
+                                <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.Page+1)" class="page-link">&gt;</button></li>
+                                <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.PagesMax)" class="page-link">&gt;&gt;</button></li>
+                            }
+                            @*<li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <span class="tm-dots d-block">...</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">13</a></li>
+            <li class="page-item"><a class="page-link" href="#">14</a></li>*@
                         </ul>
-                    </nav>
-                </div>
+                    </form>
+                </nav>
             </div>
         </div>
     </div>
-        
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@await Html.PartialAsync("_EventListAppPartialView", Model)
+
+@await Html.PartialAsync("Main/_ModalPartialView", Model)

@@ -32,7 +32,7 @@ namespace MotorGliding.Services
 
         public async Task<Order> GetPreviewAsync (int id)
         {
-            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).ThenInclude(a => a.Address).SingleAsync(o => o.Id == id);
+            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).ThenInclude(a => a.Address).SingleOrDefaultAsync(o => o.Id == id);
         }
 
         public async Task<bool> UpdateAsync (Order order)
@@ -43,20 +43,20 @@ namespace MotorGliding.Services
 
         public async Task<bool> RemoveAsync (int id)
         {
-            OrderDetails orderDetails = await _context.OrderDetails.SingleAsync(d => d.Id == id);
+            OrderDetails orderDetails = await _context.OrderDetails.SingleOrDefaultAsync(d => d.Id == id);
             _context.OrderDetails.Remove(orderDetails);
             return await _context.SaveChangesAsync() > 0;
         }
         public async Task<OrderDetails> GetOrderDetailsAsync(int id)
         {
-            return await _context.OrderDetails.SingleAsync(d => d.Id == id);
+            return await _context.OrderDetails.SingleOrDefaultAsync(d => d.Id == id);
         }
 
         public async Task<bool> UpdateOrderDetailsAsync(List<OrderDetails> detail)
         {
             foreach (var d in detail)
             {
-                var det = await _context.OrderDetails.SingleAsync(o => o.Id == d.Id);
+                var det = await _context.OrderDetails.SingleOrDefaultAsync(o => o.Id == d.Id);
                 det.Quantity = d.Quantity;
                 //_context.Entry(det).CurrentValues.SetValues(d);
             }           
@@ -105,10 +105,10 @@ namespace MotorGliding.Services
 
         public async Task<bool> UpdateOrderUserId(int orderId, int userId)
         {
-            var order = await _context.Orders.SingleAsync(o => o.Id == orderId);
-            var userOrder = await _context.OrderUsers.SingleAsync(u => u.Id == userId);
+            var order = await _context.Orders.SingleOrDefaultAsync(o => o.Id == orderId);
+            var userOrder = await _context.OrderUsers.SingleOrDefaultAsync(u => u.Id == userId);
             order.Accepted = true;
-            order.OrderUserId = userOrder.Id;
+            order.OrderUser = userOrder;
           //  order.OrderUser = userOrder;
             _context.Orders.Update(order);
             return await _context.SaveChangesAsync() > 0;
@@ -116,7 +116,7 @@ namespace MotorGliding.Services
 
         public async Task<bool> OrderAccept (int id)
         {
-            var order = await _context.Orders.SingleAsync(o => o.Id == id);
+            var order = await _context.Orders.SingleOrDefaultAsync(o => o.Id == id);
             order.Accepted = true;
             order.CreateData = DateTime.Now;
             _context.Orders.Update(order);
@@ -125,7 +125,7 @@ namespace MotorGliding.Services
 
         public async Task<IList<Order>> GetSummaryOrders()
         {
-            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).Where(o => o.Accepted).ToListAsync();
+            return await _context.Orders.Include(d => d.OrderDetails).Include(u => u.OrderUser).ThenInclude(a => a.Address).Where(o => o.Accepted).ToListAsync();
         }
 
         public async Task<IList<Order>> FilterOrderContainingEvent(int id)

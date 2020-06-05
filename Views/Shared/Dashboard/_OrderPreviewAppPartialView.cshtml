@@ -1,7 +1,7 @@
 ﻿@model Order
-<div class="col-xl-4 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+<div class="col-xl-5 col-lg-12 tm-md-12 tm-sm-12 tm-col">
     <div class="bg-white tm-block h-100">
-        <h2 class="tm-block-title d-inline-block">Szczegóły zamówienia</h2>
+        <h2 class="tm-block-title d-inline-block">Zamówienie @Model.Id</h2>
         <table class="table table-hover table-striped mt-3">
             <tbody>
                 <tr>
@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td>Data zamówienia</td>
-                    <td>@Model.CreateData</td>
+                    <td>@Model.CreateData.ToShortDateString()</td>
                 </tr>
                 <tr>
                     <td>Ulica</td>

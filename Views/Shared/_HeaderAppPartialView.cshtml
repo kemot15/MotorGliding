@@ -18,14 +18,9 @@
                             <a class="nav-link" asp-action="Index" asp-controller="Dashboard">Dashboard</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link" asp-action="Calendar" asp-controller="Dashboard">Kalendarz</a>
-                        </li>*@
-                        <li class="nav-item @(Html.Raw(ViewBag.Active == MotorGliding.Models.Enums.Tabs.Gallery ? "active" : "")) />">
-                            <a class="nav-link" asp-action="List" asp-controller="Gallery">Galeria</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-action="List" asp-controller="Event">Oferty</a>
-                        </li>
+            <a class="nav-link" asp-action="Calendar" asp-controller="Dashboard">Kalendarz</a>
+        </li>*@
+
                         @*<li class="nav-item @(Html.Raw(ViewBag.Active == "Account" ? "active" : "")) />">
             <a class="nav-link" asp-action="Account" asp-controller="Dashboard">Konto</a>
         </li>*@
@@ -39,23 +34,28 @@
                                 <a class="dropdown-item" asp-action="EditPass" asp-controller="Account">Zmień hasło</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false">
-                                Ustawienia
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Profil</a>
-                                @if (User.IsInRole("Admin") || User.IsInRole("User"))
-                                {
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item @(Html.Raw(ViewBag.Active == MotorGliding.Models.Enums.Tabs.Gallery ? "active" : "")) />">
+                                <a class="nav-link" asp-action="List" asp-controller="Gallery">Galeria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-action="List" asp-controller="Event">Oferty</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Ustawienia
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @*<a class="dropdown-item" href="#">Profil</a>*@
                                     <a class="dropdown-item" asp-action="UserList" asp-controller="Account">Użytkownicy</a>
                                     <a class="dropdown-item" asp-action="List" asp-controller="Vehicle">Sprzęt</a>
-                                }
-                                <a class="dropdown-item" href="#">Billing</a>
-                                <a class="dropdown-item" href="#">Customize</a>
-                            </div>
-
-                        </li>
+                                    @*<a class="dropdown-item" href="#">Billing</a>
+                    <a class="dropdown-item" href="#">Customize</a>*@
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item">

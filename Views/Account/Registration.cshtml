@@ -40,9 +40,9 @@
                                                 <span asp-validation-for="UserName" class="text-danger"></span>
                                                 <input asp-for="Email" class="form-control" placeholder="Email" required>
                                                 <span asp-validation-for="Email" class="text-danger"></span>
-                                                <input asp-for="Password" class="form-control" placeholder="Hasło" required>
+                                                <input type="password" asp-for="Password" class="form-control" placeholder="Hasło" required>
                                                 <span asp-validation-for="Password" class="text-danger"></span>
-                                                <input asp-for="RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
+                                                <input type="password" asp-for="RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
                                                 <span asp-validation-for="RepeatPassword" class="text-danger"></span>
                                                 <input type="submit" class="form-control" name="submit" value="Zarejestruj">
                                             </form>

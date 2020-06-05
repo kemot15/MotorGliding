@@ -12,7 +12,7 @@ namespace MotorGliding.Models.Db
     {
         public int Id { get; set; }
         public DateTime CreateData { get; set; } = DateTime.Now;
-        public int? OrderUserId { get; set; }
+        //public int? OrderUserId { get; set; }
         public OrderUser OrderUser { get; set; }
         public bool Accepted { get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
