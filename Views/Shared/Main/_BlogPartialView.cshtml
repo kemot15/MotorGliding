@@ -17,12 +17,12 @@
                     <div class="media blog-thumb">
                         <div class="media-object media-left">
                             @if (item.Image != null)
-                            { 
+                            {
                                 <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="@($"../images/{item.Image.Name}")" class="img-responsive" alt="~/images/logo-2.png" width="238" height="358"></a>
                             }
                             else
                             {
-                            <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="~/images/logo-2.png" class="img-responsive" alt="Brak zdjęcia"></a>
+                                <a asp-action="Details" asp-controller="Event" asp-route-id="@item.Id"><img src="~/images/logo-2.png" class="img-responsive" alt="Brak zdjęcia"></a>
                             }
 
                         </div>
@@ -35,6 +35,21 @@
                     </div>
                 </div>
             }
+            <div class="col-md-6 col-sm-6">
+                <!-- BLOG THUMB -->
+                <div class="media blog-thumb">
+                    <div class="media-object media-left">                     
+                            <a asp-action="Details" asp-controller="Order"><img src="~/img/logo.png" class="img-responsive" alt="Brak zdjęcia"></a>                    
+                    </div>
+                    <div class="media-body blog-info">
+                        @*<small><i class="fa fa-clock-o"></i>Czas trwania</small>*@
+                        <h3><a href="blog-detail.html"></a></h3>
+                        <p></p>
+                        <a asp-action="Details" asp-controller="Order"  class="btn section-btn">Koszyk</a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
