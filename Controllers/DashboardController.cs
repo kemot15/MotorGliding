@@ -11,9 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MotorGliding.Services.OrderFilter;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace MotorGliding.Controllers
 {
@@ -37,12 +35,13 @@ namespace MotorGliding.Controllers
         {
             //if (page == 1 && page != model.Page)
             //    page = model.Page;
+            
             if (page < 1) page = 1;
             model.Page = page;
             ViewBag.Active = Tabs.Dashboard;
             var events = await _eventService.ListAsync();
-            //var selectListItem = events.Select(e => new SelectListItem(e.Title, .Name)).ToList();
-            var orderFilter = new OrderNameFilter(new LastNameOrderFilter(new OrderCityFilter(new OrderDateFilter(new OrderEventFilter(new OrderPageSizeFilter(null))))));
+            var orderFilter = new LastNameOrderFilter(new OrderCityFilter(new OrderDateFilter(new OrderEventFilter(new OrderNameFilter (null)))));
+            var idFilter = new OrderIdFilter(null);
             var eventList = events.Select(e => new SelectListItem() { Text = e.Title, Value = e.Id.ToString() }).ToList();
             eventList.Add(new SelectListItem { Text = "Wszystkie", Value = "0" });
 
@@ -51,21 +50,26 @@ namespace MotorGliding.Controllers
                   new SelectListItem { Text = "10", Value = "10" },
                    new SelectListItem { Text = "25", Value = "25" },
                     new SelectListItem { Text = "50", Value = "50" },
-                new SelectListItem { Text = "Wszystkie", Value = "0" },
+                new SelectListItem { Text = "Wszystkie", Value = "1" },
             };
-
-
+            if (model.PageSize == "0")
+                model.PageSize = "10";
             if (User.IsInRole("Admin"))
             {
                 var summaryViewModel = new DashboardSummaryViewModel()
                 {
+                    PageSize = model.PageSize,
                     PageSizes = pageSizes,
                     Events = eventList,
-                    Orders = orderFilter.FilterResult(await _orderService.GetSummaryOrders(), model)
+                    Orders = model.OrderID != 0 ? idFilter.FilterResult(await _orderService.GetSummaryOrders(), model) : orderFilter.FilterResult(await _orderService.GetSummaryOrders(), model)
                 };
+                
 
                 ViewBag.Page = page;
-                ViewBag.PagesMax = Math.Ceiling((double)summaryViewModel.Orders.Count / double.Parse(summaryViewModel.PageSize));
+                ViewBag.PagesMax = summaryViewModel.PageSize == "1" ? 1 : Math.Ceiling((double)summaryViewModel.Orders.Count / double.Parse(summaryViewModel.PageSize));
+                var pageFilter = new OrderPageSizeFilter(null);
+                if(model.OrderID == 0)
+                summaryViewModel.Orders = pageFilter.FilterResult(summaryViewModel.Orders, model);
                 summaryViewModel.Page = page;
                 return View(summaryViewModel);
             }

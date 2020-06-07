@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Differencing;
 using MotorGliding.Models.Db;
 using MotorGliding.Models.Enums;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services.Email;
 using MotorGliding.Services.Interfaces;
+using Rotativa.AspNetCore;
+using System.IO;
+using Microsoft.AspNetCore.Razor.TagHelpers;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace MotorGliding.Controllers
 {
@@ -20,13 +25,15 @@ namespace MotorGliding.Controllers
         private readonly UserManager<User> UserManager;
         private readonly IAccountService _accountService;
         private readonly IEventService _eventService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public OrderController(IOrderService orderService, UserManager<User> userManager, IAccountService accountService, IEventService eventService)
+        public OrderController(IOrderService orderService, UserManager<User> userManager, IAccountService accountService, IEventService eventService, IWebHostEnvironment webHostEnvironment)
         {
             _orderService = orderService;
             UserManager = userManager;
             _accountService = accountService;
             this._eventService = eventService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -224,17 +231,29 @@ namespace MotorGliding.Controllers
                 return RedirectToAction("Error", "Home");
             }
 
-            Uri baseUri = new Uri("localhost:44386/");
-            Uri myUri = new Uri(baseUri, $"Reports/Previe?id={model.Id}");
-            //var link = \"\\Reports\\Preview?id={ model.OrderId }\";
+
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var path = $"{wwwRootPath}\\Reports\\{DateTime.Now.ToShortDateString()}_{model.OrderId}.pdf";
+          
+
+            //var result = new ViewAsPdf("OrderConfirmation", "Reports", model.OrderId)
+            //{
+            //    FileName = "test",
+            //    SaveOnServerPath = path
+            //};
+
+
+
 
             var userEmail = new EmailViewModel
             {
                 From = null,
                 Subject = "Potwierdzenie zamówienia ze strony SkyClub",
                 IsHtml = true,
-                Body = $"<h1>Potwierdzamy przyjęcie zamówienia</h1>{Environment.NewLine}<h2>{model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>Potwierdzamy otrzymanie zamówienia</div></br><a href=\"www.wp.pl\">Link do pobrania zamówienia</a>",
-                To = model.Email
+                Body = BodyHtmlGenerator(model.OrderId.ToString(), model.Name, model.LastName),
+                //$"<h1>Potwierdzamy przyjęcie zamówienia</h1>{Environment.NewLine}<h2>{model.OrderId} {model.Name} {model.LastName}</h2>{Environment.NewLine}<div>Potwierdzamy otrzymanie zamówienia</div></br><a href=\"{context}\">Link do pobrania zamówienia</a>",
+                To = model.Email,
+               // PathAttachment = path,
             };
 
             var adminEmail = new EmailViewModel
@@ -248,9 +267,10 @@ namespace MotorGliding.Controllers
             if (await EmailService.SendEmailAsync(userEmail))
             {
                 await EmailService.SendEmailAsync(adminEmail);
+                return RedirectToAction("OrderConfirm", "Order", new { id = model.OrderId }); //docelowo strona potwierdzenia      
                 
             }
-            return RedirectToAction("OrderConfirm", "Order", new { id = model.OrderId }); //docelowo strona potwierdzenia      
+            return RedirectToAction("Error", "Home");
             
         }
 
@@ -281,5 +301,51 @@ namespace MotorGliding.Controllers
         };
             return View(model);
         }
+
+
+        //generuje zamowienie w formacie pdf na serwerze, zwraca sciezke do pliku
+        public async Task<string> OrderConfirmationGeneratorAsync(int id)
+        {
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var order = await _orderService.GetPreviewAsync(id);
+            var path = $"{wwwRootPath}\\Reports\\{DateTime.Now.ToShortDateString()}_{id}.pdf";
+            var result = new ViewAsPdf("OrderConfirmation", "Reports", order) 
+            { 
+                FileName = "test",
+                SaveOnServerPath = path
+            };
+            result.ExecuteResult(ControllerContext);
+
+           // var bytefile = result.BuildFile();
+            //await result.ExecuteResultAsync(this.ControllerContext);
+            //result.SaveOnServerPath = path;
+            return  result.SaveOnServerPath;
+        }       
+
+
+        public async Task<IActionResult> Preview(int id, string path)
+        {            
+            var order = await _orderService.GetPreviewAsync(id);
+            var result = new ViewAsPdf("OrderConfirmation", "Reports", order)
+            {
+                FileName = "test",
+            };            
+            var test = result.SaveOnServerPath = path;
+            return result;
+        }
+
+        public string BodyHtmlGenerator(string orderId, string Name, string LastName)
+        {
+            var context = $"{HttpContext.Request.Host}/Reports/Preview/{orderId}";
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var path = $"{wwwRootPath}\\Reports\\EmailBodyOrderConfirmation.html";
+            var html = System.IO.File.ReadAllText(path);
+            html = html.Replace("{{ orderId }}", orderId);
+            html = html.Replace("{{ Name }}", Name);
+            html = html.Replace("{{ LastName }}", LastName);
+            html = html.Replace("{{ context }}", context);
+            return html;
+        }
+
     }
 }

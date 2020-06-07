@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace MotorGliding.Services.OrderFilter
 {
-    public class OrderDateFilter : IOrderFilter
+    public class OrderIdFilter : IOrderFilter
     {
         public IOrderFilter Successor { get; set; }
 
-        public OrderDateFilter(IOrderFilter successor)
+        public OrderIdFilter(IOrderFilter successor)
         {
             Successor = successor;
         }
@@ -19,11 +19,12 @@ namespace MotorGliding.Services.OrderFilter
         public IList<Order> FilterResult(IList<Order> orders, DashboardSummaryViewModel model)
         {
             IList<Order> result = orders;
-            //if (model.dateFrom == default && model.dateTo == default)
-                result = orders.Where(o => o.CreateData >= model.DateFrom && o.CreateData <= model.DateTo).ToList();
+            if (model.OrderID != 0)
+                result = orders.Where(o => o.Id == model.OrderID).ToList();
             if (Successor != null)
                 return Successor.FilterResult(result, model);
             return result;
         }
     }
 }
+

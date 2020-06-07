@@ -30,79 +30,92 @@
             <div class="col-md-offset-1 col-md-10 col-sm-12">
                 <!-- BLOG THUMB -->
                 <div class="blog-detail-thumb">
-                    <div class="blog-image">
-                        <img src="images/blog-detail-image.jpg" class="img-responsive" alt="Blog Image">
+                    @*<div class="blog-image">
+            <img src="images/blog-detail-image.jpg" class="img-responsive" alt="Blog Image">
+        </div>*@
+
+                    <div>
+                        <h3>Podsumowanie</h3>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
                     </div>
-                   
+
+
                     @if (Model != null && Model.Order.OrderDetails.Any())
                     {
-                        <form asp-action="Refresh" asp-controller="Order" method="post">
+                <form asp-action="Refresh" asp-controller="Order" method="post">
 
-                            <input type="hidden" asp-for="Order.Id" />
+                    <input type="hidden" asp-for="Order.Id" />
 
-                            <div class="table-responsive">
-                                <table class="table table-hover table-striped tm-table-striped-even mt-3">
-                                    <thead>
-                                        <tr class="tm-bg-gray">
-                                            <th scope="col">Nazwa</th>
-                                            <th scope="col">Cena</th>
-                                            <th scope="col">&nbsp;</th>
-                                            <th scope="col">&nbsp;</th>
-                                            <th scope="col">&nbsp;</th>
-                                            <th scope="col">Ilość</th>
-                                            @*<th scope="col">Filmowanie</th>*@
-                                            <th scope="col">Razem</th>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped tm-table-striped-even mt-3">
+                            <thead>
+                                <tr class="tm-bg-gray">
+                                    <th scope="col">Nazwa</th>
+                                    <th scope="col">Cena</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
+                                    <th scope="col">Ilość</th>
+                                    @*<th scope="col">Filmowanie</th>*@
+                                    <th scope="col">Razem</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{double sum = 0;}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{double sum = 0;}
 
-                                        @foreach (var detail in Model.Order.OrderDetails)
-                                        {
+                                @foreach (var detail in Model.Order.OrderDetails)
+                                {
 
-                                            @:<tr class="position">
-                                                  <th scope="row">
-                                                      <input type="hidden" asp-for="@detail.EventID" />
-                                                      <input type="hidden" asp-for="@detail.Id" />
-                                                      <input type="hidden" asp-for="@detail.OrderId" />
-                                                      @Model.EventList.SingleOrDefault(e => e.Id == detail.EventID).Title
-                                                  </th>
-                                                <td class="tm-product-name price"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
-                                                @*<input type="hidden" asp-for="@detail" />*@
-                                                <td class="tm-product-name">&nbsp;</td>
-                                                <td class="tm-product-name">&nbsp;</td>
-                                                <td class="tm-product-name">&nbsp;</td>
-                                                <td class="tm-product-name qty"><input type="number" min="1" step="1" asp-for="@detail.Quantity" /></td>
-                                                @*<td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>*@
-                                                <td class="tm-product-name part_sum">@(detail.Quantity*detail.Price)</td>
-                                                <td>
-                                                    @Html.ActionLink("", "Remove", "Order", protocol: null, hostname: null, fragment: "table", routeValues: new { detail.Id }, htmlAttributes: new { @class = "smoothScroll fas fa-trash-alt tm-trash-icon", @onclick = "return confirm('Czy chcesz usunąć pozycję?')" })
-                                                </td>
-                                            @:</tr>
-                                            sum += detail.Price * detail.Quantity;
+                                    @:<tr class="position">
+                                        <th scope="row">
+                                            <input type="hidden" asp-for="@detail.EventID" />
+                                            <input type="hidden" asp-for="@detail.Id" />
+                                            <input type="hidden" asp-for="@detail.OrderId" />
+                                            @Model.EventList.SingleOrDefault(e => e.Id == detail.EventID).Title
+                                        </th>
+                                        <td class="tm-product-name price"><input type="hidden" asp-for="@detail.Price" />@detail.Price</td>
+                                        @*<input type="hidden" asp-for="@detail" />*@
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name">&nbsp;</td>
+                                        <td class="tm-product-name qty"><input type="number" min="1" step="1" asp-for="@detail.Quantity" /></td>
+                                        @*<td class="tm-product-name "><input type="checkbox" asp-for="@detail.Camera" /> 50 zł</td>*@
+                                        <td class="tm-product-name part_sum">@(detail.Quantity*detail.Price)</td>
+                                        <td>
+                                            @Html.ActionLink("", "Remove", "Order", protocol: null, hostname: null, fragment: "table", routeValues: new { detail.Id }, htmlAttributes: new { @class = "smoothScroll fas fa-trash-alt tm-trash-icon", @onclick = "return confirm('Czy chcesz usunąć pozycję?')" })
+                                        </td>
+                                    @:</tr>
+                                    sum += detail.Price * detail.Quantity;
 
-                                        }
-                                    <tr>
-                                        <td class="bg-light" scope="col">&nbsp;</td>
-                                        <td class="bg-light" scope="col">&nbsp;</td>
-                                        <td class="bg-light" scope="col">&nbsp;</td>
-                                        <td class="bg-light" scope="col">&nbsp;</td>
-                                        <td class="bg-light" scope="col">&nbsp;</td>
-                                        <td scope="col" class="bg-warning"><b>Suma:</b></td>
-                                        <td scope="col" class="bg-success"><b id="sum">@sum</b></td>
+                                }
+                                <tr>
+                                    <td class="bg-light" scope="col">&nbsp;</td>
+                                    <td class="bg-light" scope="col">&nbsp;</td>
+                                    <td class="bg-light" scope="col">&nbsp;</td>
+                                    <td class="bg-light" scope="col">&nbsp;</td>
+                                    <td class="bg-light" scope="col">&nbsp;</td>
+                                    <td scope="col" class="bg-warning"><b>Suma:</b></td>
+                                    <td scope="col" class="bg-success"><b id="sum">@sum</b></td>
 
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            </div>
-                            <div class="col-md-1 col-sm-12">
-                                @*<button type="submit" class="btn btn-small btn-info">Odśwież koszyk</button>*@
-                                @*<button type="submit" asp-action="UserConfirm" asp-controller="Order" class="btn btn-small btn-info">Zatwierdź</button>*@
-                                @Html.ActionLink("Rezerwuj", "UserConfirm", "Order", null, new { @class = "btn btn-small btn-info" })
-                            </div>
-                     </form>
+                    </div>
+
+                    <div class="col-12" style=" text-align: left">
+                        @Html.ActionLink("Rezerwuj", "UserConfirm", "Order", null, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Pokaż inne oferty", "Index", "Home", protocol: null, hostname: null, fragment: "blog", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+
+                    </div>
+
+                    <div class="col-11"></div>
+
+                </form>
 
                     }
                     else

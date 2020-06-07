@@ -1,0 +1,135 @@
+﻿@model Vehicle
+@{
+    ViewData["Title"] = "Sprzęt";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+}
+
+<body class="bg02">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="bg-white tm-block">
+            <div class="row">
+                <div class="col-12">
+                    @if (Model == null)
+                    {
+                        <h2 class="tm-block-title d-inline-block">Dodaj sprzęt</h2>
+                    }
+                    else
+                    {
+                        <h2 class="tm-block-title d-inline-block">Edycja sprzętu</h2>
+
+
+                    }
+                </div>
+            </div>
+            <div asp-validation-summary="All" class="text-danger col-12"></div>
+            <input type="hidden" asp-for="Id" />
+            <form asp-action="AddEdit" asp-controller="Vehicle" method="post" enctype="multipart/form-data">
+
+                <div class="row mt-4 tm-edit-product-row">
+                    <div class="col-xl-7 col-lg-7 col-md-12">
+                        <section class="tm-edit-product-form">
+                            <div class="input-group mb-3">
+                                <label asp-for="Name" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
+                                </label>
+                                <input asp-for="Name" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="input-group mb-3">
+
+                                <label asp-for="Description" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2"></label>
+
+                                @*<div class="form-control col-xl-9 col-lg-8 col-md-8 col-sm-7">*@
+                                <textarea asp-for="Description" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required></textarea>
+                                @*</div>*@
+                                <span asp-validation-for="Description" class="text-danger"></span>
+
+                            </div>
+
+
+                            @if (Model == null || Model.Features == null)
+                            {
+
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Prędkość</label>
+                                    <input type="number" asp-for="Features1.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Moc</label>
+                                    <input type="number" asp-for="Features2.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Przyśpieszenie</label>
+                                    <input type="number" asp-for="Features3.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Nośność</label>
+                                    <input type="number" asp-for="Features4.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                </div>
+
+                            }else
+                            
+                            {
+                                @foreach (var feature in Model.Features)
+                                {
+                                    <div class="input-group mb-3">
+                                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">@feature.Name</div>
+                                        <input type="number" asp-for="@feature.Value" min="0" max="100" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7" rows="3" required>
+                                    </div>
+                                }
+
+                                <div class="input-group mb-3">
+                                    <label asp-for="Visible" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label"></label>
+                                    <input asp-for="Visible" type="checkbox" aria-label="Checkbox">
+                                </div>
+                            }
+                            <div class="input-group mb-3">
+                                <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                    <button class="btn btn-primary" asp-action="List" formnovalidate>
+                                        Wstecz
+                                    </button>
+                                    <button type="submit" class="btn btn-danger tm-btn-right">
+                                        Zapisz
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-4">
+                        <div class="tm-product-img-dummy mx-auto">
+                            @if (Model != null && Model.Image != null)
+                            {
+                                <input type="hidden" asp-for="@Model.Image.Id" />
+                                <input type="hidden" asp-for="@Model.Image.Name" />
+                                <img src="@("~/images/"+Model.Image.Name)" asp-append-version="true" width="250" height="250" class="fas fa-5x fa-cloud-upload-alt" id="imagePreview" />
+                            }
+                            else
+                            {
+                        @*<i class="fas fa-5x fa-cloud-upload-alt" id="Image_Icon" ></i>
+                            <img src="" asp-append-version="true" id="imagePreview" />*@
+                        
+                                <img src="~/images/about-image.jpg" asp-append-version="true" width="250" height="250" class="fas fa-5x fa-cloud-upload-alt" id="imagePreview" />
+
+                            }
+                        </div>
+                        <div class=" mt-3 mb-3">
+                            @*custom-file*@
+                            @*<input id="fileInput" type="file" style="display:none;" />*@
+                            <input asp-for="@Model.Image.ImageFile" accept="image/*" class="btn d-block mx-auto" />
+                        </div>
+                        @*onchange="ShowImagePreview(this, document.getElementById('imagePreview'));"*@
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+</body>
+
+<script>
+    var editorVehicle = CKEDITOR.replace('Description')
+</script>

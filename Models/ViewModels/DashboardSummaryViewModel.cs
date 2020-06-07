@@ -17,9 +17,9 @@ namespace MotorGliding.Models.ViewModels
         public string Event { get; set; } = "0";
         public IList<Order> Orders { get; set; }
         [DisplayName("Od")]
-        public DateTime dateFrom { get; set; } = DateTime.Now.AddDays(-1);
+        public DateTime DateFrom { get; set; } = DateTime.Now.AddDays(-1);
         [DisplayName("Do")]
-        public DateTime dateTo { get; set; } = DateTime.Now.AddDays(30);
+        public DateTime DateTo { get; set; } = DateTime.Now.AddDays(30);
         [DisplayName("Imię")]
         public string Name { get; set; }
         [DisplayName("Nazwisko")]
@@ -33,6 +33,8 @@ namespace MotorGliding.Models.ViewModels
         [DisplayName("Ilość na stronie")]
         public string PageSize { get; set; } = "0";
         public int Page { get; set; }
+        [DisplayName("Numer zamówienia")]
+        public int OrderID { get; set; }
 
     }
 }

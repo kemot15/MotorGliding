@@ -1,34 +1,35 @@
 ﻿
 $(function () {
-    console.log('test')
+    //console.log('test')
 
     //aktualizacja ilosci zamowionych rzeczy w koszyku + zapis do bazy danych
     const rows = document.querySelectorAll('tr.position');
     const suma = document.getElementById('sum');
     const table = document.getElementById('tab');
 
-    for (const tr of rows) {
-        let price = tr.querySelector('.price > input');
-        let partSum = tr.querySelector('.part_sum');
-        let qty = tr.querySelector('.qty > input');
-        let id = tr.querySelector('#detail_Id');
-        qty.addEventListener('change', function () {
-            var val = qty.value * price.value;
-            let tempSum = suma.innerText - partSum.innerText;
-            partSum.innerText = val;
-            suma.innerText = tempSum + val;
-            console.log(val);
-            console.log(suma.innerText);
-            if (table == null) {
-                fetch("/Order/RefreshPosition", {
-                    method: 'POST',
-                    headers: { 'Content-Type': "application/json" },
-                    body: JSON.stringify([{ id: parseInt(id.value), quantity: parseInt(qty.value) }])
-                })//.then(data => data.json()).then(result => console.log(result))
-            }
-        })
+    var changeValue = function () {
+        for (const tr of rows) {
+            let price = tr.querySelector('.price > input');
+            let partSum = tr.querySelector('.part_sum');
+            let qty = tr.querySelector('.qty > input');
+            let id = tr.querySelector('#detail_Id');
+            qty.addEventListener('change', function () {
+                var val = qty.value * price.value;
+                let tempSum = suma.innerText - partSum.innerText;
+                partSum.innerText = val;
+                suma.innerText = tempSum + val;
+                // console.log(val);
+                //   console.log(suma.innerText);
+                if (table == null) {
+                    fetch("/Order/RefreshPosition", {
+                        method: 'POST',
+                        headers: { 'Content-Type': "application/json" },
+                        body: JSON.stringify([{ id: parseInt(id.value), quantity: parseInt(qty.value) }])
+                    })//.then(data => data.json()).then(result => console.log(result))
+                }
+            })
+        }
     }
-
    
     //function refresh() {
             //    setInterval(function () {
@@ -69,6 +70,7 @@ $(function () {
     const imgBtn = document.getElementById('Image_ImageFile');
     const imgPreview = document.getElementById('imagePreview');
     const imgInput = document.getElementById('Image_ImageFile');
+    const imgIcon = document.getElementById('Image_Icon')
     console.log(imgBtn);
     imgBtn.addEventListener('change', function () {
         const file = this.files[0];
@@ -77,6 +79,7 @@ $(function () {
             const reader = new FileReader();
             //var preview = document.getElementById(imgPreview);
             imgPreview.style.display = 'block';
+           // imgIcon.hidden = true;
             reader.addEventListener('load', function () {
                 console.log(this);
                 imgPreview.setAttribute('src', this.result);
@@ -84,6 +87,7 @@ $(function () {
             reader.readAsDataURL(file);
         }
         else {
+           // imgIcon.hidden = false;
             //preview.style.display = '';
             imgPreview.setAttribute('src', '');
         }

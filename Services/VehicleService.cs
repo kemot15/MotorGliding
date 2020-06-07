@@ -35,7 +35,7 @@ namespace MotorGliding.Services
             //return await _context.Vehicles.Include(f => f.Features.Any(id => id.SourceId.Equals(f.Id))).Include(i => i.Images).FirstAsync();
         }
 
-        public async Task<bool> AddAsync(Vehicle vehicle) 
+        public async Task<int> AddAsync(Vehicle vehicle) 
         {
             await _context.Vehicles.AddAsync(vehicle);
             await _context.SaveChangesAsync();
@@ -51,13 +51,15 @@ namespace MotorGliding.Services
             }
             vehicle.Image = new Image() { Category = "Vehicle", Default = true, SourceId = vehicle.Id, Name = $"../gallery/MainLogo_3.png" };
             await _context.Images.AddAsync(vehicle.Image);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return vehicle.Id;
         }
 
-        public async Task<bool> UpdateAsync(Vehicle vehicle)
+        public async Task<int> UpdateAsync(Vehicle vehicle)
         {
             _context.Vehicles.Update(vehicle);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return vehicle.Id;
 
         }
 

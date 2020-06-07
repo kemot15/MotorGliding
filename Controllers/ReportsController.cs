@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +10,13 @@ namespace MotorGliding.Controllers
     public class ReportsController : Controller
     {
 
-        private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IOrderService _orderService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ReportsController(IWebHostEnvironment hostEnvironment, IOrderService orderService)
+        public ReportsController(IOrderService orderService, IWebHostEnvironment webHostEnvironment)
         {
-            _hostEnvironment = hostEnvironment;
             _orderService = orderService;
+            this._webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -35,26 +32,15 @@ namespace MotorGliding.Controllers
 
         public async Task<IActionResult> Preview(int id)
         {
-            //var wwwRootPath = _hostEnvironment.WebRootPath;
-            //string path = Path.Combine($"{wwwRootPath}/Reports/raport_{DateTime.Now}");
+            var wwwRootPath = _webHostEnvironment.WebRootPath;
+            var path = $"{wwwRootPath}\\Reports\\{DateTime.Now.ToShortDateString()}_{id}.pdf";
             var order = await _orderService.GetPreviewAsync(id);
-            var result = new ViewAsPdf("OrderConfirmation", "Reports", order);
-            //{
-            //    FileName = (path)
-            //};
+            var result = new ViewAsPdf("OrderConfirmation", "Reports", order)
+            {
+               // SaveOnServerPath = path                       //tworzy plik zamowienia na serwerze
+            };
             return result;
         }
-
-
-        public string AttachmentGenerator()
-        {
-            var wwwRootPath = _hostEnvironment.WebRootPath;
-            string path = Path.Combine($"{wwwRootPath}/Reports/raport_{DateTime.Now}");
-            //var result = new ViewAsPdf("OrderConfirmation", "Reports")
-            //{
-            //    FileName = (path)
-            //};
-            return path;
-        }
+      
     }
 }

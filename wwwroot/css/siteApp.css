@@ -39,26 +39,13 @@ body {
 }
 
 #cke_Info {
-    /*display: block;
-    width: 100%;*/
-    /*font-size: 1rem;*/
-    /*line-height: 1.5;
-    color: #495057;*/
-   /* transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    overflow: auto;*/
-/*    resize: vertical;
-    flex-direction: column;
-    position: relative;
-    -ms-flex: 1 1 auto;*/
     flex: 1 1 auto;
     width: 1%;
     margin-bottom: 0;
 }
-/**/
-/*textarea ::after {
-    background-color: yellow;
-    display: block;
-    width: 100%;
-    height: auto;
-}*/
 
+#cke_Description {
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}

@@ -1,4 +1,20 @@
-﻿<footer data-stellar-background-ratio="0.5">
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <img src="~/img/logo.png"></img>
+    <h1>Potwierdzenie zamówienia {{ orderId }}</h1>
+    <h2>W celu realizacji zamówienia prosimy o kontakt</h2>
+    <p>Dane</p>
+    Imie: {{ Name }} <br />
+    Nazwisko: {{ LastName }} <br />
+    <a href="{{ context }}">Link do zamówienia</a>
+</body>
+</html>
+<footer data-stellar-background-ratio="0.5">
     <div class="container">
         <div class="row">
 
@@ -43,7 +59,7 @@
                 <div class="footer-bottom">
                     <div class="col-md-6 col-sm-5">
                         <div class="copyright-text">
-                            <p>Copyright &copy; 2020 SkyClub</p>
+                            <p>Copyright &copy; 2017 Your Company</p>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-7">

@@ -86,7 +86,7 @@
                                             <h2>Sprzęt</h2>
                                             <span class="line-bar">...</span>
                                         </div>
-                                        <p><em>@item.Name</em> - @item.Description</p>
+                                        <p><em>@item.Name</em><br/>@Html.Raw(item.Description)</p>
                                     </div>
                                 </div>
 
@@ -105,7 +105,8 @@
 
                                 <div class="col-md-4 col-sm-12">
                                     <div class="about-image">
-                                        <img src="@item.Images.First().Name" class="img-responsive" alt="">
+                                        <img src="@($"../images/{item.Images.First().Name}")" class="img-responsive" alt="~/images/logo-2.png" width="238" height="358">
+                                        @*<img src="@item.Images.First().Name" class="img-responsive" alt="">*@
                                     </div>
                                 </div>
 

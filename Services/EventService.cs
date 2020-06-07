@@ -58,7 +58,7 @@ namespace MotorGliding.Services
             //    item.Image = await get
             //}
 
-            return await _context.Events.Include(g => g.Gallery).ToListAsync(); ;
+            return await _context.Events.Include(g => g.Gallery).ToListAsync();
         }
 
         /// <summary>

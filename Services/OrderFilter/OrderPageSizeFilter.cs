@@ -20,7 +20,7 @@ namespace MotorGliding.Services.OrderFilter
         {
             var pageSize = int.Parse(model.PageSize);
             IList<Order> result = orders;
-            if (model.PageSize != "0")
+            if (model.PageSize != "1")
                 result = orders.Skip((model.Page-1) * pageSize).Take(pageSize).ToList();
             if (Successor != null)
                 return Successor.FilterResult(result, model);

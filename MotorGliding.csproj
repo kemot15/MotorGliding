@@ -30,7 +30,6 @@
   <ItemGroup>
     <Folder Include="Models\ViewModels\Dashboard\" />
     <Folder Include="wwwroot\gallery\" />
-    <Folder Include="wwwroot\Reports\" />
     <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
 

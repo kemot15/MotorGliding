@@ -52,17 +52,17 @@
                 <span class="tm-pagination-label">Strona</span>
                 <nav aria-label="Page navigation" class="d-inline-block">
                     <form asp-action="Index">
+                        <input type="hidden" asp-for="OrderID" />
                         <input type="hidden" asp-for="Name" />
                         <input type="hidden" asp-for="LastName" />
                         <input type="hidden" asp-for="City" />
-                        <input type="hidden" asp-for="dateFrom" />
-                        <input type="hidden" asp-for="dateTo" />
+                        <input type="hidden" asp-for="DateFrom" />
+                        <input type="hidden" asp-for="DateTo" />
                         <input type="hidden" asp-for="PageSize" />
                         <input type="hidden" asp-for="Event" />
                         <ul class="pagination tm-pagination">
                             @if (ViewBag.Page > 1)
                             {
-                                @*<a asp-action="Index" asp-route-page="@(ViewBag.Page - 1)">&lt;&lt;</a>*@
                                 <li class="page-item"><button type="submit" asp-route-page="1" class="page-link">&lt;&lt;</button></li>
                                 <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.Page - 1)" class="page-link">&lt;</button></li>
                             }
@@ -71,18 +71,10 @@
                             </li>
                             @if (ViewBag.Page < ViewBag.PagesMax)
                             {
-                                @*<a asp-action="Index" asp-route-page="@(ViewBag.Page + 1)">&gt;&gt;</a>*@
                                 <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.Page+1)" class="page-link">&gt;</button></li>
                                 <li class="page-item"><button type="submit" asp-route-page="@(ViewBag.PagesMax)" class="page-link">&gt;&gt;</button></li>
                             }
-                            @*<li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <span class="tm-dots d-block">...</span>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">13</a></li>
-            <li class="page-item"><a class="page-link" href="#">14</a></li>*@
+
                         </ul>
                     </form>
                 </nav>
@@ -90,17 +82,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 

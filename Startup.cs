@@ -46,7 +46,7 @@ namespace MotorGliding
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env)// IWebHostEnvironment
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)// IWebHostEnvironment IHostingEnvironment
         {
             if (env.IsDevelopment())
             {
@@ -64,7 +64,8 @@ namespace MotorGliding
             app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
-            RotativaConfiguration.Setup(env);
+           // RotativaConfiguration.Setup(env);
+           RotativaConfiguration.Setup(env.WebRootPath, "Rotativa");
 
             app.UseEndpoints(endpoints =>
             {

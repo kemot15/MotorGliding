@@ -16,5 +16,7 @@ namespace MotorGliding.Models.ViewModels
         public string Body { get; set; }
         public int Phone { get; set; }
         public bool IsHtml { get; set; }
+
+        public string PathAttachment { get; set; }
     }
 }
