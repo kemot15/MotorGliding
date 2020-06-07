@@ -17,14 +17,34 @@
     <!-- https://fonts.google.com/specimen/Open+Sans -->
     <link rel="stylesheet" href="~/css/fontawesome.min.css">
     <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="~/css/fullcalendar.min.css">
-    <!-- https://fullcalendar.io/ -->
+    @*<link rel="stylesheet" href="~/css/fullcalendar.min.css">
+        https://fullcalendar.io/*@
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="~/css/tooplate.css">
+
+    @*swiper*@
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+    @*<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.css">*@
+    <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
+    <link href="~/css/siteApp.css" rel="stylesheet" />
+    @*CKEditor*@
+    <script src="//cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script>
+
+    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
+    <!-- include your less or built css files  -->
+    <!--
+    bootstrap-datetimepicker-build.less will pull in "../bootstrap/variables.less" and "bootstrap-datetimepicker.less";
+    or
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+    -->
+
 </head>
 <body>
-    <script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    @*<script src="~/js/jquery-3.3.1.min.js" type="text/javascript"></script>*@
     <div class="container">
         @await Html.PartialAsync("_HeaderAppPartialView")
         <div class="row tm-content-row tm-mt-big">
@@ -34,7 +54,34 @@
     </div>
 
     <script src="~/js/site.js" type="text/javascript"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
-    
+
+
+    @*swiper*@
+    @*<script src="https://unpkg.com/swiper/js/swiper.js"></script>*@
+    <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
+    <script>   
+            var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 5,
+            slidesPerColumn: 1,
+            spaceBetween: 1,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },            
+            });
+
+        var editor = CKEDITOR.replace('Info');
+       
+
+
+        $('#sandbox-container .input-daterange').datepicker({
+            format: "dd/mm/yyyy",
+            todayBtn: true,
+            language: "pl",
+            autoclose: true
+        });
+    </script>
+</body>
 </html>

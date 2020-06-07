@@ -1,0 +1,29 @@
+﻿@model Image
+@{
+    ViewData["Title"] = "Galeria";
+    Layout = "~/Views/Shared/_AppLayout.cshtml";
+
+}
+
+
+<body class="bg02">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="bg-white tm-block">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="tm-block-title d-inline-block">Dodaj zdjecia</h2>
+                    <form method="post" asp-action="Add" asp-controller="Gallery" enctype="multipart/form-data">
+                        <input type="file" accept="image/*" asp-for="@Model.Gallery" multiple class="btn btn-info d-inline-block" />
+                        <button type="submit" class="btn btn-info">Zapisz zdjęcia</button>
+                    </form>
+
+
+
+                </div>
+</div>
+<div asp-validation-summary="All" class="text-danger col-12"></div>
+
+</div>
+</div>
+</body>
+

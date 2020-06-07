@@ -1,4 +1,7 @@
 ﻿@model EditUserViewModel
+@inject RoleManager<IdentityRole<int>> RoleManager
+@inject UserManager<User> UserManager
+@inject MotorGliding.Services.Interfaces.IAccountService AccountService
 @{
     Layout = "_AppLayout";
 }
@@ -18,7 +21,7 @@
                     </div>
                     <div class="row">
                         <div asp-validation-summary="All" class="text-danger col-12"></div>
-                        <span class="text-info">@ViewBag.Status</span>
+                        <span class="text-info col-12">@ViewBag.Status</span>
                         <div class="col-12">
                             <form asp-action="Edit" asp-controller="Account" class="tm-signup-form">
                                 <input type="hidden" asp-for="AddressId" />
@@ -30,18 +33,19 @@
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                     <div class="form-group col-6">
+                                        <label asp-for="LastName" placeholde="Podaj nazwisko"></label>
+                                        <input asp-for="LastName" class="form-control validate" />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col col-lg-6 col-sm-12">
+                                        
                                         <label asp-for="Street"></label>
                                         <input asp-for="Street" class="form-control validate" />
                                         <span asp-validation-for="Street" class="text-danger"></span>
                                     </div>
-                                    
-                                </div>
-                                <div class="row">
-                                    <div class="form-group col col-lg-6 col-sm-12">
-                                        <label asp-for="LastName" placeholde="Podaj nazwisko"></label>
-                                        <input asp-for="LastName" class="form-control validate" />
-                                        <span asp-validation-for="LastName" class="text-danger"></span>
-                                    </div>                                    
                                     <div class="form-group col col-lg-3 col-sm-6">
                                         <label asp-for="ZipCode"></label>
                                         <input asp-for="ZipCode" class="form-control validate" />
@@ -51,7 +55,7 @@
                                         <label asp-for="City"></label>
                                         <input asp-for="City" class="form-control validate" />
                                         <span asp-validation-for="City" class="text-danger"></span>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-6">
@@ -66,20 +70,50 @@
                                     </div>
                                 </div>
 
-
+                                @if (User.IsInRole("Admin"))
+                                {
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-4">
-                                            <button asp-action="Index" asp-controller="Dashboard" class="btn btn-primary">
-                                                Wstecz
-                                            </button>
-                                        </div>
-                                        <div class="col-12 col-md-8 col-sm-8 tm-btn-right">
-                                            <button type="submit" class="btn btn-danger">
-                                                Zapisz zmiany
-                                            </button>
-                                        </div>
+                                        <div class="col col-6">
+                                            <p>
+                                                <a class="btn btn-outline-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                                    Role
+                                                </a>
+                                            </p>
+                                            @foreach (var role in RoleManager.Roles.ToList())
+                                            {
+                                                <div class="collapse" id="collapseExample">
+                                                    <div class="card card-body">
+                                                        @if (await UserManager.IsInRoleAsync(await AccountService.GetUser(Model.Id), role.Name))
+                                                        {
+                                                            <p>@role.Name</p><a type="button" asp-action="SwitchRole" asp-controller="Account" asp-route-roleName="@role.Name" asp-route-id="@Model.Id">Usuń z roli @role.Name</a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p>@role.Name</p><a type="button" asp-action="SwitchRole" asp-controller="Account" asp-route-roleName="@role.Name" asp-route-id="@Model.Id">Dodaj do roli @role.Name</a>
+                                                        }
+                                                    </div>                                           
+                                                </div>
+                                            }
+                                        </div>                                   
                                     </div>
+                                }
+
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <button asp-action="UserList" asp-controller="Account" class="btn btn-primary">
+                                            Wstecz
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-8 col-sm-8 tm-btn-right">
+                                        <button type="submit" class="btn btn-danger">
+                                            Zapisz zmiany
+                                        </button>
+                                    </div>
+                                </div>
                             </form>
+
+                            
+
                             <div asp-validation-summary="All" class="text-danger"></div>
                         </div>
                     </div>

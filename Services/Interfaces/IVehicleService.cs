@@ -11,8 +11,8 @@ namespace MotorGliding.Services.Interfaces
     {
         Task<IList<Vehicle>> ListAsync();
         Task<IList<Vehicle>> GetMainAsync();
-        Task<bool> AddAsync(Vehicle vehicle);
-        Task<bool> UpdateAsync(Vehicle vehicle);
+        Task<int> AddAsync(Vehicle vehicle);
+        Task<int> UpdateAsync(Vehicle vehicle);
         Task<bool> RemoveAsync(int id);
         Task<Vehicle> GetAsync(int id);
 

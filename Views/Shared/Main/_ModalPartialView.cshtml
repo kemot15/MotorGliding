@@ -1,5 +1,4 @@
-﻿@model RegLogViewModel
-@await Html.PartialAsync("_ValidationScriptsPartialView")
+﻿@model DashboardSummaryViewModel
 <section class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content modal-popup">
@@ -17,43 +16,46 @@
                         <div class="col-md-12 col-sm-12">
                             <div class="modal-title">
                                 <h2>SkyClub</h2>
-                            </div>
+                            </div>               
+                            <form asp-action="" asp-controller="">
+                                <div class="form-group">
+                                    <label asp-for="Event"></label>
+                                    <select asp-for="Event" asp-items="Model.Events" class="form-control"></select>
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Name"></label>
+                                    <input placeholder="Podaj imię" asp-for="Name" class="form-control">
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LastName"></label>
+                                    <input asp-for="LastName" class="form-control">
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="City"></label>
+                                    <input asp-for="City" class="form-control">
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DateFrom"></label>
+                                    <input asp-for="DateFrom" type="date" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="DateTo"></label>
+                                    <input asp-for="DateTo" type="date" class="form-control" />
+                                </div>
 
-                            <!-- NAV TABS -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="active"><a href="#sign_in" aria-controls="sign_in" role="tab" data-toggle="tab">Logowanie</a></li>
-                                <li><a href="#sign_up" aria-controls="sign_up" role="tab" data-toggle="tab">Rejestracja</a></li>
-                            </ul>
+                                <button type="submit" class="btn btn-outline-info">Filtruj</button>
 
+                            </form>
                             <!-- TAB PANES -->
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade in active" id="sign_in">
                                     @*<form asp-action="Login" asp-controller="Account" method="post">*@
-                                        <form>
-                                            <input asp-for="LoginViewModel.Login" class="form-control" placeholder="Email" required>
-                                            <span asp-validation-for="LoginViewModel.Password" class="valid-tooltip"></span>
-                                            <input asp-for="LoginViewModel.Password" type="password" class="form-control" placeholder="Password" required>
-                                            <span asp-validation-for="LoginViewModel.Password" class="valid-feedback"></span>
-                                            <input type="submit" class="form-control" name="submit" value="Zaloguj" id="login_button">
-                                            @*<a href="https://www.facebook.com/templatemo">Forgot your password?</a>*@
-                                        </form>
-</div>
 
-                                <div role="tabpanel" class="tab-pane fade in" id="sign_up">
-                                    <form asp-action="Registration" asp-controller="Account" method="post">
-                                        <input asp-for="RegistrationViewModel.UserName" type="text" class="form-control" placeholder="Name" required>
-                                        <span asp-validation-for="RegistrationViewModel.UserName"></span>
-                                        <input asp-for="RegistrationViewModel.Email" class="form-control" placeholder="Email" required>
-                                        <span asp-validation-for="RegistrationViewModel.Email"></span>
-                                        <input asp-for="RegistrationViewModel.Password" class="form-control" placeholder="Password" required>
-                                        <span asp-validation-for="RegistrationViewModel.Password"></span>
-                                        <input asp-for="RegistrationViewModel.RepeatPassword" class="form-control" placeholder="Powtórz hasło" required>
-                                        <span asp-validation-for="RegistrationViewModel.RepeatPassword"></span>
-                                        <input type="submit" class="form-control" name="submit" value="Zarejestruj">
-
-                                    </form>
                                 </div>
-                                <div asp-validation-summary="All"></div>
                             </div>
                         </div>
                     </div>
@@ -62,3 +64,19 @@
         </div>
     </div>
 </section>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker();
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>

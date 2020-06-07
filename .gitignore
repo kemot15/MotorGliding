@@ -5,6 +5,7 @@
 
 Migrations/
 images/
+appsetings.json
 
 # User-specific files
 *.rsuser

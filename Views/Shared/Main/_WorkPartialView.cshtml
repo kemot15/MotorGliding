@@ -1,70 +1,38 @@
-﻿<section id="work" data-stellar-background-ratio="0.5">
-    <div class="container">
-        <div class="row">
+﻿@model IList<Image>
+    <section id="work" data-stellar-background-ratio="0.5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="section-title">
+                        <h2>Galeria</h2>
+                        <span class="line-bar">...</span>
+                    </div>
+                </div>
+                <div class="swiper-container">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        @foreach (var image in Model)
+                        {
+                            <div class="col-md-3 col-sm-6 swiper-slide">
+                                <!-- WORK THUMB -->
+                                <div class="work-thumb">
+                                    <a href="~/@MotorGliding.Models.Other.Folders.gallery.ToString()/@image.Name" class="image-popup">
+                                        <img src="../@MotorGliding.Models.Other.Folders.gallery.ToString()/@image.Name" class="img-responsive d-block w-100" alt="SkyClub">
 
-            <div class="col-md-12 col-sm-12">
-                <div class="section-title">
-                    <h2>Galeria</h2>
-                    <span class="line-bar">...</span>
+                                        <div class="work-info">
+                                            <h3>SkyClub</h3>
+                                            <small>Loty widokowe</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- If we need navigation buttons -->
+                    @*<div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>*@
                 </div>
             </div>
-
-            <div class="col-md-3 col-sm-6">
-                <!-- WORK THUMB -->
-                <div class="work-thumb">
-                    <a href="~/gallery/2020_05_23_EPWS_00398.jpg" class="image-popup">
-                        <img src="~/gallery/2020_05_23_EPWS_00398.jpg" class="img-responsive" alt="Work">
-
-                        <div class="work-info">
-                            <h3>Clean &amp; Minimal</h3>
-                            <small>Product Design</small>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <!-- WORK THUMB -->
-                <div class="work-thumb">
-                    <a href="~/gallery/2020_05_23_EPWS_00401.jpg" class="image-popup">
-                        <img src="~/gallery/2020_05_23_EPWS_00401.jpg" class="img-responsive" alt="Work">
-
-                        <div class="work-info">
-                            <h3>Studio Bag</h3>
-                            <small>Branding</small>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <!-- WORK THUMB -->
-                <div class="work-thumb">
-                    <a href="~/gallery/2020_05_23_EPWS_00421.jpg" class="image-popup">
-                        <img src="~/gallery/2020_05_23_EPWS_00421.jpg" class="img-responsive" alt="Work">
-
-                        <div class="work-info">
-                            <h3>Frame Design</h3>
-                            <small>Photography</small>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            @*<div class="col-md-3 col-sm-6">
-                 WORK THUMB 
-                <div class="work-thumb">
-                    <a href="images/work-image4.jpg" class="image-popup">
-                        <img src="images/work-image4.jpg" class="img-responsive" alt="Work">
-
-                        <div class="work-info">
-                            <h3>Paint Work</h3>
-                            <small>Art, Design</small>
-                        </div>
-                    </a>
-                </div>
-            </div>*@
-
         </div>
-    </div>
-</section>
+    </section>

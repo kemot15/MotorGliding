@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.Db;
+using MotorGliding.Models.Enums;
 using MotorGliding.Models.Other;
 using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
@@ -21,13 +23,13 @@ namespace MotorGliding.Controllers
             _calendarService = calendarService;
             _imageService = imageService;
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             //ViewData["Title"] = Tabs.Other;
-            return View();
+            return RedirectToAction("List");
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> List()
         {
             //ViewData["Title"] = Tabs.Other;
@@ -39,19 +41,23 @@ namespace MotorGliding.Controllers
         //{
         //    return View();
         //}
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> AddEdit(int id = 0)
         {
             if (id == 0)
             return View();
             var item = await _eventService.GetAsync(id);
+            if (item == null)
+            {
+                return View();
+            }
             var image = await _imageService.GetMainAsync(item.Id, EventCategory.Event.ToString());
             if (image != null)
                 item.Image = image;
             return View(item);
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> AddEdit (Event model)
         {
@@ -72,7 +78,7 @@ namespace MotorGliding.Controllers
                 ModelState.AddModelError("", "Błąd wydarzenia.");
                 return View(model);
             }
-            if (model.Image.ImageFile != null)
+            if (model.Image !=null && model.Image.ImageFile != null)
             {
                 var image = await _imageService.GetAsync(model.Image.Id);
                 if (image != null)
@@ -125,6 +131,7 @@ namespace MotorGliding.Controllers
         /// </summary>
         /// <param name="id">Id Eventu do usuniecia</param>
         /// <returns>Przekierowanie do listy Eventow</returns>
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> Remove (int id)
         {
             var item = await _eventService.GetAsync(id);
@@ -171,6 +178,7 @@ namespace MotorGliding.Controllers
         /// <returns>Zwraca Event</returns>
         public async Task<IActionResult> Details(int id)
         {
+            ViewBag.Tab = Tabs.Other;
             return View(await _eventService.GetAsync(id));
         }
 

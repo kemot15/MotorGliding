@@ -30,79 +30,101 @@
 <section class="weather-content weathergroup">
     <section>
         <form asp-action="Index">
-            <h2 class="text-danger">@ViewBag.Info</h2>
-            <b>Wpisz miasto:</b> <input name="city" class="tm-block-title" />
-            <button type="submit" class="btn btn-info">Sprawdź pogodę</button>
-            <h2>Pogoda dla: @Model.rootobject.city.name</h2>
+
+            @*<b>Wpisz miasto:</b> <input name="city" class="tm-block-title" />
+        <button type="submit" class="btn btn-info">Sprawdź pogodę</button>
+        <h2>Pogoda dla: @Model.rootobject.city.name</h2>*@
+
+            <div class="input-group mb-3">
+                <h2 class="text-danger">@ViewBag.Info</h2>
+                <div class="input-group-prepend">
+                    <h2><span class="input-group-text" id="city">Podaj miasto</span></h2>
+                </div>
+                <input name="city" type="text" class="form-control" placeholder="Miasto" aria-label="city" aria-describedby="city">
+                <button type="submit" class="btn btn-info">Sprawdź pogodę</button>
+                <h2>Pogoda dla: @Model.rootobject.city.name</h2>
+            </div>          
         </form>
     </section>
 
     <div id="monday">
         <div class="row">
-            <div class="col-md-4">
-                <div class="weather-item">
-                    <h1>@DateTime.Now.DayOfWeek</h1>
-                    <div class="weather-icon">
-                        @{var icon = $"http://openweathermap.org/img/wn/{@Model.root.weather[0].icon}@2x.png";}
-                        <img src="@icon" alt="">
+
+         
+
+                <div class="col-md-4">
+                    <div class="weather-item">
+                        <h1>@DateTime.Now.DayOfWeek</h1>
+                        <div class="weather-icon">
+                            @{var icon = $"http://openweathermap.org/img/wn/{@Model.root.weather[0].icon}@2x.png";}
+                            <img src="@icon" alt="">
+                        </div>
+
+                     
+
+                            <h2>@Model.root.main.temp&deg;C</h2>
+                            <h4>@Model.root.weather[0].description</h4>
+                            <ul class="time-weather">
+                                <li>Min<span>@Model.root.main.temp_min&deg;C</span></li>
+                                <li>Max<span>@Model.root.main.temp_max&deg;C</span></li>
+                                <li>Ciśnieni<span>@Model.root.main.pressure hPa</span></li>
+                                <li>Wilgotność<span>@Model.root.main.humidity%</span></li>
+                            </ul>
+
+                     
+
+                        </div>
                     </div>
-                    <h2>@Model.root.main.temp&deg;C</h2>
-                    <h4>@Model.root.weather[0].description</h4>
-                    <ul class="time-weather">
-                        <li>Min<span>@Model.root.main.temp_min&deg;C</span></li>
-                        <li>Max<span>@Model.root.main.temp_max&deg;C</span></li>
-                        <li>Ciśnieni<span>@Model.root.main.pressure hPa</span></li>
-                        <li>Wilgotność<span>@Model.root.main.humidity%</span></li>
-                    </ul>
-                </div>
+
+         
+
+                @for (int i = 3; i < 19; i += 8)
+                {
+                    <div class="col-md-4">
+                        <div class="weather-item">
+                            <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
+                            <div class="weather-icon">
+                                @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
+                                <img src="@icon" alt="">
+                            </div>
+                            <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
+                            <h4>@Model.rootobject.list[i].weather[0].description</h4>
+                            <ul class="time-weather">
+                                <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString()<span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+
             </div>
-            @for (int i = 3; i < 19; i += 8)
-            {
-                <div class="col-md-4">
-                    <div class="weather-item">
-                        <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
-                        <div class="weather-icon">
-                            @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
-                            <img src="@icon" alt="">
+            <div class="row">
+                @for (int i = 20; i < 43; i += 8)
+                {
+
+                    <div class="col-md-4">
+                        <div class="weather-item">
+                            <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
+                            <div class="weather-icon">
+                                @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
+                                <img src="@icon" alt="">
+                            </div>
+                            <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
+                            <h4>@Model.rootobject.list[i].weather[0].description</h4>
+                            <ul class="time-weather">
+                                <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
+                                <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
+                            </ul>
                         </div>
-                        <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
-                        <h4>@Model.rootobject.list[i].weather[0].description</h4>
-                        <ul class="time-weather">
-                            <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString()<span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
-                        </ul>
                     </div>
-                </div>
-            }
+                }
 
-        </div>  
-        <div class="row">
-            @for (int i = 20; i < 43; i += 8)
-            {
-
-                <div class="col-md-4">
-                    <div class="weather-item">
-                        <h1>@DateTime.Parse(Model.rootobject.list[i].dt_txt).DayOfWeek</h1>
-                        <div class="weather-icon">
-                            @{ icon = $"http://openweathermap.org/img/wn/{@Model.rootobject.list[i].weather[0].icon}@2x.png";}
-                            <img src="@icon" alt="">
-                        </div>
-                        <h2>@Model.rootobject.list[i].main.temp&deg;C</h2>
-                        <h4>@Model.rootobject.list[i].weather[0].description</h4>
-                        <ul class="time-weather">
-                            <li>@DateTime.Parse(Model.rootobject.list[i - 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 2].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i - 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i - 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i + 1].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 1].main.temp&deg;C</span></li>
-                            <li>@DateTime.Parse(Model.rootobject.list[i + 2].dt_txt).ToShortTimeString() <span>@Model.rootobject.list[i + 2].main.temp&deg;C</span></li>
-                        </ul>
-                    </div>
-                </div>
-            }
-
+            </div>
         </div>
-    </div>
 
 </section>
 

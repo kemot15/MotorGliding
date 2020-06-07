@@ -1,15 +1,18 @@
-﻿@model Order
+﻿@model OrderWithDetailsViewModel
 @{
     Layout = "_AppLayout";
 }
-@await Html.PartialAsync("Dashboard/_OrderPreviewAppPartialView", Model)
-<div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+@await Html.PartialAsync("Dashboard/_OrderPreviewAppPartialView", Model.Order)
+<div class="col-xl-7 col-lg-12 tm-md-12 tm-sm-12 tm-col">
     <div class="bg-white tm-block h-100">
+        <h2 class="tm-block-title d-inline-block">Pozycje</h2>
+
+
         <div class="table-responsive">
             <table class="table table-hover table-striped tm-table-striped-even mt-3">
                 <thead>
                     <tr class="tm-bg-gray">
-                        <th scope="col">Wydarzenie</th>
+                        <th scope="col">Rodzaj lotu</th>
                         <th scope="col" class="text-center">Ilość</th>
                         <th scope="col" class="text-center">Cena</th>
                         <th scope="col" class="text-center">Koszt</th>
@@ -17,24 +20,34 @@
                 </thead>
                 <tbody>
                     @{var sum = 0.0; }
-                    @foreach (var order in Model.OrderDetails)
+                    @foreach (var order in Model.Order.OrderDetails)
                     {
                         sum += order.Price * order.Quantity;
-                        <tr>                            
-                            <td class="tm-product-name">@order.EventTitle</td>
+                        <tr>
+                            <td class="tm-product-name">@Model.EventList.SingleOrDefault(e => e.Id == order.EventID).Title</td>
                             <td class="text-center">@order.Quantity</td>
                             <td class="text-center">@order.Price</td>
-                            <td class="text-center">@sum</td>
+                            <td class="text-center">@(order.Price * order.Quantity)</td>
                         </tr>
                     }
+                    <tr>
+                        <td class="tm-product-name"></td>
+                        <td class="text-center"></td>
+                        <td class="text-center">Suma</td>
+                        <td class="text-center">@sum</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="tm-table-mt tm-table-actions-row">
+            <div class="tm-table-actions-col-left">
+                <a type="button" asp-action="Preview" asp-controller="Reports" asp-route-id="@Model.Order.Id" class="btn btn-outline-info">Wydrukuj potwierdzenie zamówienia</a>
+            </div>
             <div class="tm-table-actions-col-right">
                 <a type="button" asp-action="Index" asp-controller="Dashboard" class="btn btn-outline-info">Wstecz</a>
-            </div>           
+
+            </div>
         </div>
     </div>
 </div>

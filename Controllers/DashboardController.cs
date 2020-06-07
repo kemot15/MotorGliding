@@ -6,9 +6,16 @@ using MotorGliding.Models.ViewModels;
 using MotorGliding.Services;
 using MotorGliding.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using MotorGliding.Models.Enums;
+using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MotorGliding.Services.OrderFilter;
+using System.Collections.Generic;
 
 namespace MotorGliding.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         private readonly ICalendarService _calendarService;
@@ -24,20 +31,55 @@ namespace MotorGliding.Controllers
             _orderService = orderService;
         }
 
-        public async Task<IActionResult> Index(int orderId, int eventId)
+        public async Task<IActionResult> Index(DashboardSummaryViewModel model, int page)
         {
-            ViewBag.Active = "Dashboard";
+            //if (page == 1 && page != model.Page)
+            //    page = model.Page;
+            
+            if (page < 1) page = 1;
+            model.Page = page;
+            ViewBag.Active = Tabs.Dashboard;
+            var events = await _eventService.ListAsync();
+            var orderFilter = new LastNameOrderFilter(new OrderCityFilter(new OrderDateFilter(new OrderEventFilter(new OrderNameFilter (null)))));
+            var idFilter = new OrderIdFilter(null);
+            var eventList = events.Select(e => new SelectListItem() { Text = e.Title, Value = e.Id.ToString() }).ToList();
+            eventList.Add(new SelectListItem { Text = "Wszystkie", Value = "0" });
+
+            var pageSizes = new List<SelectListItem> { 
+                 new SelectListItem { Text = "5", Value = "5" },
+                  new SelectListItem { Text = "10", Value = "10" },
+                   new SelectListItem { Text = "25", Value = "25" },
+                    new SelectListItem { Text = "50", Value = "50" },
+                new SelectListItem { Text = "Wszystkie", Value = "1" },
+            };
+            if (model.PageSize == "0")
+                model.PageSize = "10";
             if (User.IsInRole("Admin"))
             {
                 var summaryViewModel = new DashboardSummaryViewModel()
                 {
-                    Events = await _eventService.ListAsync(),
-                    Orders = orderId == 0 ? await _orderService.GetSummaryOrders() : await _orderService.FilterOrderContainingEvent(orderId)
+                    PageSize = model.PageSize,
+                    PageSizes = pageSizes,
+                    Events = eventList,
+                    Orders = model.OrderID != 0 ? idFilter.FilterResult(await _orderService.GetSummaryOrders(), model) : orderFilter.FilterResult(await _orderService.GetSummaryOrders(), model)
                 };
+                
+
+                ViewBag.Page = page;
+                ViewBag.PagesMax = summaryViewModel.PageSize == "1" ? 1 : Math.Ceiling((double)summaryViewModel.Orders.Count / double.Parse(summaryViewModel.PageSize));
+                var pageFilter = new OrderPageSizeFilter(null);
+                if(model.OrderID == 0)
+                summaryViewModel.Orders = pageFilter.FilterResult(summaryViewModel.Orders, model);
+                summaryViewModel.Page = page;
                 return View(summaryViewModel);
             }
             return RedirectToAction("UserIndex");
             
+        }
+
+        public IActionResult ClearFilters()
+        {
+            return RedirectToAction("Index", new { model = new DashboardSummaryViewModel() });
         }
 
         public async Task<IActionResult> UserIndex()
@@ -102,6 +144,7 @@ namespace MotorGliding.Controllers
             await _calendarService.ClearReservedAsync(currentCalendarDate);
             return RedirectToAction("Calendar", new { dateTime = currentCalendarDate });
         }
+      
 
     }
 }

@@ -13,10 +13,13 @@ namespace MotorGliding.Models.Db
     {
         public int Id { get; set; }
         [Required, StringLength(50)]
+        [DisplayName("Nazwa")]
         public string Name { get; set; }
         [Required, MaxLength]
+        [DisplayName("Opis")]
         public string Description { get; set; }
         [DefaultValue(false)]
+        [DisplayName ("Aktywny")]
         public bool Visible { get; set; }
         public ICollection<Image> Images { get; set; }
         public ICollection<Features> Features { get; set; }

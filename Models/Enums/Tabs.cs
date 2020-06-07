@@ -4,6 +4,10 @@
     {
         Login,
         Registration,
-        Other
+        Other,
+        Dashboard,
+        Gallery,
+        UserSettings,
+        Settings
     }
 }

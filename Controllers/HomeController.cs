@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MotorGliding.Models.ViewModels;
@@ -32,11 +33,12 @@ namespace MotorGliding.Controllers.Home
             {
                 item.Image = await _imageService.GetMainAsync(item.Id, "Event");
             }
-            
+
             var model = new MainPageViewModel()
             {
                 Vehicle = await _vehicleService.GetMainAsync(),
-                Events = events.Where(e => e.Visible == true).ToList()                
+                Events = events.Where(e => e.Visible == true).ToList(),
+                Gallery = await _imageService.GetGalleryAsync(true)
             };
             //model.Vehicle = await _vehicleService.GetMainAsync();
             //ViewBag.Image = $"{model.Vehicle.Images.First().Name}";           
@@ -58,6 +60,11 @@ namespace MotorGliding.Controllers.Home
             //info = "Wiadomość nie została wysłana";
             return Json(false);
 
+        }
+
+        public  IActionResult Error()
+        {
+            return View();
         }
     }
 }
