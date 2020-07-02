@@ -20,4 +20,9 @@ Kolejne etapy to integracja z serwisami społecznościowymi oraz wprowadzenie p
 - Java Script
 - filtrowanie zamówień z użyciem wzorca łańcuch odpowiedzialności
 Wersja testowa: skyclub.tmarciniak.com.pl
-![Plik](wwwroot/Resource/SkyClub_MainPage.png)
+![Plik](wwwroot/Resource/SkyClub_Ofer.png)
+![Plik](wwwroot/Resource/SkyClub_44386_Order_Details.png)
+![Plik](wwwroot/Resource/SkyClub_44386_Order_Account_UserList.png)
+![Plik](wwwroot/Resource/SkyClub_44386_Event_List.png)
+![Plik](wwwroot/Resource/SkyClub_Dashboard.png)
+![Plik](wwwroot/Resource/SkyClub_44386_Event_AddEdit_2.png)
