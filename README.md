@@ -20,4 +20,4 @@ Kolejne etapy to integracja z serwisami społecznościowymi oraz wprowadzenie p
 - Java Script
 - filtrowanie zamówień z użyciem wzorca łańcuch odpowiedzialności
 Wersja testowa: skyclub.tmarciniak.com.pl
-https://github.com/kemot15/MotorGliding/blob/master/wwwroot/Resource/SkyClub_MainPage.png
+![Plik](wwwroot/Resource/SkyClub_MainPage.png)
