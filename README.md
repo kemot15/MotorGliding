@@ -1,5 +1,5 @@
 # SkyClub - MotorGliding
-Strona wizytówka z możliwością składania zamówień na loty motolotnią. Użytkownik może przeglądać i dodawać wybrane oferty do koszyka. Po złożeniu zamówienia otrzymuje potwierdzenie na podany adres e-mail. 
+Strona wizytówka z możliwością składania zamówień na loty motolotnią. Użytkownik może przeglądać i dodawać wybrane oferty do koszyka. Po złożeniu zamówienia otrzymuje potwierdzenie na podany adres e-mail. Na stronie jest również możliwość podejrzenia warunków pogodowych z zewnetrzengo serwisu.
 
 ## Użytkownik ma dostępęp do:
 - sowich zamówień,
